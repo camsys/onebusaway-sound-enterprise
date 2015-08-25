@@ -1,0 +1,14 @@
+# predictions
+#
+# startup transitime prediction engine when network becomes available, and respawn if it 
+# crashes
+description "transitime prediction management daemon"
+author "sheldonabrown"
+
+start on started network
+stop on starting shutdown
+
+respawn
+respawn limit 3 30
+
+exec su -s /bin/sh -c 'exec "$0" "$@"' <%= node[:oba][:user] %> -- /var/lib/oba/transitime/core/core.sh

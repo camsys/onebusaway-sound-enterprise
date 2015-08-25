@@ -1,0 +1,14 @@
+#!/bin/bash
+cd /var/lib/oba/transitime/core
+java \
+  -classpath logback-core-1.1.2.jar:logback-classic-1.1.2.jar:slf4j-api-1.7.2.jar \
+  -Xmx2g \
+  -Dtransitime.core.agencyId=<%= node[:oba][:transitime][:agency]%> \
+  -Dtransitime.db.dbName=<%= node[:oba][:transitime][:dbname]%> \
+  -Dtransitime.modules.optionalModulesList="org.transitime.custom.irishrail.NexalaAvlModule;org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.core.schedBasedPreds.SchedBasedPredsModule" \
+  -Dtransitime.avl.feedTimeoutInMSecs=120000 \
+  -Dtransitime.avl.queueSize=100000 \
+  -Dtransitime.avl.shouldUseSqs=true \
+  -Dlogback.configuration=/var/lib/oba/transitime/core/logback.xml \
+  -jar \
+  core.jar org.transitime.applications.Core
