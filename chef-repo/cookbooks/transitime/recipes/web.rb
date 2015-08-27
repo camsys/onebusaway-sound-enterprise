@@ -97,6 +97,19 @@ template "/var/lib/tomcat7/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml" 
   group 'tomcat7'
   mode '0644'
 end
+template "/var/lib/tomcat7/webapps/api/WEB-INF/classes/transiTimeConfig.xml" do
+  source "web/transitimeConfig.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
+# template transitime configuration
+template "/var/lib/tomcat7/webapps/api/WEB-INF/classes/mysql_hibernate.cfg.xml" do
+  source "web/mysql_hibernate.cfg.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
 
 script "deploy_web_post" do
   interpreter "bash"
