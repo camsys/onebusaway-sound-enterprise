@@ -80,6 +80,8 @@ script "deploy_web" do
   sudo rm -rf /var/lib/tomcat7/webapps/*
   sudo unzip #{mvn_web_dest_file} -d /var/lib/tomcat7/webapps/web || exit 1
   sudo unzip #{mvn_api_dest_file} -d /var/lib/tomcat7/webapps/api || exit 1
+  sudo rm -f /var/lib/tomcat7/webapps/web/WEB-INF/classes/transiTimeConfig.xml
+  sudo rm -f /var/lib/tomcat7/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml
   sudo service tomcat7 start
 EOH
 end
