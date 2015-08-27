@@ -9,6 +9,7 @@ java \
   -Dtransitime.avl.feedTimeoutInMSecs=120000 \
   -Dtransitime.avl.queueSize=100000 \
   -Dtransitime.avl.shouldUseSqs=true \
+  -Dtransitime.hibernate.configFile=/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml \
   -Dlogback.configuration=/var/lib/oba/transitime/core/logback.xml \
   -jar \
-  core.jar org.transitime.applications.Core
+  core.jar

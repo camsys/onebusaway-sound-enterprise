@@ -59,7 +59,13 @@ template "/var/lib/oba/transitime/core/core.sh" do
     group "root"
     mode '0755'
 end
-
+# template transitime configuration
+template "/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml" do
+  source "core/mysql_hibernate.cfg.xml.erb"
+  owner 'ubuntu'
+  group 'ubuntu'
+  mode '0644'
+end
 service "predictions" do
   provider Chef::Provider::Service::Upstart
   supports :restart => true, :stop => true, :start => true
