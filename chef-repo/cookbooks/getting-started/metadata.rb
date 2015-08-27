@@ -1,3 +1,4 @@
+name             "getting-started"
 maintainer       "Opscode, Inc."
 maintainer_email "sysadmin@opscode.com"
 license          "Apache 2.0"
