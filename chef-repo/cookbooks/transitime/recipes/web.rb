@@ -54,7 +54,7 @@ template "/var/lib/oba/transitime/web/transitimeConfig.xml" do
   mode '0644'
 end
 
-["logback-classic-1.1.2.jar" "logback-core-1.1.2.jar" "slf4j-api-1.7.2.jar"].each do |jar_file|
+%w{"logback-classic-1.1.2.jar" "logback-core-1.1.2.jar" "slf4j-api-1.7.2.jar"}.each do |jar_file|
   cookbook_file ["/usr/share/tomcat7/lib", jar_file].compact.join("/") do
     owner 'tomcat7'
     group 'tomcat7'
