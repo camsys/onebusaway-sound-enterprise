@@ -6,7 +6,7 @@ maven "transitimeCore" do
   dest "/tmp"
   version mvn_version
   packaging "jar"
-  classifier "onejar"
+  classifier "jar-with-dependencies"
   owner "ubuntu"
   repositories node[:oba][:mvn][:repositories]
 end
