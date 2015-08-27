@@ -6,7 +6,7 @@ maven "transitimeCore" do
   dest "/tmp"
   version mvn_version
   packaging "jar"
-  classifier "jar-with-dependencies"
+  classifier "onejar"
   owner "ubuntu"
   repositories node[:oba][:mvn][:repositories]
 end
@@ -22,6 +22,13 @@ end
 directory "/var/lib/oba/transitime/core" do
   owner 'root'
   group 'root'
+  action :create
+  recursive true
+end
+
+directory "/Logs" do
+  owner 'ubuntu'
+  group 'ubuntu'
   action :create
   recursive true
 end
