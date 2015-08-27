@@ -47,19 +47,19 @@ end
 
 
 # template transitime ocnfiguration
-template "/var/lib/oba/transitime/web/transitimeConfig.xml" do
-  source "web/transitimeConfig.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
-  mode '0644'
-end
-# template transitime ocnfiguration
-template "/var/lib/oba/transitime/web/mysql_hibernate.cfg.xml" do
-  source "web/mysql_hibernate.cfg.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
-  mode '0644'
-end
+# template "/var/lib/oba/transitime/web/transitimeConfig.xml" do
+#   source "web/transitimeConfig.xml.erb"
+#   owner 'tomcat7'
+#   group 'tomcat7'
+#   mode '0644'
+# end
+# # template transitime ocnfiguration
+# template "/var/lib/oba/transitime/web/mysql_hibernate.cfg.xml" do
+#   source "web/mysql_hibernate.cfg.xml.erb"
+#   owner 'tomcat7'
+#   group 'tomcat7'
+#   mode '0644'
+# end
 
 
 %w{logback-classic-1.1.2.jar logback-core-1.1.2.jar slf4j-api-1.7.2.jar}.each do |jar_file|
@@ -70,9 +70,8 @@ end
     mode  '0444'
   end
 end
-script "deploy_web" do
+script "deploy_web_pre" do
   interpreter "bash"
-#  user node[:oba][:user]
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
@@ -82,6 +81,28 @@ script "deploy_web" do
   sudo unzip #{mvn_api_dest_file} -d /var/lib/tomcat7/webapps/api || exit 1
   sudo rm -f /var/lib/tomcat7/webapps/web/WEB-INF/classes/transiTimeConfig.xml
   sudo rm -f /var/lib/tomcat7/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml
+EOH
+end
+
+template "/var/lib/tomcat7/webapps/web/WEB-INF/classes/transiTimeConfig.xml" do
+  source "web/transitimeConfig.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
+# template transitime configuration
+template "/var/lib/tomcat7/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml" do
+  source "web/mysql_hibernate.cfg.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
+
+script "deploy_web_post" do
+  interpreter "bash"
+  user "root"
+  cwd node[:oba][:home]
+  code <<-EOH
   sudo service tomcat7 start
 EOH
 end
