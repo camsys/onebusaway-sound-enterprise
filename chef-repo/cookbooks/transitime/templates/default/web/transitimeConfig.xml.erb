@@ -41,11 +41,11 @@
     <db>
         <dbName>transitime</dbName>
         <dbHost><%= node[:oba][:transitime][:dbhost] %></dbHost>
-        <dbType><%= node[:oba][:transitime][:dbhost] %></dbType>
+        <dbType><%= node[:oba][:transitime][:dbtype] %></dbType>
         <dbUserName><%= node[:oba][:transitime][:dbusername] %></dbUserName>
         <dbPassword><%= node[:oba][:transitime][:dbpassword] %></dbPassword>
     </db>     
     <hibernate>
-        <configFile>mysql_hibernate.cfg.xml</configFile>        
+        <configFile>/var/lib/oba/transitime/web/mysql_hibernate.cfg.xml</configFile>        
     </hibernate>
 </transitime>

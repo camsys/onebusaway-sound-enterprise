@@ -53,6 +53,14 @@ template "/var/lib/oba/transitime/web/transitimeConfig.xml" do
   group 'tomcat7'
   mode '0644'
 end
+# template transitime ocnfiguration
+template "/var/lib/oba/transitime/web/mysql_hibernate.cfg.xml" do
+  source "web/mysql_hibernate.cfg.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
+
 
 %w{logback-classic-1.1.2.jar logback-core-1.1.2.jar slf4j-api-1.7.2.jar}.each do |jar_file|
   cookbook_file ["/usr/share/tomcat7/lib", jar_file].compact.join("/") do
