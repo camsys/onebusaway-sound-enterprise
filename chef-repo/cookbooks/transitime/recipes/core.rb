@@ -7,7 +7,7 @@ maven "transitimeCore" do
   version mvn_version
   packaging "jar"
   classifier "onejar"
-  owner "tomcat7"
+  owner "ubuntu"
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -33,7 +33,7 @@ script "install_broker" do
   interpreter "bash"
   user 'root'
   cwd "/var/lib/oba/transitime/core"
-  puts "Queue broker version is #{mvn_version}"
+  puts "core version is #{mvn_version}"
   code <<-EOH
   mv #{mvn_dest_file} /var/lib/oba/transitime/core/core.jar || exit 1
   EOH
