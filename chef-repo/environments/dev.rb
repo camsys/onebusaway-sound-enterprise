@@ -3,8 +3,8 @@ name "dev"
 description "environment attributes/configuration for dev environment"
 default_attributes({
                        "oba" => {
-                       "user" => "dev",
-                       "home" => "/home/dev",
+                       "user" => "ubuntu",
+                       "home" => "/home/ubuntu",
                            "mvn" => {
                                "version_nyc" => "2.10.0-st-SNAPSHOT",
                                "version_core" => "1.1.13-st.3",
