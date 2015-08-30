@@ -58,6 +58,7 @@ script "deploy_admin" do
     ln -s /usr/bin/python /usr/bin/python2.5
   fi
   unzip #{mvn_dest_file} -d /var/lib/tomcat7/webapps/ROOT || exit 1
+  rm -f /var/lib/tomcat7/webapps/ROOT/WEB-INF/lib/mysql-connector-java-5.1.17.jar
   EOH
 end
 
@@ -69,8 +70,9 @@ template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   mode '0644'
 end
 
-%w{mysql-connector-java-5.1.35.jar}.each do |jar_file|
-  cookbook_file ["/usr/share/tomcat7/lib", jar_file].compact.join("/") do
+# TODO fix build dependency
+%w{admin/mysql-connector-java-5.1.35.jar}.each do |jar_file|
+  cookbook_file ["/var/lib/tomcat7/webapps/ROOT/WEB-INF/lib", jar_file].compact.join("/") do
     owner 'tomcat7'
     group 'tomcat7'
     source jar_file
