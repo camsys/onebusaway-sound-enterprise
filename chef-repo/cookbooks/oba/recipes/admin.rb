@@ -19,6 +19,12 @@ end
 #  action :create
 #end
 
+directory "/var/lib/oba/ do
+  owner "tomcat7"
+  group "tomcat7"
+  action :create
+end
+
 # template context.xml adding datasource
 template "/etc/tomcat7/context.xml" do
   source "admin/context.xml.erb"
