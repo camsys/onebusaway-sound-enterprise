@@ -8,7 +8,7 @@ maven "onebusaway-nyc-admin-webapp" do
   dest "/tmp"
   version mvn_version
   packaging "war"
-  owner "tomcat"
+  owner "tomcat7"
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -22,8 +22,8 @@ end
 # template context.xml adding datasource
 template "/etc/tomcat7/context.xml" do
   source "admin/context.xml.erb"
-  owner 'tomcat'
-  group 'tomcat'
+  owner 'tomcat7'
+  group 'tomcat7'
   mode '0644'
 end
 
@@ -58,8 +58,8 @@ end
 # template data-sources
 template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   source "admin/data-sources.erb"
-  owner 'tomcat'
-  group 'tomcat'
+  owner 'tomcat7'
+  group 'tomcat7'
   mode '0644'
 end
 
