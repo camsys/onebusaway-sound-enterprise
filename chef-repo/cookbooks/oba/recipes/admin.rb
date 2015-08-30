@@ -24,6 +24,7 @@ end
     owner "tomcat7"
     group "tomcat7"
     action :create
+    recursive true
   end
 end
 
