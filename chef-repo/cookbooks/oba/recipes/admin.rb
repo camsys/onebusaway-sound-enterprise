@@ -71,11 +71,11 @@ template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
 end
 
 # TODO fix build dependency
-%w{admin/mysql-connector-java-5.1.35.jar}.each do |jar_file|
+%w{mysql-connector-java-5.1.35.jar}.each do |jar_file|
   cookbook_file ["/var/lib/tomcat7/webapps/ROOT/WEB-INF/lib", jar_file].compact.join("/") do
     owner 'tomcat7'
     group 'tomcat7'
-    source jar_file
+    source ["admin", jar_file].compact.join("/")
     mode  '0444'
   end
 end
