@@ -69,6 +69,15 @@ template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   mode '0644'
 end
 
+%w{mysql-connector-java-5.1.35.jar}.each do |jar_file|
+  cookbook_file ["/usr/share/tomcat7/lib", jar_file].compact.join("/") do
+    owner 'tomcat7'
+    group 'tomcat7'
+    source jar_file
+    mode  '0444'
+  end
+end
+
 script "deploy_admin" do
   interpreter "bash"
   user "root"
