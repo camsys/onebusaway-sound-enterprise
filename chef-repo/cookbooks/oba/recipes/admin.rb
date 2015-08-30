@@ -31,6 +31,13 @@ directory "/var/lib/obanyc" do
   action :create
 end
 
+directory "/var/lib/obanyc/bundles/staged" do
+  owner "tomcat7"
+  group "tomcat7"
+  action :create
+  recursive true
+end
+
 # template context.xml adding datasource
 template "/etc/tomcat7/context.xml" do
   source "admin/context.xml.erb"
