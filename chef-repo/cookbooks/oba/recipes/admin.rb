@@ -19,23 +19,11 @@ end
 #  action :create
 #end
 
-directory "/var/lib/oba" do
+["/var/lib/oba" "/var/lib/obanyc" "/var/lib/obanyc/bundles/staged" "/var/lib/obanyc/activebundles"].each do |path|
+directory path do
   owner "tomcat7"
   group "tomcat7"
   action :create
-end
-
-directory "/var/lib/obanyc" do
-  owner "tomcat7"
-  group "tomcat7"
-  action :create
-end
-
-directory "/var/lib/obanyc/bundles/staged" do
-  owner "tomcat7"
-  group "tomcat7"
-  action :create
-  recursive true
 end
 
 # template context.xml adding datasource
