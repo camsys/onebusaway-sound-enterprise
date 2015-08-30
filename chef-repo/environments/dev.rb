@@ -14,7 +14,8 @@ default_attributes({
                                "repositories" => ["http://developer.onebusaway.org/archiva/repository/snapshots/"]
 
                        },
-                       "db_user" => "db.dev.wmata.obaweb.org",
+                       "db_master" => "db.dev.wmata.obaweb.org",
+                       "db_user" => "oba",
                        "db_password" => "changeme",
                        "env" => "dev",
                        "base_domain" => "wmata.obaweb.org",

@@ -34,7 +34,7 @@
         secondsBeforeRetryMaster="60"
         failOverReadOnly="false"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://<%= node[:oba][:db_master] %>,<%= node[:oba][:db_slave] %>/org_onebusaway_users" >
+        url="jdbc:mysql://<%= node[:oba][:db_master] %>/org_onebusaway_users" >
         <connection-property name="readOnly">false</connection-property>
      </Resource>
      <Resource name="jdbc/archiveDB"
@@ -63,7 +63,7 @@
         secondsBeforeRetryMaster="60"
         failOverReadOnly="false"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://<%= node[:oba][:db_master] %>,<%= node[:oba][:db_slave] %>/<%= node[:oba][:db_archive] %>" >
+        url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>" >
         <connection-property name="readOnly">false</connection-property>
      </Resource>
     <Parameter name="server.url" value="https://admin.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>" override="false" />
