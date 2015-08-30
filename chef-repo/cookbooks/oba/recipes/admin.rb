@@ -63,7 +63,7 @@ end
 
 # template data-sources
 template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
-  source "admin/data-sources.erb"
+  source "admin/data-sources.xml.erb"
   owner 'tomcat7'
   group 'tomcat7'
   mode '0644'
