@@ -19,7 +19,7 @@ end
 #  action :create
 #end
 
-directory "/var/lib/oba/ do
+directory "/var/lib/oba" do
   owner "tomcat7"
   group "tomcat7"
   action :create
