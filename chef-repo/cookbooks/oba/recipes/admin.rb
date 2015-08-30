@@ -73,11 +73,11 @@ script "deploy_admin" do
   EOH
 end
 
-service "tomcat7" do
-  provider Chef::Provider::Service::Upstart
-  supports :restart => true, :stop => true, :start => true
-  action [:restart]
-end
+#service "tomcat7" do
+#  provider Chef::Provider::Service::Upstart
+#  supports :restart => true, :stop => true, :start => true
+#  action [:restart]
+#end
 
 # restart to pick up SSL changes
 #service "apache2" do
