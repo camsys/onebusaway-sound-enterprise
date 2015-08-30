@@ -45,7 +45,7 @@ end
 log "war file is #{mvn_dest_file}"
 script "deploy_admin" do
   interpreter "bash"
-  user node[:oba][:user]
+  user root
   cwd node[:oba][:home]
   puts "admin version is #{mvn_version}"
   code <<-EOH
