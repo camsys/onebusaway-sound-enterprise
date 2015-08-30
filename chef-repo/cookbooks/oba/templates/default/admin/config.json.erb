@@ -1,0 +1,63 @@
+{
+        "oba": {
+                "env": "local",
+                "config": "local"
+        },
+        "config":
+ [
+ {"component": "admin", "key": "apiHostname", "value": "<%= node[:oba][:api_server] %>"},
+ {"component": "admin", "key": "useTdm", "value": "false"},
+ {"component": "admin", "key": "admin.auxSupport", "value": "true"},
+ {"component": "admin", "key": "admin.stopConsolidation", "value": "true"},
+ {"component": "admin", "key": "admin.stopMappingUrl", "value": "https://raw.github.com/wiki/camsys/onebusaway-application-modules/EmptyModifications.md"},
+ {"component": "admin", "key": "admin.stopVerificationUrl", "value": "https://raw.github.com/wiki/camsys/onebusaway-application-modules/EmptyModifications.md"},
+ {"component": "admin", "key": "admin.instanceId", "value": "localhost"},
+ {"component": "admin", "key": "bundleStagingDir", "value": "/var/lib/oba/bundles/staged"},
+ {"component": "admin", "key": "showApiKey", "value": "true"},
+ {"component": "admin", "key": "showManageUsers", "value": "true"},
+ {"component": "admin", "key": "showBundleUtil", "value": "true"},
+ {"component": "admin", "key": "showVehicleStatus", "value": "false"},
+ {"component": "admin", "key": "showUpdateConfig", "value": "false"},
+ {"component": "admin", "key": "showQrCode", "value": "false"},
+ {"component": "admin", "key": "manageServiceAlerts", "value": "true"},
+ {"component": "admin", "key": "validateTransitDataBundle", "value": "true"},
+ {"component": "admin", "key": "no_default_agency", "value": "true"},
+ {"component": "admin", "key": "1_modurl", "value": "https://raw.github.com/wiki/camsys/onebusaway-application-modules/EmptyModifications.md"},
+ {"component": "admin", "key": "2_modurl", "value": "https://raw.github.com/wiki/camsys/onebusaway-application-modules/EmptyModifications.md"},
+      {
+         "component":"admin",
+         "key":"apiStaging",
+         "value":"http://app.dev.wmata.obaweb.org"
+      },
+      {
+         "component":"admin",
+         "key":"apiProd",
+         "value":"http://app.dev.wmata.obaweb.org"
+      },
+      {
+         "component":"admin",
+         "key":"apiQuery",
+         "value":"/api"
+      },
+      {
+         "component":"admin",
+         "key":"siriQuery",
+         "value":"/siri"
+      },
+      {
+         "component":"admin",
+         "key":"apiKey",
+         "value":"mykey"
+      },
+      {
+         "component":"admin",
+         "key":"defaultAgency",
+         "value":"1"
+      },
+  {
+         "component":"agency",
+         "key":"1",
+         "value":DC,1;MET,2"
+      }
+ ]
+}

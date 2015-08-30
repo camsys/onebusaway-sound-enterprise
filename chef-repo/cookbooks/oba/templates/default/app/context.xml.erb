@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+    <WatchedResource>WEB-INF/web.xml</WatchedResource>
+    <Environment name="xwikiUrl" value="http://xwiki.<%= node[:oba][:env] %>.obanyc.com" type="java.lang.String" override="true" />
+    <Environment name="wikiDocumentEditUrl" value="http://xwiki.<%= node[:oba][:env] %>.obanyc.com/bin/edit/%{namespace}/%{documentName}" type="java.lang.String" override="true" />
+    <Environment name="wikiAttachmentUrl" value="http://xwiki.<%= node[:oba][:env] %>.obanyc.com/bin/download/%{namespace}/%{documentName}/%{attachmentName}" type="java.lang.String" override="true" />
+     <Resource name="jdbc/appDB"
+        auth="Container"
+        type="javax.sql.DataSource"
+        maxActive="100"
+        maxIdle="30"
+        maxWait="60"
+        validationQuery="select 1"
+        testWhileIdle="true"
+        timeBetweenEvictionRunsMillis="10000"
+        minEvictableIdleTimeMillis="60000"
+        username="<%= node[:oba][:db_user] %>"
+        password="<%= node[:oba][:db_password] %>"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://db.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>:3306/<%= node[:oba][:db_instance_name] %>" >
+     </Resource>
+
+</Context>
