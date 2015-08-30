@@ -1,6 +1,5 @@
 log "Downloading wars"
 
-include_recipe "oba::mvn-prep"
 mvn_version = node[:oba][:mvn][:version_nyc]
 mvn_dest_file = "/tmp/onebusaway-nyc-admin-webapp-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_dest_file}"
