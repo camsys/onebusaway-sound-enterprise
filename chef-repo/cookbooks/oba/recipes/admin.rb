@@ -20,10 +20,11 @@ end
 #end
 
 ["/var/lib/oba" "/var/lib/obanyc" "/var/lib/obanyc/bundles/staged" "/var/lib/obanyc/activebundles"].each do |path|
-directory path do
-  owner "tomcat7"
-  group "tomcat7"
-  action :create
+  directory path do
+    owner "tomcat7"
+    group "tomcat7"
+    action :create
+  end
 end
 
 # template context.xml adding datasource
