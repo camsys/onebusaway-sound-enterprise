@@ -19,7 +19,7 @@ end
 #  action :create
 #end
 
-["/var/lib/oba", "/var/lib/obanyc", "/var/lib/obanyc/bundles/staged", "/var/lib/obanyc/activebundles"].each do |path|
+["/var/lib/obanyc", "/var/lib/obanyc/bundles/staged", "/var/lib/obanyc/activebundles"].each do |path|
   directory path do
     owner "tomcat7"
     group "tomcat7"
@@ -33,13 +33,6 @@ template "/etc/tomcat7/context.xml" do
   source "admin/context.xml.erb"
   owner 'tomcat7'
   group 'tomcat7'
-  mode '0644'
-end
-
-template "/var/lib/oba/config.json" do
-  source "admin/config.json.erb"
-  owner 'root'
-  group 'root'
   mode '0644'
 end
 
