@@ -6,7 +6,8 @@ java \
   -Dtransitime.core.agencyId=<%= node[:oba][:transitime][:agency]%> \
   -Dtransitime.db.dbName=<%= node[:oba][:transitime][:dbname]%> \
   -Dtransitime.modules.optionalModulesList="org.transitime.custom.irishrail.NexalaAvlModule;org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.core.schedBasedPreds.SchedBasedPredsModule" \
-  -Dtransitime.avl.feedTimeoutInMSecs=120000 \
+  -Dtransitime.avl.feedTimeoutInMSecs=60000 \
+  -Dtransitime.core.maxPredictionTimeForDbSecs=2592000 \
   -Dtransitime.avl.queueSize=100000 \
   -Dtransitime.avl.shouldUseSqs=true \
   -Dtransitime.hibernate.configFile=/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml \
