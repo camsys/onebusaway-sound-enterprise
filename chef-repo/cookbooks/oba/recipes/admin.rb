@@ -19,7 +19,7 @@ end
 #  action :create
 #end
 
-["/var/lib/obanyc", "/var/lib/obanyc/bundles/staged", "/var/lib/obanyc/activebundles"].each do |path|
+["/var/lib/obanyc", "/var/lib/obanyc/wm_bundles", "/var/lib/obanyc/bundles/staged", "/var/lib/obanyc/activebundles"].each do |path|
   directory path do
     owner "tomcat7"
     group "tomcat7"
