@@ -1,4 +1,4 @@
-name             "obaa"
+name             "oba"
 maintainer       "Sheldon A. Brown"
 maintainer_email "sheldonb@gmail.com"
 license          "Apache 2.0"
