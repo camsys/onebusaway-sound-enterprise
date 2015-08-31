@@ -22,7 +22,7 @@ default_attributes({
                        "db_instance_name" => "org_onebusaway_users",
                        "db_agency" => "gtfsrt",
                        "db_archive" => "gtfsrt",
-                       "api_server" => "app1.dev.wmata.obaweb.org",
+                       "api_server" => "app.dev.wmata.obaweb.org:8080",
                        "transitime" => {
                          "dbhost" => "db.dev.wmata.obaweb.org:3306",
                          "dbtype" => "mysql",
