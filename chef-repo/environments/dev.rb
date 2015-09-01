@@ -6,6 +6,7 @@ default_attributes({
                        "user" => "ubuntu",
                        "home" => "/home/ubuntu",
                            "mvn" => {
+                               "group_id" => "org.onebusaway",
                                "version_nyc" => "2.10.0-st-SNAPSHOT",
                                "version_core" => "1.1.13-st.3",
                                "version_app" => "1.1.13-st.3",
