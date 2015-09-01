@@ -3,6 +3,7 @@ directory node[:oba][:tds][:bundle_path] do
   owner "tomcat7"
   group "tomcat7"
   action :create
+  recursive true
 end
 
 mvn_version = node[:oba][:mvn][:version_app]
