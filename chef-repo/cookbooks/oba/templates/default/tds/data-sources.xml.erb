@@ -50,7 +50,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
     <bean id="bundleManagementService" class="org.onebusaway.transit_data_federation.impl.bundle.BundleManagementServiceImpl">
       <property name="bundleStoreRoot" value="${bundlePath}" />
-      <property name="standaloneMode" value="true" />
+      <property name="standaloneMode" value="false" />
     </bean>
 
     <bean id="refreshServiceImpl" class="org.onebusaway.container.refresh.RefreshServiceImpl" />
