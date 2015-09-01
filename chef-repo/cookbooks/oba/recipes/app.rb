@@ -5,6 +5,8 @@ directory node[:oba][:tds][:bundle_path] do
   action :create
 end
 
+mvn_version = node[:oba][:mvn][:version_app]
+
 log "Downloading wars"
 mvn_tdf_dest_file = "/tmp/onebusaway-transit-data-federation-webapp-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_tdf_dest_file}"
@@ -17,7 +19,6 @@ maven "onebusaway-transit-data-federation-webapp" do
   repositories node[:oba][:mvn][:repositories]
 end
 
-mvn_version = node[:oba][:mvn][:version_app]
 mvn_api_dest_file = "/tmp/onebusaway-api-webapp-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_api_dest_file}"
 maven "onebusaway-api-webapp" do
