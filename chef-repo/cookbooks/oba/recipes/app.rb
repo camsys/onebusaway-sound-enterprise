@@ -6,6 +6,10 @@ directory node[:oba][:tds][:bundle_path] do
   recursive true
 end
 
+link "/var/log/tomcat6" do
+ to "/var/log/tomcat7"
+end
+
 mvn_version = node[:oba][:mvn][:version_app]
 
 log "Downloading wars"
