@@ -1,5 +1,5 @@
 # create bundle directory
-directory node[:oba][:ie][:bundle_path] do
+directory node[:oba][:tds][:bundle_path] do
   owner "tomcat7"
   group "tomcat7"
   action :create
