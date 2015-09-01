@@ -101,6 +101,16 @@ template "#{node[:tomcat][:webapp_dir]}/ROOT/WEB-INF/classes/data-sources.xml" d
   mode '0644'
 end
 
+# TODO fix build dependency
+%w{mysql-connector-java-5.1.35.jar}.each do |jar_file|
+  cookbook_file ["/usr/share/tomcat7/lib", jar_file].compact.join("/") do
+    owner 'tomcat7'
+    group 'tomcat7'
+    source ["admin", jar_file].compact.join("/")
+    mode  '0444'
+  end
+end
+
 # start up tomcat
 script "start_front_end" do
   interpreter "bash"
