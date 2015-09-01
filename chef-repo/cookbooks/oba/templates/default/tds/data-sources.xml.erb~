@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <bean id="dataSource"
+          class="org.springframework.jndi.JndiObjectFactoryBean">
+      <property name="jndiName"
+                value="java:comp/env/jdbc/wmataDB"/>
+      <property name="lookupOnStartup"
+                value="true"/>
+      <property name="cache"
+                value="true"/>
+      <property name="proxyInterface"
+                value="javax.sql.DataSource"/>
+      <property name="resourceRef"
+                value="true" />
+    </bean>
+
+    <bean class="org.onebusaway.container.spring.SystemPropertyOverrideConfigurer">
+      <property name="order" value="-2" />
+      <property name="properties">
+          <props>
+              <prop key="bundlePath">/var/lib/oba/bundle</prop>
+         </props>
+      </property>
+    </bean>
+
+    <bean class="org.onebusaway.transit_data_federation.impl.realtime.gtfs_realtime.GtfsRealtimeSource">
+    <property name="tripUpdatesUrl" value="http://gtfsrt.dev.wmata.obaweb.org:8080/api/v1/key/4b248c1b/agency/1/command/gtfs-rt/tripUpdates" />
+    <property name="vehiclePositionsUrl" value="http://gtfsrt.dev.wmata.obaweb.org:8080/api/v1/key/4b248c1b/agency/1/command/gtfs-rt/vehiclePositions" />
+    <property name="refreshInterval" value="30" />
+    <!--<property name="agencyId" value="2" />-->
+    <property name="agencyIds">
+        <list>
+                <value>DC</value>
+                <value>MET</value>
+        </list>
+        </property>
+        </bean>
+
+
+    <bean id="httpServiceClient" class="org.onebusaway.transit_data_federation.util.HttpServiceClientImpl" >
+      <constructor-arg type="java.lang.String" value="<%= node[:oba][:admin_server] %>"/>
+      <constructor-arg type="java.lang.Integer" value="<%= node[:oba][:admin_server_port] %>" />
+      <constructor-arg type="java.lang.String" value="/api/" />
+    </bean>
+
+    <bean id="bundleManagementService" class="org.onebusaway.transit_data_federation.impl.bundle.BundleManagementServiceImpl">
+      <property name="bundleStoreRoot" value="${bundlePath}" />
+      <property name="standaloneMode" value="true" />
+    </bean>
+</beans>
