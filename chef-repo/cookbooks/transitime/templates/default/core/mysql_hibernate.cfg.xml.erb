@@ -55,7 +55,11 @@
         setting batch_size to 25 actually hurt performance by a few
         percent. Probably much more important when db is remote and
         network traffic could bog down the thread that is writing. -->
-   <property name="hibernate.jdbc.batch_size">25</property>  
+   <property name="hibernate.jdbc.batch_size">100</property>  
+   <property name="default_batch_fetch_size">100</property>  
+   <property name="hibernate.order_inserts">true</property>  
+   <property name="hibernate.order_updates">true</property>  
+
  
    <!-- Configure db settings. Currently commented out because this
         can be done programmatically by HibernateUtils using
