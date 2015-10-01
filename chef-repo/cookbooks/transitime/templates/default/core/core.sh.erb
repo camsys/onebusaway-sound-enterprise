@@ -8,7 +8,7 @@ java \
   -Xmx2g \
   -Dtransitime.core.agencyId=<%= node[:oba][:transitime][:agency]%> \
   -Dtransitime.db.dbName=<%= node[:oba][:transitime][:dbname]%> \
-  -Dtransitime.modules.optionalModulesList="org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.core.schedBasedPreds.SchedBasedPredsModule;org.transitime.custom.aws.AvlSqsClientModule" \
+  -Dtransitime.modules.optionalModulesList="org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.custom.aws.AvlSqsClientModule" \
   -Dtransitime.avl.feedTimeoutInMSecs=30000 \
   -Dtransitime.core.maxPredictionTimeForDbSecs=3600 \
   -Dtransitime.avl.queueSize=100000 \
