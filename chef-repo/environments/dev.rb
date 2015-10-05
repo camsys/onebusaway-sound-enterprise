@@ -25,6 +25,7 @@ default_attributes({
                        "db_archive" => "gtfsrt",
                        "api_server" => "app.dev.wmata.obaweb.org:8080",
                        "admin_server" => "admin.dev.wmata.obaweb.org",
+                       "prediction_api_server" => "gtfsrt.dev.wmata.obaweb.org",
                        "admin_server_port" => "8080",
                        "tds" => {
                          "bundle_path" => "/var/lib/oba/bundle"

@@ -13,22 +13,33 @@ end
 mvn_version = node[:oba][:mvn][:version_app]
 
 log "Downloading wars"
-mvn_tdf_dest_file = "/tmp/onebusaway-transit-data-federation-webapp-#{mvn_version}.war"
+mvn_tdf_dest_file = "/tmp/war/onebusaway-transit-data-federation-webapp-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_tdf_dest_file}"
 maven "onebusaway-transit-data-federation-webapp" do
   group_id node[:oba][:mvn][:group_id]
-  dest "/tmp"
+  dest "/tmp/war"
   version mvn_version
   packaging "war"
   owner "tomcat7"
   repositories node[:oba][:mvn][:repositories]
 end
 
-mvn_api_dest_file = "/tmp/onebusaway-api-webapp-#{mvn_version}.war"
+mvn_api_dest_file = "/tmp/war/onebusaway-api-webapp-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_api_dest_file}"
 maven "onebusaway-api-webapp" do
   group_id node[:oba][:mvn][:group_id]
-  dest "/tmp"
+  dest "/tmp/war"
+  version mvn_version
+  packaging "war"
+  owner "tomcat7"
+  repositories node[:oba][:mvn][:repositories]
+end
+
+mvn_nextbus_api_dest_file = "/tmp/war/onebusaway-api-webapp-#{mvn_version}.war"
+log "maven dependency installed at #{mvn_nextbus_api_dest_file}"
+maven "onebusaway-nextbus-api-webapp" do
+  group_id node[:oba][:mvn][:group_id]
+  dest "/tmp/war"
   version mvn_version
   packaging "war"
   owner "tomcat7"
@@ -36,11 +47,11 @@ maven "onebusaway-api-webapp" do
 end
 
 front_end_webapp = node[:oba][:webapp][:artifact]
-mvn_webapp_dest_file = "/tmp/#{front_end_webapp}-#{mvn_version}.war"
+mvn_webapp_dest_file = "/tmp/war/#{front_end_webapp}-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_webapp_dest_file}"
 maven "#{front_end_webapp}" do
   group_id node[:oba][:mvn][:group_id]
-  dest "/tmp"
+  dest "/tmp/war"
   version mvn_version
   packaging "war"
   owner "tomcat7"
@@ -56,6 +67,7 @@ template "/var/lib/tomcat7/conf/context.xml" do
 end
 
 # deploy onebusaway-api-webapp
+# deploy onebusaway-nextbus-api-webapp
 # deploy onebusaway-transit-data-federation-webapp
 # deploy onebusaway-enterprise-(acta|branded)-webapp
 # install ie
@@ -76,6 +88,9 @@ script "deploy_front_end" do
   # deploy api
   sudo mkdir #{node[:tomcat][:webapp_dir]}/onebusaway-api-webapp
   sudo unzip #{mvn_api_dest_file} -d #{node[:tomcat][:webapp_dir]}/onebusaway-api-webapp || exit 1
+  # deploy nextbus-api
+  sudo mkdir #{node[:tomcat][:webapp_dir]}/onebusaway-nextbus-api-webapp
+  sudo unzip #{mvn_nextbus_api_dest_file} -d #{node[:tomcat][:webapp_dir]}/onebusaway-nextbus-api-webapp || exit 1
   # deploy enterprise
   sudo mkdir #{node[:tomcat][:webapp_dir]}/ROOT
   sudo unzip #{mvn_webapp_dest_file} -d #{node[:tomcat][:webapp_dir]}/ROOT || exit 1
@@ -93,6 +108,13 @@ end
 # template api data-sources
 template "#{node[:tomcat][:webapp_dir]}/onebusaway-api-webapp/WEB-INF/classes/data-sources.xml" do
   source "api/data-sources.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
+# template nextbus api data-sources
+template "#{node[:tomcat][:webapp_dir]}/onebusaway-nextbus-api-webapp/WEB-INF/classes/data-sources.xml" do
+  source "nextbus-api/data-sources.xml.erb"
   owner 'tomcat7'
   group 'tomcat7'
   mode '0644'
