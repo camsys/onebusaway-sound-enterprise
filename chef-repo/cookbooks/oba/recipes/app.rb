@@ -35,7 +35,7 @@ maven "onebusaway-api-webapp" do
   repositories node[:oba][:mvn][:repositories]
 end
 
-mvn_nextbus_api_dest_file = "/tmp/war/onebusaway-api-webapp-#{mvn_version}.war"
+mvn_nextbus_api_dest_file = "/tmp/war/onebusaway-nextbus-api-webapp-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_nextbus_api_dest_file}"
 maven "onebusaway-nextbus-api-webapp" do
   group_id node[:oba][:mvn][:group_id]
