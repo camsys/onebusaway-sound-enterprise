@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <!-- Specify our transit data source -->
+    
+	<bean id="transitDataService"
+		class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<property name="serviceUrl" value="http://localhost:8080/onebusaway-transit-data-federation-webapp/remoting/transit-data-service" />
+		<property name="serviceInterface"
+			value="org.onebusaway.transit_data.services.TransitDataService" />
+	</bean>
+    
+    <!-- Database Connection Configuration -->
+    
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/appDB" />
+		<property name="lookupOnStartup" value="true" />
+		<property name="cache" value="true" />
+		<property name="proxyInterface" value="javax.sql.DataSource" />
+		<property name="resourceRef" value="true" />
+	</bean>
+    <alias name="dataSource" alias="mutableDataSource" />
+    <!--
+        The Geocoder is used in the SMS interface for determining your default search location. The DefaultGeocoderImpl
+        doesn't actually do much geocoding... it's just there for testing
+    -->
+   	<bean id="externalGeocoderImpl"
+		class="org.onebusaway.geocoder.enterprise.impl.EnterpriseGoogleGeocoderImpl">
+		<property name="wktFilterPolygon"
+			value="POLYGON((-77.449457 38.598692, -77.449457 39.19148899999999, -76.488045 39.19148899999999, -76.488045 38.598692, -77.449457 38.598692))" />
+
+	</bean>
+ 
+    <bean id="smsAbbreviationsFactory" class="org.onebusaway.presentation.impl.text.XmlTextModificationsFactory">
+        <property name="resource" value="classpath:sms-destination-abbreviations.xml" />
+    </bean>
+
+    <bean id="smsAbbreviations" factory-bean="smsAbbreviationsFactory" factory-method="create">
+        <qualifier value="smsDestinationAbbreviations" />
+    </bean>
+	<bean class="org.onebusaway.container.spring.PropertyOverrideConfigurer">
+		<property name="properties">
+			<props>
+				<prop key="cacheManager.cacheManagerName">org.onebusaway.nyc_webapp.cacheManager</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>

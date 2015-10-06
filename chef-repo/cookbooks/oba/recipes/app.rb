@@ -35,6 +35,17 @@ maven "onebusaway-api-webapp" do
   repositories node[:oba][:mvn][:repositories]
 end
 
+mvn_sms_dest_file = "/tmp/war/onebusaway-sms-webapp-#{mvn_version}.war"
+log "maven dependency installed at #{mvn_sms_dest_file}"
+maven "onebusaway-sms-webapp" do
+  group_id node[:oba][:mvn][:group_id]
+  dest "/tmp/war"
+  version mvn_version
+  packaging "war"
+  owner "tomcat7"
+  repositories node[:oba][:mvn][:repositories]
+end
+
 mvn_nextbus_api_dest_file = "/tmp/war/onebusaway-nextbus-api-webapp-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_nextbus_api_dest_file}"
 maven "onebusaway-nextbus-api-webapp" do
@@ -75,6 +86,7 @@ template "/var/lib/tomcat7/conf/server.xml" do
 end
 
 # deploy onebusaway-api-webapp
+# deploy onebusaway-sms-webapp
 # deploy onebusaway-nextbus-api-webapp
 # deploy onebusaway-transit-data-federation-webapp
 # deploy onebusaway-enterprise-(acta|branded)-webapp
@@ -96,6 +108,9 @@ script "deploy_front_end" do
   # deploy api
   sudo mkdir #{node[:tomcat][:webapp_dir]}/onebusaway-api-webapp
   sudo unzip #{mvn_api_dest_file} -d #{node[:tomcat][:webapp_dir]}/onebusaway-api-webapp || exit 1
+  # deploy sms
+  sudo mkdir #{node[:tomcat][:webapp_dir]}/onebusaway-sms-webapp
+  sudo unzip #{mvn_sms_dest_file} -d #{node[:tomcat][:webapp_dir]}/onebusaway-sms-webapp || exit 1
   # deploy nextbus-api
   sudo mkdir #{node[:tomcat][:webapp_dir]}/onebusaway-nextbus-api-webapp
   sudo unzip #{mvn_nextbus_api_dest_file} -d #{node[:tomcat][:webapp_dir]}/onebusaway-nextbus-api-webapp || exit 1
@@ -116,6 +131,13 @@ end
 # template api data-sources
 template "#{node[:tomcat][:webapp_dir]}/onebusaway-api-webapp/WEB-INF/classes/data-sources.xml" do
   source "api/data-sources.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
+# template sms data-sources
+template "#{node[:tomcat][:webapp_dir]}/onebusaway-sms-webapp/WEB-INF/classes/data-sources.xml" do
+  source "sms/data-sources.xml.erb"
   owner 'tomcat7'
   group 'tomcat7'
   mode '0644'
