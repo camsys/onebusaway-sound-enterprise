@@ -66,6 +66,14 @@ template "/var/lib/tomcat7/conf/context.xml" do
   mode '0644'
 end
 
+# template service.xml for logging conf
+template "/var/lib/tomcat7/conf/server.xml" do
+  source "app/server.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
+
 # deploy onebusaway-api-webapp
 # deploy onebusaway-nextbus-api-webapp
 # deploy onebusaway-transit-data-federation-webapp
