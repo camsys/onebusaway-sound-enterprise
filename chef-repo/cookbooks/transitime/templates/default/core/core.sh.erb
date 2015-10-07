@@ -27,8 +27,8 @@ java \
   -Dtransitime.avl.maxLatitude=39.19148899999999 \
   -Dtransitime.avl.maxSpeed=45 \
   -Dtransitime.environmentName=<%= node["oba"]["env"] %> \
-  -Dtransitime.cloudwatch.awsAccessKey=<%= node["aws"]["cloudwatch_publish_key"] %> \
-  -Dtransitime.cloudwatch.awsSecretKey=<%= node["aws"]["cloudwatch_publish_secret"] %> \
+  -Dtransitime.cloudwatch.awsAccessKey="<%= node["aws"]["cloudwatch_publish_key"] %>" \
+  -Dtransitime.cloudwatch.awsSecretKey="<%= node["aws"]["cloudwatch_publish_secret"] %>" \
   -Dtransitime.cloudwatch.awsEndpoint=<%= node["aws"]["cloudwatch_endpoint"] %> \
   -Dtransitime.hibernate.configFile=/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml \
   -Dlogback.configuration=/var/lib/oba/transitime/core/logback.xml \
