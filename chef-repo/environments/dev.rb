@@ -42,6 +42,11 @@ default_attributes({
                          "agency" => "1",
                        }
                      },
+                     "aws" => {
+                       "cloudwatch_publish_key" => "cloudwatch_publisher",
+                       "cloudwatch_publish_secret" => "AKIAJ2USYJ54JLTDL6CA lHIxTfrYtkFQ4qXo3vpO+8nbdYqiQ7Qu0JdqqMKH",
+                       "cloudwatch_endpoint" => "monitoring.us-east-1.amazonaws.com"
+                     },
                      "tomcat" => {
                        "user" => "tomcat7",
                        "group" => "tomcat7",
