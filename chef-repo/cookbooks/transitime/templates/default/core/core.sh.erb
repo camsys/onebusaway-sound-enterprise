@@ -5,7 +5,7 @@ export AWS_SECRET_KEY=65Tcmn+3W7NwTvEKsFYdcV6LHu0zl54J1PFKzRlk
 cd /var/lib/oba/transitime/core
 java \
   -classpath logback-core-1.1.2.jar:logback-classic-1.1.2.jar:slf4j-api-1.7.2.jar \
-  -Xmx2g \
+  -Xmx4g \
   -Dtransitime.core.agencyId=<%= node[:oba][:transitime][:agency]%> \
   -Dtransitime.db.dbName=<%= node[:oba][:transitime][:dbname]%> \
   -Dtransitime.modules.optionalModulesList="org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.custom.aws.AvlSqsClientModule" \
