@@ -1,11 +1,23 @@
 log "Downloading wars"
 
-mvn_version = node[:oba][:mvn][:version_nyc]
-mvn_dest_file = "/tmp/onebusaway-nyc-admin-webapp-#{mvn_version}.war"
-log "maven dependency installed at #{mvn_dest_file}"
+mvn_admin_version = node[:oba][:mvn][:version_nyc]
+mvn_admin_dest_file = "/tmp/war/onebusaway-nyc-admin-webapp-#{mvn_admin_version}.war"
+log "maven dependency installed at #{mvn_admin_dest_file}"
 maven "onebusaway-nyc-admin-webapp" do
   group_id "org.onebusaway"
-  dest "/tmp"
+  dest "/tmp/war"
+  version mvn_admin_version
+  packaging "war"
+  owner "tomcat7"
+  repositories node[:oba][:mvn][:repositories]
+end
+
+mvn_version = node[:oba][:mvn][:version_app]
+mvn_watchdog_dest_file = "/tmp/war/onebusaway-watchdog-webapp-#{mvn_version}.war"
+log "maven dependency installed at #{mvn_watchdog_dest_file}"
+maven "onebusaway-watchdog-webapp" do
+  group_id "org.onebusaway"
+  dest "/tmp/war"
   version mvn_version
   packaging "war"
   owner "tomcat7"
@@ -19,7 +31,7 @@ end
 #  action :create
 #end
 
-["/var/lib/obanyc", "/var/lib/obanyc/wm_bundles", "/var/lib/obanyc/bundles/staged", "/var/lib/obanyc/activebundles"].each do |path|
+["/var/lib/oba", "/var/lib/oba/bundle",  "/var/lib/obanyc", "/var/lib/obanyc/wm_bundles", "/var/lib/obanyc/bundles/staged", "/var/lib/obanyc/activebundles"].each do |path|
   directory path do
     owner "tomcat7"
     group "tomcat7"
@@ -45,7 +57,7 @@ end
 
 
 # deploy onebusaway-nyc-admin-webapp
-log "war file is #{mvn_dest_file}"
+log "war file is #{mvn_admin_dest_file}"
 script "deploy_admin" do
   interpreter "bash"
   user "root"
@@ -60,14 +72,22 @@ script "deploy_admin" do
   then
     ln -s /usr/bin/python /usr/bin/python2.5
   fi
-  unzip #{mvn_dest_file} -d /var/lib/tomcat7/webapps/ROOT || exit 1
+  unzip #{mvn_admin_dest_file} -d /var/lib/tomcat7/webapps/ROOT || exit 1
   rm -f /var/lib/tomcat7/webapps/ROOT/WEB-INF/lib/mysql-connector-java-5.1.17.jar
+  unzip #{mvn_watchdog_dest_file} -d /var/lib/tomcat7/webapps/watchdog || exit 1
   EOH
 end
 
 # template data-sources
 template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   source "admin/data-sources.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
+
+template "/var/lib/tomcat7/webapps/watchdog/WEB-INF/classes/data-sources.xml" do
+  source "watchdog/data-sources.xml.erb"
   owner 'tomcat7'
   group 'tomcat7'
   mode '0644'
