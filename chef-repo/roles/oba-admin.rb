@@ -38,13 +38,13 @@ override_attributes(:maven => {
                           'certificate_dn' => "cn=localhost",
                           'loglevel' => "INFO",
                           'tomcat_auth' => "true",
-                          'user' = "tomcat",
-                          'group' = "tomat",
-                          'home' = "/var/lib/watchdog",
-                          'base' = "/var/lib/watchdog",
-                          'tmp_dir' = "/var/cache/watchdog/temp",
-                          'lib_dir' = "/var/lib/watchdog/lib",
-                          'endorsed_dir' = "/var/lib/watchdog/lib/endorsed"
+                          'user' => "tomcat",
+                          'group' => "tomat",
+                          'home' => "/var/lib/watchdog",
+                          'base' => "/var/lib/watchdog",
+                          'tmp_dir' => "/var/cache/watchdog/temp",
+                          'lib_dir' => "/var/lib/watchdog/lib",
+                          'endorsed_dir' => "/var/lib/watchdog/lib/endorsed"
                         }
                       }
                     }
