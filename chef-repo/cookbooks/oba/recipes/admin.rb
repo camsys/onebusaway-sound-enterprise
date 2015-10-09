@@ -86,12 +86,6 @@ template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   mode '0644'
 end
 
-template "/var/lib/tomcat7/webapps/watchdog/WEB-INF/classes/data-sources.xml" do
-  source "watchdog/data-sources.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
-  mode '0644'
-end
 
 # TODO fix build dependency
 %w{mysql-connector-java-5.1.35.jar}.each do |jar_file|
@@ -103,7 +97,7 @@ end
   end
 end
 
-script "deploy_admin" do
+script "start_admin" do
   interpreter "bash"
   user "root"
   cwd node[:oba][:home]
@@ -113,31 +107,35 @@ script "deploy_admin" do
   EOH
 end
 
-#service "tomcat7" do
-#  provider Chef::Provider::Service::Upstart
-#  supports :restart => true, :stop => true, :start => true
-#  action [:restart]
-#end
+# deploy onebusaway-watchdog-webapp
+log "war file is #{mvn_watchdog_dest_file}"
+script "deploy_watchdog" do
+  interpreter "bash"
+  user "root"
+  cwd node[:oba][:home]
+  puts "watchdog version is #{mvn_version}"
+  code <<-EOH
+  service watchdog stop
+  rm -rf /var/lib/watchdog/webapps/*
+  rm -rf /var/cache/watchdog/temp/*
+  rm -rf /var/cache/watchdog/work/Catalina/localhost/
+  unzip #{mvn_watchdog_dest_file} -d /var/lib/watchdog/webapps/ROOT || exit 1
+  EOH
+end
 
-# restart to pick up SSL changes
-#service "apache2" do
-#  supports :restart => true, :stop => true, :start => true
-#  action [:restart]
-#end
+template "/var/lib/watchdog/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
+  source "watchdog/data-sources.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
 
-## CHEF-2816: cron does not support @reboot
-# script "admin_reboot_cron" do
-#   interpreter "bash"
-#   user "root"
-#   cwd node[:oba][:home]
-#   code <<-EOH
-#   crontab -l >/tmp/crontab.root
-#   grep -q -e reboot /tmp/crontab.root
-#   if [ $? -eq 1  ]
-#   then
-#     echo "@reboot /usr/local/bin/chef-client >/home/ubuntu/chef-client.log 2>&1" >>/tmp/crontab.root
-#     cat /tmp/crontab.root | crontab
-#  fi
-# EOH
-# end
-
+script "start_watchdog" do
+  interpreter "bash"
+  user "root"
+  cwd node[:oba][:home]
+  puts "admin version is #{mvn_version}"
+  code <<-EOH
+  service watchdog start
+  EOH
+end

@@ -40,6 +40,7 @@ default_attributes({
                          "dbpassword" => "changeme",
                          "dbname" => "transitime",
                          "agency" => "1",
+                         "api_key" => "4b248c1b",
                        }
                      },
                      "aws" => {
