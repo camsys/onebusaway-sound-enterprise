@@ -24,12 +24,12 @@
       {
          "component":"admin",
          "key":"apiStaging",
-         "value":"http://app.dev.wmata.obaweb.org:8080"
+         "value":"http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080"
       },
       {
          "component":"admin",
          "key":"apiProd",
-         "value":"http://app.dev.wmata.obaweb.org:8080"
+         "value":"http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080"
       },
       {
          "component":"admin",
