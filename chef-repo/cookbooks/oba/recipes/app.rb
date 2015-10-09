@@ -69,6 +69,14 @@ maven "#{front_end_webapp}" do
   repositories node[:oba][:mvn][:repositories]
 end
 
+# template config.json for local configuration
+template "/var/lib/oba/config.json" do
+  source "app/config.json.erb"
+  owner 'ubuntu'
+  group 'ubuntu'
+  mode '0644'
+end
+
 # template context.xml adding datasource
 template "/var/lib/tomcat7/conf/context.xml" do
   source "app/context.xml.erb"
