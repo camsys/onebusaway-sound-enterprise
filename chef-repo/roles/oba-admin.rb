@@ -43,8 +43,8 @@ override_attributes(:maven => {
                           'home' => "/usr/share/watchdog",
                           'base' => "/var/lib/watchdog",
                           'tmp_dir' => "/var/cache/watchdog/temp",
-                          'lib_dir' => "/var/lib/watchdog/lib",
-                          'endorsed_dir' => "/var/lib/watchdog/lib/endorsed"
+                          'lib_dir' => "/usr/share/watchdog/lib",
+                          'endorsed_dir' => "/usr/share/watchdog/lib/endorsed"
                         }
                       }
                     }
