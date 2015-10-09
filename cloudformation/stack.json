@@ -1,0 +1,653 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "OBAWMATA Template for auto-scaled front-end servers inside vpc",
+    "Parameters": {
+        "TransitimeCoreInstanceType": {
+            "Description": "AppServer EC2 instance type",
+            "Type": "String",
+            "Default": "t2.small",
+            "AllowedValues": [
+                "t2.micro",
+                "t2.small",
+                "t2.medium"
+            ],
+            "ConstraintDescription": "must be a valid EC2 instance type."
+        },
+        "AccountNumber": {
+            "Description": "The OBAWMATA environment (e.g. prod, dev, etc)",
+            "Default": "",
+            "Type": "String"
+        },
+        "AccountNumber": {
+            "Description": "The Account for that environment environment",
+            "Default": "",
+            "Type": "String"
+        },
+        "Env": {
+            "Description": "The OBAWMATA environment (e.g. prod, dev, etc)",
+            "Default": "dev",
+            "Type": "String"
+        },
+        "BaseAMI": {
+            "Description": "Ubuntu Cloud Image AMI",
+            "Default": "dev",
+            "Type": "String"
+        },
+        "KeyName":{
+            "Description":"The EC2 Key Pair to allow SSH access to the instances (must match environment)",
+            "Default":"obawmata_qa",
+            "Type":"String"
+        },
+        "MinSize": {
+            "Description": "Minimum number of instances in the scaling group",
+            "Default": "1",
+            "Type": "Number"
+        },
+        "MaxSize": {
+            "Description": "Maximum number of instances in the scaling group",
+            "Default": "1",
+            "Type": "Number"
+        },
+	"VpcId" : {
+	    "Type" : "String",
+	    "Description" : "VpcId of your existing Virtual Private Cloud (VPC).",
+	    "Default" : "vpc-15a50070"
+	},
+	"Subnets" : {
+	    "Type" : "CommaDelimitedList",
+	    "Default" : "subnet-ce51abb9",
+	    "Description" : "The list of SubnetIds where the stack will be launched"
+		}
+    },
+    "Mappings": {
+        "AWSInstanceType2Arch": {
+            "t1.micro": {
+                "Arch": "64"
+            },
+            "t2.micro": {
+                "Arch": "64"
+            },
+            "t2.small": {
+                "Arch": "64"
+            },
+            "t2.medium": {
+                "Arch": "64"
+            },
+            "m1.small": {
+                "Arch": "64"
+            },
+            "m1.medium": {
+                "Arch": "64"
+            },
+            "m3.medium": {
+                "Arch": "64"
+            },
+            "m1.large": {
+                "Arch": "64"
+            },
+            "m1.xlarge": {
+                "Arch": "64"
+            },
+            "m2.xlarge": {
+                "Arch": "64"
+            },
+            "m2.2xlarge": {
+                "Arch": "64"
+            },
+            "m2.4xlarge": {
+                "Arch": "64"
+            },
+            "m3.xlarge": {
+                "Arch": "64"
+            },
+            "m3.2xlarge": {
+                "Arch": "64"
+            },
+            "c1.medium": {
+                "Arch": "64"
+            },
+            "c3.2xlarge": {
+                "Arch": "64"
+            }
+        },
+        "AWSRegionArch2AMI": {
+            "us-east-1": {
+                "32": { "Ref" : "BaseAMI" }",
+                "64": { "Ref" : "BaseAMI" }"
+            }
+        }
+    },
+    "Resources": {
+        "AppServerGroup": {
+            "Type": "AWS::AutoScaling::AutoScalingGroup",
+            "Properties": {
+	        "Tags" : [ { "Key" : "ENV", "Value" : "staging", "PropagateAtLaunch" : "true" }, { "Key" : "owner", "Value" : "sbrown@camsys.com", "PropagateAtLaunch" : "true" }, { "Key" : "project", "Value" : "140048.01", "PropagateAtLaunch" : "true" }, { "Key" : "project-name", "Value" : "obawmata", "PropagateAtLaunch" : "true" } ],
+                "AvailabilityZones": [
+                    "us-east-1a"
+                ],
+		"VPCZoneIdentifier" : { "Ref" : "Subnets" },
+                "HealthCheckType": "ELB",
+                "HealthCheckGracePeriod": 600,
+                "LaunchConfigurationName": {
+                    "Ref": "LaunchConfig"
+                },
+                "MinSize": {
+                    "Ref": "MinSize"
+                },
+                "MaxSize": {
+                    "Ref": "MaxSize"
+                },
+                "LoadBalancerNames": [
+                    {
+                        "Ref": "ElasticLoadBalancer"
+                    }
+                ],
+                "NotificationConfiguration": {
+                    "TopicARN": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:sns:us-east-1:",
+				{
+					"Ref": "AccountNumber"
+				},
+				":OBAWMATA-Monitoring-",
+                                {
+                                    "Ref": "Env"
+                                }
+                            ]
+                        ]
+                    },
+                    "NotificationTypes": [
+                        "autoscaling:EC2_INSTANCE_LAUNCH",
+                        "autoscaling:EC2_INSTANCE_LAUNCH_ERROR",
+                        "autoscaling:EC2_INSTANCE_TERMINATE",
+                        "autoscaling:EC2_INSTANCE_TERMINATE_ERROR"
+                    ]
+                }
+            }
+        },
+        "ScaleUpPolicy": {
+            "Type": "AWS::AutoScaling::ScalingPolicy",
+            "Properties": {
+                "AdjustmentType": "ChangeInCapacity",
+                "AutoScalingGroupName": {
+                    "Ref": "AppServerGroup"
+                },
+                "Cooldown": "180",
+                "ScalingAdjustment": "1"
+            }
+        },
+        "ScaleUpCPUAlarm": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "EvaluationPeriods": "1",
+                "Statistic": "Average",
+                "Threshold": "60",
+                "AlarmDescription": "Alarm if CPU too high or metric disappears indicating instance is down",
+                "Period": "300",
+                "AlarmActions": [
+                    {
+                        "Ref": "ScaleUpPolicy"
+                    }
+                ],
+                "Namespace": "AWS/EC2",
+                "Dimensions": [
+                    {
+                        "Name": "AutoScalingGroupName",
+                        "Value": {
+                            "Ref": "AppServerGroup"
+                        }
+                    }
+                ],
+                "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+                "MetricName": "CPUUtilization"
+            }
+        },
+        "ScaleDownPolicy": {
+            "Type": "AWS::AutoScaling::ScalingPolicy",
+            "Properties": {
+                "AdjustmentType": "ChangeInCapacity",
+                "AutoScalingGroupName": {
+                    "Ref": "AppServerGroup"
+                },
+                "Cooldown": "180",
+                "ScalingAdjustment": "-1"
+            }
+        },
+        "ScaleDownCPUAlarm": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "EvaluationPeriods": "2",
+                "Statistic": "Average",
+                "Threshold": "30",
+                "AlarmDescription": "Alarm if CPU low or metric disappears indicating instance is down",
+                "Period": "300",
+                "AlarmActions": [
+                    {
+                        "Ref": "ScaleDownPolicy"
+                    }
+                ],
+                "Namespace": "AWS/EC2",
+                "Dimensions": [
+                    {
+                        "Name": "AutoScalingGroupName",
+                        "Value": {
+                            "Ref": "AppServerGroup"
+                        }
+                    }
+                ],
+                "ComparisonOperator": "LessThanOrEqualToThreshold",
+                "MetricName": "CPUUtilization"
+            }
+        },
+        "ScaleUpPolicyLatency": {
+            "Type": "AWS::AutoScaling::ScalingPolicy",
+            "Properties": {
+                "AdjustmentType": "ChangeInCapacity",
+                "AutoScalingGroupName": {
+                    "Ref": "AppServerGroup"
+                },
+                "Cooldown": "120",
+                "ScalingAdjustment": "1"
+            }
+        },
+        "ScaleUpLatencyAlarm": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "EvaluationPeriods": "1",
+                "Statistic": "Average",
+                "Threshold": "20",
+                "AlarmDescription": "Alarm if Latency too high or metric disappears indicating instance is down",
+                "Period": "60",
+                "AlarmActions": [
+                    {
+                        "Ref": "ScaleUpPolicyLatency"
+                    }
+                ],
+                "Namespace": "AWS/ELB",
+                "Dimensions": [
+                    {
+                        "Name": "LoadBalancerName",
+                        "Value": {
+                            "Ref": "ElasticLoadBalancer"
+                        }
+                    }
+                ],
+                "ComparisonOperator": "GreaterThanThreshold",
+                "MetricName": "Latency"
+            }
+        },
+        "ScaleUpPolicyHealthyHost": {
+            "Type": "AWS::AutoScaling::ScalingPolicy",
+            "Properties": {
+                "AdjustmentType": "ChangeInCapacity",
+                "AutoScalingGroupName": {
+                    "Ref": "AppServerGroup"
+                },
+                "Cooldown": "120",
+                "ScalingAdjustment": "6"
+            }
+        },
+        "ScaleUpHealthyHostAlarm": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "EvaluationPeriods": "1",
+                "Statistic": "Average",
+                "Threshold": "1",
+                "AlarmDescription": "Alarm if HealthyHostCount is too low or metric disappears indicating instance is down",
+                "Period": "60",
+                "AlarmActions": [
+                    {
+                        "Ref": "ScaleUpPolicyHealthyHost"
+                    },
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:sns:us-east-1:",
+				{
+					"Ref": "AccountNumber"
+				},
+				":OBAWMATA-Monitoring-",
+                                {
+                                    "Ref": "Env"
+                                }
+                            ]
+                        ]
+                    }
+                ],
+                "InsufficientDataActions": [
+                    {
+                        "Ref": "ScaleUpPolicyHealthyHost"
+                    },
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:sns:us-east-1:",
+				{
+					"Ref": "AccountNumber"
+				},
+				":OBAWMATA-Monitoring-",
+                                {
+                                    "Ref": "Env"
+                                }
+                            ]
+                        ]
+                    }
+                ],
+                "OKActions": [
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:sns:us-east-1:",
+				{
+					"Ref": "AccountNumber"
+				},
+				":OBAWMATA-Monitoring-",
+                                {
+                                    "Ref": "Env"
+                                }
+                            ]
+                        ]
+                    }
+                ],
+                "Namespace": "AWS/ELB",
+                "Dimensions": [
+                    {
+                        "Name": "LoadBalancerName",
+                        "Value": {
+                            "Ref": "ElasticLoadBalancer"
+                        }
+                    }
+                ],
+                "ComparisonOperator": "LessThanThreshold",
+                "MetricName": "HealthyHostCount"
+            }
+        },
+        "ScaleUpPastSoftLimit": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "EvaluationPeriods": "1",
+                "Statistic": "Minimum",
+                "Threshold": "1",
+                "AlarmDescription": "Alarm when instance count > 1",
+                "Period": "60",
+                "AlarmActions": [
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:sns:us-east-1:",
+				{
+					"Ref": "AccountNumber"
+				},
+				":OBAWMATA-Alarm-",
+                                {
+                                    "Ref": "Env"
+                                }
+                            ]
+                        ]
+                    }
+                ],
+                "OKActions": [
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:sns:us-east-1:",
+				{
+					"Ref": "AccountNumber"
+				},
+				":OBAWMATA-Monitoring-",
+                                {
+                                    "Ref": "Env"
+                                }
+                            ]
+                        ]
+                    }
+                ],
+                "Namespace": "AWS/ELB",
+                "Dimensions": [
+                    {
+                        "Name": "LoadBalancerName",
+                        "Value": {
+                            "Ref": "ElasticLoadBalancer"
+                        }
+                    }
+                ],
+                "ComparisonOperator": "GreaterThanThreshold",
+                "MetricName": "HealthyHostCount"
+            }
+        },
+        "ELBLatency": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "EvaluationPeriods": "3",
+                "Statistic": "Average",
+                "Threshold": "20",
+                "AlarmDescription": "Alarm when ELB Latency is greater than 20 seconds",
+                "Period": "60",
+                "AlarmActions": [
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:sns:us-east-1:",
+				{
+					"Ref": "AccountNumber"
+				},
+				":OBAWMATA-Monitoring-",
+                                {
+                                    "Ref": "Env"
+                                }
+                            ]
+                        ]
+                    }
+                ],
+                "Namespace": "AWS/ELB",
+                "Dimensions": [
+                    {
+                        "Name": "LoadBalancerName",
+                        "Value": {
+                            "Ref": "ElasticLoadBalancer"
+                        }
+                    }
+                ],
+                "ComparisonOperator": "GreaterThanThreshold",
+                "MetricName": "Latency"
+            }
+        },
+        "LaunchConfig": {
+            "Type": "AWS::AutoScaling::LaunchConfiguration",
+            "Properties": {
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "ImageId": {
+                    "Fn::FindInMap": [
+                        "AWSRegionArch2AMI",
+                        {
+                            "Ref": "AWS::Region"
+                        },
+                        {
+                            "Fn::FindInMap": [
+                                "AWSInstanceType2Arch",
+                                {
+                                    "Ref": "TransitimeCoreInstanceType"
+                                },
+                                "Arch"
+                            ]
+                        }
+                    ]
+                },
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sdb",
+                        "VirtualName": "ephemeral0"
+                    }
+                ],
+		"UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+				"#!/bin/bash\n",
+                                "# user-data.sh for app role\n",
+                                "exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1\n",
+                                "mkdir /var/log/chef\n",
+                                "\"\n"
+                            ]
+                        ]
+                    }
+                },
+                "SecurityGroups": [
+                    {
+                        "Ref": "InstanceSecurityGroupVPC"
+                    }
+                ],
+                "InstanceType": {
+                    "Ref": "TransitimeCoreInstanceType"
+                }
+            }
+        },
+        "DnsRecord": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneName": "obaweb.org.",
+                "Comment": "CNAME for app ELB frontend.",
+                "Name": {
+                    "Fn::Join": [
+                        "",
+                        [
+                            "appelbvpc.",
+                            {
+                                "Ref": "Env"
+                            },
+                            ".wmata.obaweb.org."
+                        ]
+                    ]
+                },
+                "Type": "CNAME",
+                "TTL": "300",
+                "ResourceRecords": [
+                    {
+                        "Fn::GetAtt": [
+                            "ElasticLoadBalancer",
+                            "DNSName"
+                        ]
+                    }
+                ]
+            }
+        },
+        "ElasticLoadBalancer": {
+            "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+            "Properties": {
+	        "Subnets" : { "Ref" : "Subnets" },
+                "Listeners": [
+                    {
+                        "LoadBalancerPort": "80",
+                        "InstancePort": "80",
+                        "Protocol": "HTTP"
+                    },
+                    {
+                        "LoadBalancerPort": "8088",
+                        "InstancePort": "80",
+                        "Protocol": "HTTP"
+                    }
+                ],
+                "HealthCheck": {
+                    "Target": "HTTP:80/api/where/agencies-with-coverage.xml?key=TEST",
+                    "HealthyThreshold": "3",
+                    "UnhealthyThreshold": "4",
+                    "Interval": "30",
+                    "Timeout": "20"
+                }
+            }
+        },
+        "InstanceSecurityGroupVPC": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Enable SSH access and HTTP from the load balancer only",
+		"VpcId" : { "Ref" : "VpcId" },
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "209.65.164.27/32"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "12.0.47.2/32"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "80",
+                        "ToPort": "80",
+                        "CidrIp": "209.65.164.27/32"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "80",
+                        "ToPort": "80",
+                        "CidrIp": "12.0.47.2/32"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "80",
+                        "ToPort": "80",
+                        "SourceSecurityGroupOwnerId": {
+                            "Fn::GetAtt": [
+                                "ElasticLoadBalancer",
+                                "SourceSecurityGroup.OwnerAlias"
+                            ]
+                        },
+                        "SourceSecurityGroupName": {
+                            "Fn::GetAtt": [
+                                "ElasticLoadBalancer",
+                                "SourceSecurityGroup.GroupName"
+                            ]
+                        }
+                    }
+                ],
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "1433",
+                        "ToPort": "1433",
+                        "CidrIp": "74.203.128.235/32"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "3306",
+                        "ToPort": "3306",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "80",
+                        "ToPort": "80",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "8088",
+                        "ToPort": "8088",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+		]
+            }
+        }
+    }
+}
