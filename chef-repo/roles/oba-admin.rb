@@ -23,7 +23,7 @@ override_attributes(:maven => {
                           'log_dir' => '/var/log/watchdog',
                           'work_dir' => '/var/cache/watchdog/work',
                           'context_dir' => "/etc/watchdog/Catalina/localhost",
-                          'webapp_dir' => "/var/lib/watchdog/webapps",
+                          'webapp_dir' => "/usr/share/watchdog/webapps",
                           'catalina_options' => '',
                           'java_options' => "-Xmx128M -Djava.awt.headless=true",
                           'use_security_manager' => false,
