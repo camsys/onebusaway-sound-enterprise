@@ -33,16 +33,16 @@ default_attributes({
                        "webapp" => {
                          "artifact" => "onebusaway-enterprise-acta-webapp"
                        },
-                       "transitime" => {
-                         "dbhost" => "db.dev.wmata.obaweb.org:3306",
-                         "dbtype" => "mysql",
-                         "dbusername" => "prediction",
-                         "dbpassword" => "changeme",
-                         "dbname" => "transitime",
-                         "agency" => "1",
-                         "api_key" => "4b248c1b"
-                       }
                      },
+                     "transitime" => {
+                        "dbhost" => "db.dev.wmata.obaweb.org:3306",
+                        "dbtype" => "mysql",
+                        "dbusername" => "prediction",
+                        "dbpassword" => "changeme",
+                        "dbname" => "transitime",
+                        "agency" => "1",
+                        "api_key" => "4b248c1b"
+                      },
                      "aws" => {
                        "cloudwatch_publish_key" => "AKIAJ2USYJ54JLTDL6CA",
                        "cloudwatch_publish_secret" => "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",
