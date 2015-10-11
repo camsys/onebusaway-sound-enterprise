@@ -85,6 +85,13 @@ template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   group 'tomcat7'
   mode '0644'
 end
+template "/var/lib/tomcat7/webapps/watchdog/WEB-INF/classes/data-sources.xml" do
+  source "watchdog/data-sources.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
+
 
 
 # TODO fix build dependency
@@ -107,35 +114,4 @@ script "start_admin" do
   EOH
 end
 
-# deploy onebusaway-watchdog-webapp
-log "war file is #{mvn_watchdog_dest_file}"
-script "deploy_watchdog" do
-  interpreter "bash"
-  user "root"
-  cwd node[:oba][:home]
-  puts "watchdog version is #{mvn_version}"
-  code <<-EOH
-  service watchdog stop
-  rm -rf /var/lib/watchdog/webapps/*
-  rm -rf /var/cache/watchdog/temp/*
-  rm -rf /var/cache/watchdog/work/Catalina/localhost/
-  unzip #{mvn_watchdog_dest_file} -d /var/lib/watchdog/webapps/ROOT || exit 1
-  EOH
-end
 
-template "/var/lib/watchdog/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
-  source "watchdog/data-sources.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
-  mode '0644'
-end
-
-script "start_watchdog" do
-  interpreter "bash"
-  user "root"
-  cwd node[:oba][:home]
-  puts "admin version is #{mvn_version}"
-  code <<-EOH
-  service watchdog start
-  EOH
-end
