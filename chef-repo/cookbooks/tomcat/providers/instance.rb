@@ -76,7 +76,7 @@ action :configure do
       end
     end
     {'conf' => 'config_dir', 'logs' => 'log_dir', 'temp' => 'tmp_dir',
-     'work' => 'work_dir', 'webapps' => 'webapp_dir'}.each do |name, attr|
+     'work' => 'work_dir'/#, 'webapps' => 'webapp_dir'#}.each do |name, attr|
       link "#{new_resource.base}/#{name}" do
         to new_resource.instance_variable_get("@#{attr}")
       end
