@@ -140,7 +140,7 @@ template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   group 'tomcat7'
   mode '0644'
 end
-template "/var/lib/tomcat7-watchdog/webapps/onebusaway-watchdog-webapp/WEB-INF/classes/data-sources.xml" do
+template "/var/lib/tomcat7-watchdog/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   source "watchdog/data-sources.xml.erb"
   owner 'tomcat7'
   group 'tomcat7'
