@@ -95,7 +95,7 @@ script "install_tomcat_user" do
   cd /var/lib
   mkdir watchdog
   chown tomcat7:tomcat7 watchdog
-  tomcat7-instance-create -p 7070 -c 7005
+  /usr/bin/tomcat7-instance-create -p 7070 -c 7005 watchdog || exit 1
   EOH
   end unless ::File.exists?("/var/lib/watchdog")
 
