@@ -78,8 +78,8 @@ script "deploy_admin" do
   then
     ln -s /usr/bin/python /usr/bin/python2.5
   fi
-  unzip #{mvn_admin_dest_file} -d /var/lib/tomcat7/webapps/ROOT || exit 1
-  rm -f /var/lib/tomcat7/webapps/ROOT/WEB-INF/lib/mysql-connector-java-5.1.17.jar
+  unzip #{mvn_admin_dest_file} -d /var/lib/tomcat7/webapps/onebusaway-watchdog-webapp || exit 1
+  rm -f /var/lib/tomcat7/webapps/onebusaway-watchdog-webapp/WEB-INF/lib/mysql-connector-java-5.1.17.jar
   EOH
 end
 
@@ -93,11 +93,13 @@ script "install_tomcat_user" do
   apt-get install -y tomcat7-user
   cd /var/lib
   /usr/bin/tomcat7-instance-create -p 7070 -c 7005 tomcat7-watchdog || exit 1
-  chown tomcat7:tomcat7 tomcat7-watchdog
   # the policy scripts are not created above sadly
   cp -r /var/lib/tomcat7/conf/policy.d /var/lib/tomcat7-watchdog/conf/
   # bin dir is missing a well
   cp -r /usr/share/tomcat7 /usr/share/tomcat7-watchdog
+  mkdir -p /var/lib/tomcat7-watchdog/work/Catalina/localhost
+  chown -R tomcat7:tomcat7 tomcat7-watchdog
+
   EOH
   end unless ::File.exists?("/var/lib/tomcat7-watchdog")
 
@@ -126,7 +128,7 @@ script "deploy_watchdog" do
   rm -rf /var/lib/tomcat7-watchdog/webapps/*
   rm -rf /var/cache/tomcat7-watchdog/temp/*
   rm -rf /var/cache/tomcat7-watchdog/work/Catalina/localhost/
-  unzip #{mvn_watchdog_dest_file} -d /var/lib/tomcat7-watchdog/webapps/ROOT || exit 1
+  unzip #{mvn_watchdog_dest_file} -d /var/lib/tomcat7-watchdog/webapps/onebusaway-watchdog-webapp || exit 1
   EOH
 end
 
@@ -134,13 +136,13 @@ end
 
 
 # template data-sources
-template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
+template "/var/lib/tomcat7/webapps/onebusaway-watchdog-webapp/WEB-INF/classes/data-sources.xml" do
   source "admin/data-sources.xml.erb"
   owner 'tomcat7'
   group 'tomcat7'
   mode '0644'
 end
-template "/var/lib/tomcat7-watchdog/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
+template "/var/lib/tomcat7-watchdog/webapps/onebusaway-watchdog-webapp/WEB-INF/classes/data-sources.xml" do
   source "watchdog/data-sources.xml.erb"
   owner 'tomcat7'
   group 'tomcat7'
