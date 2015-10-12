@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "OBAWMATA Template for auto-scaled front-end servers inside vpc",
+    "Description": "OBAWMATA Template for transitime core server inside vpc",
     "Parameters": {
         "TransitimeCoreInstanceType": {
             "Description": "AppServer EC2 instance type",
@@ -13,24 +13,24 @@
             ],
             "ConstraintDescription": "must be a valid EC2 instance type."
         },
-        "AccountNumber": {
-            "Description": "The OBAWMATA environment (e.g. prod, dev, etc)",
-            "Default": "",
-            "Type": "String"
-        },
-        "AccountNumber": {
+        "AccountId": {
             "Description": "The Account for that environment environment",
-            "Default": "",
+            "Default": "372394388595",
             "Type": "String"
         },
         "Env": {
             "Description": "The OBAWMATA environment (e.g. prod, dev, etc)",
-            "Default": "dev",
+            "Default": "qa",
             "Type": "String"
         },
         "BaseAMI": {
             "Description": "Ubuntu Cloud Image AMI",
-            "Default": "dev",
+            "Default": "ami-89a1eeec",
+            "Type": "String"
+        },
+        "BaseAMIHVM": {
+            "Description": "Ubuntu Cloud Image AMI",
+            "Default": "ami-b5b5fad0 ",
             "Type": "String"
         },
         "KeyName":{
@@ -51,77 +51,19 @@
 	"VpcId" : {
 	    "Type" : "String",
 	    "Description" : "VpcId of your existing Virtual Private Cloud (VPC).",
-	    "Default" : "vpc-15a50070"
+	    "Default" : "vpc-2ec0644a"
 	},
 	"Subnets" : {
 	    "Type" : "CommaDelimitedList",
-	    "Default" : "subnet-ce51abb9",
+	    "Default" : "subnet-97705fbc",
 	    "Description" : "The list of SubnetIds where the stack will be launched"
 		}
-    },
-    "Mappings": {
-        "AWSInstanceType2Arch": {
-            "t1.micro": {
-                "Arch": "64"
-            },
-            "t2.micro": {
-                "Arch": "64"
-            },
-            "t2.small": {
-                "Arch": "64"
-            },
-            "t2.medium": {
-                "Arch": "64"
-            },
-            "m1.small": {
-                "Arch": "64"
-            },
-            "m1.medium": {
-                "Arch": "64"
-            },
-            "m3.medium": {
-                "Arch": "64"
-            },
-            "m1.large": {
-                "Arch": "64"
-            },
-            "m1.xlarge": {
-                "Arch": "64"
-            },
-            "m2.xlarge": {
-                "Arch": "64"
-            },
-            "m2.2xlarge": {
-                "Arch": "64"
-            },
-            "m2.4xlarge": {
-                "Arch": "64"
-            },
-            "m3.xlarge": {
-                "Arch": "64"
-            },
-            "m3.2xlarge": {
-                "Arch": "64"
-            },
-            "c1.medium": {
-                "Arch": "64"
-            },
-            "c3.2xlarge": {
-                "Arch": "64"
-            }
-        },
-        "AWSRegionArch2AMI": {
-            "us-east-1": {
-                "32": { "Ref" : "BaseAMI" }",
-                "64": { "Ref" : "BaseAMI" }"
-            }
-        }
     },
     "Resources": {
         "AppServerGroup": {
             "Type": "AWS::AutoScaling::AutoScalingGroup",
             "Properties": {
-	        "Tags" : [ { "Key" : "ENV", "Value" : "staging", "PropagateAtLaunch" : "true" }, { "Key" : "owner", "Value" : "sbrown@camsys.com", "PropagateAtLaunch" : "true" }, { "Key" : "project", "Value" : "140048.01", "PropagateAtLaunch" : "true" }, { "Key" : "project-name", "Value" : "obawmata", "PropagateAtLaunch" : "true" } ],
+	        "Tags" : [ { "Key" : "ENV", "Value" : "staging", "PropagateAtLaunch" : "true" }, { "Key" : "owner", "Value" : "sbrown@camsys.com", "PropagateAtLaunch" : "true" }, { "Key" : "project", "Value" : "150115.01", "PropagateAtLaunch" : "true" }, { "Key" : "project-name", "Value" : "obawmata", "PropagateAtLaunch" : "true" } ],
                 "AvailabilityZones": [
                     "us-east-1a"
                 ],
@@ -149,7 +91,7 @@
                             [
                                 "arn:aws:sns:us-east-1:",
 				{
-					"Ref": "AccountNumber"
+					"Ref": "AccountId"
 				},
 				":OBAWMATA-Monitoring-",
                                 {
@@ -257,7 +199,7 @@
             "Properties": {
                 "EvaluationPeriods": "1",
                 "Statistic": "Average",
-                "Threshold": "20",
+                "Threshold": "2",
                 "AlarmDescription": "Alarm if Latency too high or metric disappears indicating instance is down",
                 "Period": "60",
                 "AlarmActions": [
@@ -278,95 +220,6 @@
                 "MetricName": "Latency"
             }
         },
-        "ScaleUpPolicyHealthyHost": {
-            "Type": "AWS::AutoScaling::ScalingPolicy",
-            "Properties": {
-                "AdjustmentType": "ChangeInCapacity",
-                "AutoScalingGroupName": {
-                    "Ref": "AppServerGroup"
-                },
-                "Cooldown": "120",
-                "ScalingAdjustment": "6"
-            }
-        },
-        "ScaleUpHealthyHostAlarm": {
-            "Type": "AWS::CloudWatch::Alarm",
-            "Properties": {
-                "EvaluationPeriods": "1",
-                "Statistic": "Average",
-                "Threshold": "1",
-                "AlarmDescription": "Alarm if HealthyHostCount is too low or metric disappears indicating instance is down",
-                "Period": "60",
-                "AlarmActions": [
-                    {
-                        "Ref": "ScaleUpPolicyHealthyHost"
-                    },
-                    {
-                        "Fn::Join": [
-                            "",
-                            [
-                                "arn:aws:sns:us-east-1:",
-				{
-					"Ref": "AccountNumber"
-				},
-				":OBAWMATA-Monitoring-",
-                                {
-                                    "Ref": "Env"
-                                }
-                            ]
-                        ]
-                    }
-                ],
-                "InsufficientDataActions": [
-                    {
-                        "Ref": "ScaleUpPolicyHealthyHost"
-                    },
-                    {
-                        "Fn::Join": [
-                            "",
-                            [
-                                "arn:aws:sns:us-east-1:",
-				{
-					"Ref": "AccountNumber"
-				},
-				":OBAWMATA-Monitoring-",
-                                {
-                                    "Ref": "Env"
-                                }
-                            ]
-                        ]
-                    }
-                ],
-                "OKActions": [
-                    {
-                        "Fn::Join": [
-                            "",
-                            [
-                                "arn:aws:sns:us-east-1:",
-				{
-					"Ref": "AccountNumber"
-				},
-				":OBAWMATA-Monitoring-",
-                                {
-                                    "Ref": "Env"
-                                }
-                            ]
-                        ]
-                    }
-                ],
-                "Namespace": "AWS/ELB",
-                "Dimensions": [
-                    {
-                        "Name": "LoadBalancerName",
-                        "Value": {
-                            "Ref": "ElasticLoadBalancer"
-                        }
-                    }
-                ],
-                "ComparisonOperator": "LessThanThreshold",
-                "MetricName": "HealthyHostCount"
-            }
-        },
         "ScaleUpPastSoftLimit": {
             "Type": "AWS::CloudWatch::Alarm",
             "Properties": {
@@ -382,7 +235,7 @@
                             [
                                 "arn:aws:sns:us-east-1:",
 				{
-					"Ref": "AccountNumber"
+					"Ref": "AccountId"
 				},
 				":OBAWMATA-Alarm-",
                                 {
@@ -399,7 +252,7 @@
                             [
                                 "arn:aws:sns:us-east-1:",
 				{
-					"Ref": "AccountNumber"
+					"Ref": "AccountId"
 				},
 				":OBAWMATA-Monitoring-",
                                 {
@@ -422,67 +275,13 @@
                 "MetricName": "HealthyHostCount"
             }
         },
-        "ELBLatency": {
-            "Type": "AWS::CloudWatch::Alarm",
-            "Properties": {
-                "EvaluationPeriods": "3",
-                "Statistic": "Average",
-                "Threshold": "20",
-                "AlarmDescription": "Alarm when ELB Latency is greater than 20 seconds",
-                "Period": "60",
-                "AlarmActions": [
-                    {
-                        "Fn::Join": [
-                            "",
-                            [
-                                "arn:aws:sns:us-east-1:",
-				{
-					"Ref": "AccountNumber"
-				},
-				":OBAWMATA-Monitoring-",
-                                {
-                                    "Ref": "Env"
-                                }
-                            ]
-                        ]
-                    }
-                ],
-                "Namespace": "AWS/ELB",
-                "Dimensions": [
-                    {
-                        "Name": "LoadBalancerName",
-                        "Value": {
-                            "Ref": "ElasticLoadBalancer"
-                        }
-                    }
-                ],
-                "ComparisonOperator": "GreaterThanThreshold",
-                "MetricName": "Latency"
-            }
-        },
         "LaunchConfig": {
             "Type": "AWS::AutoScaling::LaunchConfiguration",
             "Properties": {
                 "KeyName": {
                     "Ref": "KeyName"
                 },
-                "ImageId": {
-                    "Fn::FindInMap": [
-                        "AWSRegionArch2AMI",
-                        {
-                            "Ref": "AWS::Region"
-                        },
-                        {
-                            "Fn::FindInMap": [
-                                "AWSInstanceType2Arch",
-                                {
-                                    "Ref": "TransitimeCoreInstanceType"
-                                },
-                                "Arch"
-                            ]
-                        }
-                    ]
-                },
+                "ImageId": { "Ref": "BaseAMIHVM" },
                 "BlockDeviceMappings": [
                     {
                         "DeviceName": "/dev/sdb",
@@ -494,12 +293,78 @@
                         "Fn::Join": [
                             "",
                             [
-				"#!/bin/bash\n",
-                                "# user-data.sh for app role\n",
-                                "exec > >(tee /var/log/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1\n",
-                                "mkdir /var/log/chef\n",
-                                "\"\n"
-                            ]
+"#!/bin/bash\n",
+"#user-data.sh for transitime core\n",
+"exec > >(tee /tmp/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1\n",
+"curl -L https://www.opscode.com/chef/install.sh | sudo bash\n",
+"cat - >/root/.ssh/id_rsa.pub <<EOF\n",
+"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDhQInDiVu/Q8EnbdShXTkU8qjUhPD18YHSKCRCohO2KJO89TQKKWiG2lL2SSoxL+Ago5sntdFKefSIzIYTGE2p6zfWB21F8m/6+mcPqZvyF2sshbxOYi3l1DrWCnNPSq+nEWWvZr0rJdwP1jLgm4AUMNEz+y0XxMLUq7iftTIYzuW5//jqAya3OSKxQA2xkDT++FGrq3gu4jneS2eIcDOojoB3dYzq2CxMJve0QwFUt2RYlWXRdDHvGevZMosNhu4X653xz5owMzXJtLq2y/wBekrIURDOotbUcEykStYBRXTpUjCavQuikVSha4ydeRZSFndHy5pdYhK5mEEwyP3zXlCsnXE1YdZonNWTrDKGVAepYV/BnCX/yniWJVn8pVM55pSggZS8j18Cq9LVm/qOy125TyNBUvmkhGdZmcN2DEyMzkMELe0DYE2nGRizOBiwIkdR3B6jCIcscP0cwY/guGzyxSLkKy9UXK5VL2cpddSU+nZp09shpFxT4JWZ/1/ZZxWn0O26BaB6uJhqdNgEphFslNbTvKaFQVLECoCyRYsu3ov9nZaPPWp2r6SYRTvbPOLg2b9U9wK2CCtWIWx+6cskcVvi8khLI1mRXLCW0GQTYUyDw1QkdeD8Xh0RiiaIP32TQ9CmoE2sdnGeJnk6nMfjkP/VYHOwNg2mSFegzw== sheldonb@gmail.com\n",
+"EOF\n",
+"cat - >/root/.ssh/id_rsa <<EOF\n",
+"-----BEGIN RSA PRIVATE KEY-----\n",
+"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\n",
+"-----END RSA PRIVATE KEY-----\n",
+"EOF\n",
+"chmod 600 /root/.ssh/id_rsa*\n",
+"chmod 666 /etc/ssh/ssh_config\n",
+"echo '    StrictHostKeyChecking no' >>/etc/ssh/ssh_config\n",
+"chmod 644 /etc/ssh/ssh_config\n",
+"apt-get install git -y\n",
+"cd /root\n",
+"git clone git@github.com:camsys/wmata-devops.git\n",
+"sudo chef-solo -l debug -L /tmp/chef.log -c /root/wmata-devops/chef-repo/solo.rb -E ",
+{
+  "Ref":"Env"
+},
+" -j /root/wmata-devops/chef-repo/transitime-core.json\n"                            ]
                         ]
                     }
                 },
@@ -511,35 +376,6 @@
                 "InstanceType": {
                     "Ref": "TransitimeCoreInstanceType"
                 }
-            }
-        },
-        "DnsRecord": {
-            "Type": "AWS::Route53::RecordSet",
-            "Properties": {
-                "HostedZoneName": "obaweb.org.",
-                "Comment": "CNAME for app ELB frontend.",
-                "Name": {
-                    "Fn::Join": [
-                        "",
-                        [
-                            "appelbvpc.",
-                            {
-                                "Ref": "Env"
-                            },
-                            ".wmata.obaweb.org."
-                        ]
-                    ]
-                },
-                "Type": "CNAME",
-                "TTL": "300",
-                "ResourceRecords": [
-                    {
-                        "Fn::GetAtt": [
-                            "ElasticLoadBalancer",
-                            "DNSName"
-                        ]
-                    }
-                ]
             }
         },
         "ElasticLoadBalancer": {
@@ -559,7 +395,7 @@
                     }
                 ],
                 "HealthCheck": {
-                    "Target": "HTTP:80/api/where/agencies-with-coverage.xml?key=TEST",
+                    "Target": "TCP:22",
                     "HealthyThreshold": "3",
                     "UnhealthyThreshold": "4",
                     "Interval": "30",
@@ -618,18 +454,6 @@
                 "SecurityGroupIngress": [
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "1433",
-                        "ToPort": "1433",
-                        "CidrIp": "74.203.128.235/32"
-                    },
-                    {
-                        "IpProtocol": "tcp",
-                        "FromPort": "3306",
-                        "ToPort": "3306",
-                        "CidrIp": "0.0.0.0/0"
-                    },
-                    {
-                        "IpProtocol": "tcp",
                         "FromPort": "22",
                         "ToPort": "22",
                         "CidrIp": "0.0.0.0/0"
@@ -638,12 +462,6 @@
                         "IpProtocol": "tcp",
                         "FromPort": "80",
                         "ToPort": "80",
-                        "CidrIp": "0.0.0.0/0"
-                    },
-                    {
-                        "IpProtocol": "tcp",
-                        "FromPort": "8088",
-                        "ToPort": "8088",
                         "CidrIp": "0.0.0.0/0"
                     }
 		]
