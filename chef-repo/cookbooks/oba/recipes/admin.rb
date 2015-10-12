@@ -94,7 +94,6 @@ script "deploy_watchdog" do
   rm -rf /var/lib/watchdog/webapps/*
   rm -rf /var/cache/watchdog/temp/*
   rm -rf /var/cache/watchdog/work/Catalina/localhost/
-  if [ ! -e /usr/bin/python2.5 ]
   unzip #{mvn_watchdog_dest_file} -d /var/lib/watchdog/webapps/onebusaway-watchdog-webapp || exit 1
   EOH
 end
