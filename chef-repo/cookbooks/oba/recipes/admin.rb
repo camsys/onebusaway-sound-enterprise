@@ -92,6 +92,13 @@ script "install_tomcat_user" do
   EOH
   end unless ::File.exists?("/var/lib/tomcat7-watchdog")
 
+template "/etc/init.d/tomcat7-watchdog" do
+  source "watchdog/watchdog.init.erb"
+  owner 'root'
+  group 'root'
+  mode '0755'
+end
+
 script "stop_watchdog" do
   interpreter "bash"
   user "root"
@@ -100,13 +107,6 @@ script "stop_watchdog" do
   service tomcat7-watchdog stop
   EOH
 end unless ::File.exists?("/var/lib/tomcat7-watchdog")
-
-template "/etc/init.d/tomcat7-watchdog" do
-  source "watchdog/watchdog.init.erb"
-  owner 'root'
-  group 'root'
-  mode '0755'
-end
 
 script "deploy_watchdog" do
   interpreter "bash"
