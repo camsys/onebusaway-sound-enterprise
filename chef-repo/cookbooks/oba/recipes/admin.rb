@@ -47,6 +47,13 @@ template "/etc/tomcat7/context.xml" do
   group 'tomcat7'
   mode '0644'
 end
+# template context.xml adding datasource
+template "/etc/tomcat7-watchdog/context.xml" do
+  source "admin/context.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
 
 template "/var/lib/obanyc/config.json" do
   source "admin/config.json.erb"
@@ -119,7 +126,7 @@ script "deploy_watchdog" do
   rm -rf /var/lib/tomcat7-watchdog/webapps/*
   rm -rf /var/cache/tomcat7-watchdog/temp/*
   rm -rf /var/cache/tomcat7-watchdog/work/Catalina/localhost/
-  unzip #{mvn_watchdog_dest_file} -d /var/lib/tomcat7-watchdog/webapps/onebusaway-watchdog-webapp || exit 1
+  unzip #{mvn_watchdog_dest_file} -d /var/lib/tomcat7-watchdog/webapps/ROOT || exit 1
   EOH
 end
 
