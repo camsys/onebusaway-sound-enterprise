@@ -55,7 +55,6 @@ template "/var/lib/obanyc/config.json" do
   mode '0644'
 end
 
-
 # deploy onebusaway-nyc-admin-webapp
 log "war file is #{mvn_admin_dest_file}"
 script "deploy_admin" do
@@ -74,9 +73,49 @@ script "deploy_admin" do
   fi
   unzip #{mvn_admin_dest_file} -d /var/lib/tomcat7/webapps/ROOT || exit 1
   rm -f /var/lib/tomcat7/webapps/ROOT/WEB-INF/lib/mysql-connector-java-5.1.17.jar
-  unzip #{mvn_watchdog_dest_file} -d /var/lib/tomcat7/webapps/watchdog || exit 1
   EOH
 end
+
+script "stop_watchdog" do
+  interpreter "bash"
+  user "root"
+  cwd node[:oba][:home]
+  code <<-EOH
+  service tomcat7 watchdog
+  EOH
+  unless ::File.exists?("/var/lib/watchdog")
+end
+
+script "deploy_watchdog" do
+  interpreter "bash"
+  user "root"
+  cwd node[:oba][:home]
+  puts "watcdog version is #{mvn_version}"
+  code <<-EOH
+  rm -rf /var/lib/watchdog/webapps/*
+  rm -rf /var/cache/watchdog/temp/*
+  rm -rf /var/cache/watchdog/work/Catalina/localhost/
+  if [ ! -e /usr/bin/python2.5 ]
+  unzip #{mvn_watchdog_dest_file} -d /var/lib/watchdog/webapps/onebusaway-watchdog-webapp || exit 1
+  EOH
+end
+
+
+# install tomcat-user support
+script "install_tomcat_user" do
+  interpreter "bash"
+  user "root"
+  cwd node[:oba][:home]
+  code <<-EOH
+  apt-get install -y tomcat7-users
+  cd /var/lib
+  mkdir watchdog
+  chown tomcat7:tomcat7 watchdog
+  tomcat7-instance-create -p 7070 -c 7005
+  EOH
+  unless ::File.exists?("/var/lib/watchdog")
+end
+
 
 # template data-sources
 template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
@@ -85,7 +124,7 @@ template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   group 'tomcat7'
   mode '0644'
 end
-template "/var/lib/tomcat7/webapps/watchdog/WEB-INF/classes/data-sources.xml" do
+template "/var/lib/watchdog/webapps/onebusaway-watchdog-webapp/WEB-INF/classes/data-sources.xml" do
   source "watchdog/data-sources.xml.erb"
   owner 'tomcat7'
   group 'tomcat7'
@@ -104,13 +143,14 @@ end
   end
 end
 
-script "start_admin" do
+script "start_tomcats" do
   interpreter "bash"
   user "root"
   cwd node[:oba][:home]
   puts "admin version is #{mvn_version}"
   code <<-EOH
   service tomcat7 start
+  service tomcat7 watchdog
   EOH
 end
 
