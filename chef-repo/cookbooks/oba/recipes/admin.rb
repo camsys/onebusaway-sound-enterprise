@@ -99,6 +99,12 @@ script "install_tomcat_user" do
   cp -r /var/lib/tomcat7/conf/policy.d /var/lib/watchdog/conf/
   EOH
   end unless ::File.exists?("/var/lib/watchdog")
+template "/etc/init.d/watchdog" do
+  source "watchdog/watchdog.init.erb"
+  owner 'root'
+  group 'root'
+  mode '0755'
+end
 
 script "deploy_watchdog" do
   interpreter "bash"
