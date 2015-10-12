@@ -76,14 +76,6 @@ script "deploy_admin" do
   EOH
 end
 
-script "stop_watchdog" do
-  interpreter "bash"
-  user "root"
-  cwd node[:oba][:home]
-  code <<-EOH
-  service tomcat7-watchdog stop
-  EOH
-end unless ::File.exists?("/var/lib/tomcat7-watchdog")
 
 # install tomcat-user support
 script "install_tomcat_user" do
@@ -99,6 +91,16 @@ script "install_tomcat_user" do
   cp -r /var/lib/tomcat7/conf/policy.d /var/lib/tomcat7-watchdog/conf/
   EOH
   end unless ::File.exists?("/var/lib/tomcat7-watchdog")
+
+script "stop_watchdog" do
+  interpreter "bash"
+  user "root"
+  cwd node[:oba][:home]
+  code <<-EOH
+  service tomcat7-watchdog stop
+  EOH
+end unless ::File.exists?("/var/lib/tomcat7-watchdog")
+
 template "/etc/init.d/tomcat7-watchdog" do
   source "watchdog/watchdog.init.erb"
   owner 'root'
