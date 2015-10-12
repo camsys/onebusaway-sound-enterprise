@@ -147,7 +147,7 @@ script "start_tomcats" do
   puts "admin version is #{mvn_version}"
   code <<-EOH
   service tomcat7 start
-  service tomcat7 watchdog
+  service watchdog start
   EOH
 end
 
