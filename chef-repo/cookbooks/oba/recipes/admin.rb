@@ -81,9 +81,9 @@ script "stop_watchdog" do
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
-  service watchdog stop
+  service tomcat7-watchdog stop
   EOH
-end unless ::File.exists?("/var/lib/watchdog")
+end unless ::File.exists?("/var/lib/tomcat7-watchdog")
 
 # install tomcat-user support
 script "install_tomcat_user" do
@@ -93,13 +93,13 @@ script "install_tomcat_user" do
   code <<-EOH
   apt-get install -y tomcat7-user
   cd /var/lib
-  /usr/bin/tomcat7-instance-create -p 7070 -c 7005 watchdog || exit 1
-  chown tomcat7:tomcat7 watchdog
+  /usr/bin/tomcat7-instance-create -p 7070 -c 7005 tomcat7-watchdog || exit 1
+  chown tomcat7:tomcat7 tomcat7-watchdog
   # the policy scripts are not created above sadly
-  cp -r /var/lib/tomcat7/conf/policy.d /var/lib/watchdog/conf/
+  cp -r /var/lib/tomcat7/conf/policy.d /var/lib/tomcat7-watchdog/conf/
   EOH
-  end unless ::File.exists?("/var/lib/watchdog")
-template "/etc/init.d/watchdog" do
+  end unless ::File.exists?("/var/lib/tomcat7-watchdog")
+template "/etc/init.d/tomcat7-watchdog" do
   source "watchdog/watchdog.init.erb"
   owner 'root'
   group 'root'
@@ -112,10 +112,10 @@ script "deploy_watchdog" do
   cwd node[:oba][:home]
   puts "watcdog version is #{mvn_version}"
   code <<-EOH
-  rm -rf /var/lib/watchdog/webapps/*
-  rm -rf /var/cache/watchdog/temp/*
-  rm -rf /var/cache/watchdog/work/Catalina/localhost/
-  unzip #{mvn_watchdog_dest_file} -d /var/lib/watchdog/webapps/onebusaway-watchdog-webapp || exit 1
+  rm -rf /var/lib/tomcat7-watchdog/webapps/*
+  rm -rf /var/cache/tomcat7-watchdog/temp/*
+  rm -rf /var/cache/tomcat7-watchdog/work/Catalina/localhost/
+  unzip #{mvn_watchdog_dest_file} -d /var/lib/tomcat7-watchdog/webapps/onebusaway-watchdog-webapp || exit 1
   EOH
 end
 
@@ -129,7 +129,7 @@ template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   group 'tomcat7'
   mode '0644'
 end
-template "/var/lib/watchdog/webapps/onebusaway-watchdog-webapp/WEB-INF/classes/data-sources.xml" do
+template "/var/lib/tomcat7-watchdog/webapps/onebusaway-watchdog-webapp/WEB-INF/classes/data-sources.xml" do
   source "watchdog/data-sources.xml.erb"
   owner 'tomcat7'
   group 'tomcat7'
@@ -155,7 +155,7 @@ script "start_tomcats" do
   puts "admin version is #{mvn_version}"
   code <<-EOH
   service tomcat7 start
-  service watchdog start
+  service tomcat7-watchdog start
   EOH
 end
 

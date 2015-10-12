@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# /etc/init.d/watchdog -- startup script for the Tomcat 6 servlet engine
+# /etc/init.d/tomcat7-watchdog -- startup script for the Tomcat 6 servlet engine
 #
 # Written by Miquel van Smoorenburg <miquels@cistron.nl>.
 # Modified for Debian GNU/Linux	by Ian Murdock <imurdock@gnu.ai.mit.edu>.
@@ -10,7 +10,7 @@
 # Additional improvements by Jason Brittain <jason.brittain@mulesoft.com>.
 #
 ### BEGIN INIT INFO
-# Provides:          watchdog
+# Provides:          tomcat7-watchdog
 # Required-Start:    $local_fs $remote_fs $network
 # Required-Stop:     $local_fs $remote_fs $network
 # Should-Start:      $named
@@ -24,10 +24,10 @@
 set -e
 
 PATH=/bin:/usr/bin:/sbin:/usr/sbin
-NAME=watchdog
+NAME=tomcat7-watchdog
 DESC="Tomcat servlet engine"
 DEFAULT=/etc/default/$NAME
-JVM_TMP=/tmp/tomcat7-$NAME-tmp
+JVM_TMP=/tmp/$NAME-tmp
 
 if [ `id -u` -ne 0 ]; then
 	echo "You need root privileges to run this script"
@@ -199,7 +199,7 @@ case "$1" in
 
 		# Regenerate POLICY_CACHE file
 		umask 022
-		echo "// AUTO-GENERATED FILE from /etc/watchdog/policy.d/" \
+		echo "// AUTO-GENERATED FILE from /etc/tomcat7-watchdog/policy.d/" \
 			> "$POLICY_CACHE"
 		echo ""  >> "$POLICY_CACHE"
 		cat $CATALINA_BASE/conf/policy.d/*.policy \
