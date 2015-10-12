@@ -85,6 +85,20 @@ script "stop_watchdog" do
   EOH
 end unless ::File.exists?("/var/lib/watchdog")
 
+# install tomcat-user support
+script "install_tomcat_user" do
+  interpreter "bash"
+  user "root"
+  cwd node[:oba][:home]
+  code <<-EOH
+  apt-get install -y tomcat7-users
+  cd /var/lib
+  mkdir watchdog
+  chown tomcat7:tomcat7 watchdog
+  tomcat7-instance-create -p 7070 -c 7005
+  EOH
+  end unless ::File.exists?("/var/lib/watchdog")
+
 script "deploy_watchdog" do
   interpreter "bash"
   user "root"
@@ -99,19 +113,6 @@ script "deploy_watchdog" do
 end
 
 
-# install tomcat-user support
-script "install_tomcat_user" do
-  interpreter "bash"
-  user "root"
-  cwd node[:oba][:home]
-  code <<-EOH
-  apt-get install -y tomcat7-users
-  cd /var/lib
-  mkdir watchdog
-  chown tomcat7:tomcat7 watchdog
-  tomcat7-instance-create -p 7070 -c 7005
-  EOH
-  end unless ::File.exists?("/var/lib/watchdog")
 
 
 # template data-sources
