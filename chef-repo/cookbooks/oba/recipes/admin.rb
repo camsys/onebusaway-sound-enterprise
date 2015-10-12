@@ -81,7 +81,7 @@ script "stop_watchdog" do
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
-  service tomcat7 watchdog
+  service watchdog stop
   EOH
 end unless ::File.exists?("/var/lib/watchdog")
 
