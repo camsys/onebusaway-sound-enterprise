@@ -48,7 +48,7 @@ template "/etc/tomcat7/context.xml" do
   mode '0644'
 end
 # template context.xml adding datasource
-template "/etc/tomcat7-watchdog/context.xml" do
+template "/var/lib/tomcat7-watchdog/context.xml" do
   source "admin/context.xml.erb"
   owner 'tomcat7'
   group 'tomcat7'
