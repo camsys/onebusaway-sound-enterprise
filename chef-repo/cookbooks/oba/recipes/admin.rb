@@ -91,7 +91,7 @@ script "install_tomcat_user" do
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
-  apt-get install -y tomcat7-users
+  apt-get install -y tomcat7-user
   cd /var/lib
   mkdir watchdog
   chown tomcat7:tomcat7 watchdog
