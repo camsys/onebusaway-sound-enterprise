@@ -83,8 +83,7 @@ script "stop_watchdog" do
   code <<-EOH
   service tomcat7 watchdog
   EOH
-  unless ::File.exists?("/var/lib/watchdog")
-end
+end unless ::File.exists?("/var/lib/watchdog")
 
 script "deploy_watchdog" do
   interpreter "bash"
@@ -113,8 +112,7 @@ script "install_tomcat_user" do
   chown tomcat7:tomcat7 watchdog
   tomcat7-instance-create -p 7070 -c 7005
   EOH
-  unless ::File.exists?("/var/lib/watchdog")
-end
+  end unless ::File.exists?("/var/lib/watchdog")
 
 
 # template data-sources
