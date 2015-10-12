@@ -95,6 +95,8 @@ script "install_tomcat_user" do
   cd /var/lib
   /usr/bin/tomcat7-instance-create -p 7070 -c 7005 watchdog || exit 1
   chown tomcat7:tomcat7 watchdog
+  # the policy scripts are not created above sadly
+  cp -r /var/lib/tomcat7/conf/policy.d /var/lib/watchdog/conf/
   EOH
   end unless ::File.exists?("/var/lib/watchdog")
 
