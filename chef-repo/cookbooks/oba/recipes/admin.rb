@@ -89,6 +89,8 @@ script "install_tomcat_user" do
   chown tomcat7:tomcat7 tomcat7-watchdog
   # the policy scripts are not created above sadly
   cp -r /var/lib/tomcat7/conf/policy.d /var/lib/tomcat7-watchdog/conf/
+  # bin dir is missing a well
+  cp -r /usr/share/tomcat7 /usr/share/tomcat7-watchdog
   EOH
   end unless ::File.exists?("/var/lib/tomcat7-watchdog")
 
