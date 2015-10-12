@@ -93,9 +93,8 @@ script "install_tomcat_user" do
   code <<-EOH
   apt-get install -y tomcat7-user
   cd /var/lib
-  mkdir watchdog
-  chown tomcat7:tomcat7 watchdog
   /usr/bin/tomcat7-instance-create -p 7070 -c 7005 watchdog || exit 1
+  chown tomcat7:tomcat7 watchdog
   EOH
   end unless ::File.exists?("/var/lib/watchdog")
 
