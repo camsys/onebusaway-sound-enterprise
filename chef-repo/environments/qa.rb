@@ -49,7 +49,7 @@ default_attributes({
                          "snsKey" => "",
                          "snsSecret" => "",
                          "snsArn" => ""
-                       }
+                       },
                      "aws" => {
                        "cloudwatch_publish_key" => "AKIAIHDQDZCGSQMYJAHQ",
                        "cloudwatch_publish_secret" => "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",
