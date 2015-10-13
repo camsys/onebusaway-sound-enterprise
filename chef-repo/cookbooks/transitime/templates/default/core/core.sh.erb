@@ -1,23 +1,24 @@
 #!/bin/bash
-export AWS_ACCESS_KEY=AKIAJD2S6RVL5BB5VD6Q
-export AWS_SECRET_KEY=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
 
 cd /var/lib/oba/transitime/core
 java \
   -classpath logback-core-1.1.2.jar:logback-classic-1.1.2.jar:slf4j-api-1.7.2.jar \
   -Xmx4g \
-  -Dtransitime.core.agencyId=<%= node[:oba][:transitime][:agency]%> \
-  -Dtransitime.db.dbName=<%= node[:oba][:transitime][:dbname]%> \
+  -Dtransitime.core.agencyId=<%= node[:transitime][:agency]%> \
+  -Dtransitime.db.dbName=<%= node[:transitime][:dbname]%> \
+  -Dtransitime.db.encryptionPassword=<%= node[:transitime][:encryptionPassword]%> \
   -Dtransitime.modules.optionalModulesList="org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.custom.aws.AvlSqsClientModule;org.transitime.monitoring.MonitoringModule" \
   -Dtransitime.avl.feedTimeoutInMSecs=30000 \
   -Dtransitime.core.maxPredictionTimeForDbSecs=3600 \
   -Dtransitime.avl.queueSize=100000 \
   -Dtransitime.avl.shouldUseSqs=true \
-  -Dtransitime.avl.sqsUrl=https://sqs.us-east-1.amazonaws.com/443046490497/obawmata_prod \
+  -Dtransitime.avl.sqsUrl=<%= node[:transitime][:sqsUrl] %> \
   -Dtransitime.avl.messageLogFrequency=1000 \
-  -Dtransitime.avl.snsKey=AKIAJ34CZNNFNL5G2CUA \
-  -Dtransitime.avl.snsSecret=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 \
-  -Dtransitime.avl.snsArn=arn:aws:sns:us-east-1:443046490497:wmata_avl \
+  -Dtransitime.avl.sqsKey=<%= node[:transitime][:sqsKey] %> \
+  -Dtransitime.avl.sqsSecret=<%= node[:transitime][:sqsSecret] %> \
+  -Dtransitime.avl.snsKey=<%= node[:transitime][:snsKey] %> \
+  -Dtransitime.avl.snsSecret=<%= node[:transitime][:snsSecret] %> \
+  -Dtransitime.avl.snsArn=<%= node[:transitime][:snsArn] %> \
   -Dtransitime.avl.jmsNumThreads=10 \
   -Dtransitime.avl.jmsQueueSize=10000 \
   -Dtransitime.avl.numThreads=64 \
