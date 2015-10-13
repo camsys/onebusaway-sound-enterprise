@@ -71,8 +71,8 @@ script "deploy_admin" do
   then
     ln -s /usr/bin/python /usr/bin/python2.5
   fi
-  unzip #{mvn_admin_dest_file} -d /var/lib/tomcat7/webapps/onebusaway-watchdog-webapp || exit 1
-  rm -f /var/lib/tomcat7/webapps/onebusaway-watchdog-webapp/WEB-INF/lib/mysql-connector-java-5.1.17.jar
+  unzip #{mvn_admin_dest_file} -d /var/lib/tomcat7/webapps/ROOT || exit 1
+  rm -f /var/lib/tomcat7/webapps/ROOT/WEB-INF/lib/mysql-connector-java-5.1.17.jar
   EOH
 end
 
@@ -137,7 +137,7 @@ end
 
 
 # template data-sources
-template "/var/lib/tomcat7/webapps/onebusaway-watchdog-webapp/WEB-INF/classes/data-sources.xml" do
+template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   source "admin/data-sources.xml.erb"
   owner 'tomcat7'
   group 'tomcat7'
