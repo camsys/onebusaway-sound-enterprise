@@ -32,7 +32,8 @@ default_attributes({
                        },
                        "webapp" => {
                          "artifact" => "onebusaway-enterprise-acta-webapp"
-                       },
+                       }
+                     },
                        "transitime" => {
                          "dbhost" => "db.qa.wmata.obaweb.org:3306",
                          "dbtype" => "mysql",
@@ -49,7 +50,6 @@ default_attributes({
                          "snsSecret" => "",
                          "snsArn" => ""
                        }
-                     },
                      "aws" => {
                        "cloudwatch_publish_key" => "AKIAIHDQDZCGSQMYJAHQ",
                        "cloudwatch_publish_secret" => "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",
