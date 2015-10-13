@@ -44,7 +44,7 @@
         maxIdle="30"
         maxWait="30000"
         username="oba"
-        password="changeme"
+        password="<%= node[:oba][:db_password] %>"
         driverClassName="com.mysql.jdbc.Driver"
         url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>?characterEncoding=UTF-8" />
      <Resource name="jdbc/agencyMetadataDB"
