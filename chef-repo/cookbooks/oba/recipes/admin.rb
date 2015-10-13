@@ -47,13 +47,6 @@ template "/etc/tomcat7/context.xml" do
   group 'tomcat7'
   mode '0644'
 end
-# template context.xml adding datasource
-template "/var/lib/tomcat7-watchdog/conf/context.xml" do
-  source "admin/context.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
-  mode '0644'
-end
 
 template "/var/lib/obanyc/config.json" do
   source "admin/config.json.erb"
@@ -109,6 +102,14 @@ template "/etc/init.d/tomcat7-watchdog" do
   group 'root'
   mode '0755'
 end
+# template context.xml adding datasource
+template "/var/lib/tomcat7-watchdog/conf/context.xml" do
+  source "admin/context.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
+
 
 script "stop_watchdog" do
   interpreter "bash"
