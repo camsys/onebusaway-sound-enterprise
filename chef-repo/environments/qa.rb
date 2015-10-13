@@ -44,7 +44,10 @@ default_attributes({
                          "encryptionPassword" => "transitimeqa",
                          "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/372394388595/obawmata_qa",
                          "sqsKey" => "AKIAJTZPOKKDCF3ZLW4Q",
-                         "sqsSecret" => "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"
+                         "sqsSecret" => "tUtpwiY5OSaQppSoCFt1yC0a54EUx5UUqSR68qih",
+                         "snsKey" => "",
+                         "snsSecret" => "",
+                         "snsArn" => ""
                        }
                      },
                      "aws" => {
