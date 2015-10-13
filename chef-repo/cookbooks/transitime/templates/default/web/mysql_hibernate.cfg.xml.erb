@@ -64,13 +64,13 @@
         uncomment this part and set the db parameters here. -->
 
    <property name="hibernate.connection.url">
-      jdbc:mysql://<%= node[:oba][:transitime][:dbhost] %>/transitime
+      jdbc:mysql://<%= node[:transitime][:dbhost] %>/transitime
    </property>
    <property name="hibernate.connection.username">
-      <%= node[:oba][:transitime][:dbusername] %>
+      <%= node[:transitime][:dbusername] %>
    </property>
    <property name="hibernate.connection.password">
-      <%= node[:oba][:transitime][:dbpassword] %>
+      <%= node[:transitime][:dbpassword] %>
    </property>
 
 
