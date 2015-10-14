@@ -5,11 +5,21 @@
         "TransitimeCoreInstanceType": {
             "Description": "AppServer EC2 instance type",
             "Type": "String",
-            "Default": "t2.small",
+            "Default": "m4.xlarge",
             "AllowedValues": [
                 "t2.micro",
                 "t2.small",
-                "t2.medium"
+                "t2.medium",
+		"t2.large",
+		"m3.medium",
+		"m3.large",
+		"m3.xlarge",
+		"m3.2xlarge",
+		"m4.medium",
+		"m4.large",
+		"m4.xlarge",
+		"m4.2xlarge"
+		
             ],
             "ConstraintDescription": "must be a valid EC2 instance type."
         },
@@ -384,14 +394,14 @@
 	        "Subnets" : { "Ref" : "Subnets" },
                 "Listeners": [
                     {
-                        "LoadBalancerPort": "80",
-                        "InstancePort": "80",
-                        "Protocol": "HTTP"
+                        "LoadBalancerPort": "2098",
+                        "InstancePort": "2098",
+                        "Protocol": "TCP"
                     },
                     {
-                        "LoadBalancerPort": "8088",
-                        "InstancePort": "80",
-                        "Protocol": "HTTP"
+                        "LoadBalancerPort": "2099",
+                        "InstancePort": "2099",
+                        "Protocol": "TCP"
                     }
                 ],
                 "HealthCheck": {
@@ -423,20 +433,25 @@
                     },
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "80",
-                        "ToPort": "80",
-                        "CidrIp": "209.65.164.27/32"
+                        "FromPort": "2098",
+                        "ToPort": "2098",
+                        "SourceSecurityGroupOwnerId": {
+                            "Fn::GetAtt": [
+                                "ElasticLoadBalancer",
+                                "SourceSecurityGroup.OwnerAlias"
+                            ]
+                        },
+                        "SourceSecurityGroupName": {
+                            "Fn::GetAtt": [
+                                "ElasticLoadBalancer",
+                                "SourceSecurityGroup.GroupName"
+                            ]
+                        }
                     },
                     {
                         "IpProtocol": "tcp",
-                        "FromPort": "80",
-                        "ToPort": "80",
-                        "CidrIp": "12.0.47.2/32"
-                    },
-                    {
-                        "IpProtocol": "tcp",
-                        "FromPort": "80",
-                        "ToPort": "80",
+                        "FromPort": "2099",
+                        "ToPort": "2099",
                         "SourceSecurityGroupOwnerId": {
                             "Fn::GetAtt": [
                                 "ElasticLoadBalancer",
@@ -451,21 +466,27 @@
                         }
                     }
                 ],
-                "SecurityGroupIngress": [
+               "SecurityGroupIngress": [
                     {
                         "IpProtocol": "tcp",
                         "FromPort": "22",
                         "ToPort": "22",
                         "CidrIp": "0.0.0.0/0"
                     },
-                    {
+                   {
                         "IpProtocol": "tcp",
-                        "FromPort": "80",
-                        "ToPort": "80",
+                        "FromPort": "2098",
+                        "ToPort": "2098",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                   {
+                        "IpProtocol": "tcp",
+                        "FromPort": "2099",
+                        "ToPort": "2099",
                         "CidrIp": "0.0.0.0/0"
                     }
 		]
-            }
+             }
         }
     }
 }
