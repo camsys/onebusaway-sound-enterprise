@@ -1,6 +1,6 @@
 log "Downloading wars"
 
-
+#/ we need to embedd the db password in the tomcat config
 node.override["tomcat"]["java_options"] = "-Xmx3G -Xms1G -XX:MaxPermSize=256m -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Dtransitime.rmi.timeoutSec=300 -Dtransitime.db.encryptionPassword=#{node["transitime"]["encryptionPassword"]}"
 
 mvn_version = node[:oba][:mvn][:version_transitime_web]
@@ -87,6 +87,7 @@ script "deploy_web_pre" do
 EOH
 end
 
+# NOTE: this does not appear to be read!
 template "/var/lib/tomcat7/webapps/web/WEB-INF/classes/transiTimeConfig.xml" do
   source "web/transitimeConfig.xml.erb"
   owner 'tomcat7'
