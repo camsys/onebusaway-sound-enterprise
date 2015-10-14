@@ -23,7 +23,6 @@
     </core>     
     <avl>
         <!-- URL for GTFS realtime vechicle location stream -->
-        <gtfsRealtimeFeedURI>http://developer.onebusaway.org/wmata-gtfsr/vehiclePositions</gtfsRealtimeFeedURI>        
         <!-- This is the location to read bulk AVL data from using BatchCsvAvlFeedModule -->
 <!--            <csvAvlFeedFileName>d:/transiTime/siri_13_route_id_assigned.csv</csvAvlFeedFileName> -->
                 <realTime>false</realTime>
@@ -44,6 +43,7 @@
         <dbType><%= node[:transitime][:dbtype] %></dbType>
         <dbUserName><%= node[:transitime][:dbusername] %></dbUserName>
         <dbPassword><%= node[:transitime][:dbpassword] %></dbPassword>
+	<encryptionPassword><%= node[:transitime][:encryptionPassword] %></encryptionPassword>
     </db>     
     <hibernate>
         <configFile>mysql_hibernate.cfg.xml</configFile>        
