@@ -32,7 +32,7 @@ default_attributes({
                        },
                        "webapp" => {
                          "artifact" => "onebusaway-enterprise-acta-webapp"
-                       },
+                       }
                      },
                      "transitime" => {
                         "dbhost" => "db.dev.wmata.obaweb.org:3306",
