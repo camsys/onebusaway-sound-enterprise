@@ -1,9 +1,9 @@
 log "Downloading wars"
 
-mvn_admin_version = node[:oba][:mvn][:version_nyc]
-mvn_admin_dest_file = "/tmp/war/onebusaway-nyc-admin-webapp-#{mvn_admin_version}.war"
+mvn_admin_version = node[:oba][:mvn][:version_admin]
+mvn_admin_dest_file = "/tmp/war/onebusaway-admin-webapp-#{mvn_admin_version}.war"
 log "maven dependency installed at #{mvn_admin_dest_file}"
-maven "onebusaway-nyc-admin-webapp" do
+maven "onebusaway-admin-webapp" do
   group_id "org.onebusaway"
   dest "/tmp/war"
   version mvn_admin_version
@@ -31,7 +31,7 @@ end
 #  action :create
 #end
 
-["/var/lib/oba", "/var/lib/oba/bundle",  "/var/lib/obanyc", "/var/lib/obanyc/wm_bundles", "/var/lib/obanyc/bundles/staged", "/var/lib/obanyc/activebundles"].each do |path|
+["/var/lib/oba", "/var/lib/oba/bundle",  "/var/lib/obanyc", "/var/lib/obanyc/wm_bundles", "/var/lib/obanyc/bundles/staged", "/var/lib/obanyc/activebundles", "/var/lib/oba/bundle/staged", "/var/lib/oba/bundle/active", "/var/lib/oba/bundle/active"].each do |path|
   directory path do
     owner "tomcat7"
     group "tomcat7"
@@ -48,14 +48,14 @@ template "/etc/tomcat7/context.xml" do
   mode '0644'
 end
 
-template "/var/lib/obanyc/config.json" do
+template "/var/lib/oba/config.json" do
   source "admin/config.json.erb"
   owner 'root'
   group 'root'
   mode '0644'
 end
 
-# deploy onebusaway-nyc-admin-webapp
+# deploy onebusaway-admin-webapp
 log "war file is #{mvn_admin_dest_file}"
 script "deploy_admin" do
   interpreter "bash"
