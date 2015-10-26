@@ -31,7 +31,7 @@ end
 #  action :create
 #end
 
-["/var/lib/oba", "/var/lib/oba/bundle",  "/var/lib/obanyc", "/var/lib/obanyc/wm_bundles", "/var/lib/obanyc/bundles/staged", "/var/lib/obanyc/activebundles", "/var/lib/oba/bundle/staged", "/var/lib/oba/bundle/active", "/var/lib/oba/bundle/active"].each do |path|
+["/var/lib/oba", "/var/lib/oba/bundle","/var/lib/oba/bundles/staged", "/var/lib/oba/bundles/active", "/var/lib/oba/bundles/builder"].each do |path|
   directory path do
     owner "tomcat7"
     group "tomcat7"
