@@ -1,11 +1,13 @@
 name "transitime-core"
 description "transitime core prediction engine"
 run_list(
-        "recipe[maven]",
+        "role[base]",
         "recipe[transitime::core]"
 )
 
-override_attributes(:maven => {
+override_attributes(
+                    :tz => 'America/New_York',
+                    :maven => {
                       :m2_home => '/var/lib/maven'
                     }
 )

@@ -1,12 +1,14 @@
 name "oba-admin"
 description "oba admin server"
 run_list(
-        "recipe[maven]",
+        "role[base]",
         "recipe[tomcat]",
         "recipe[oba::admin]"
 )
 
-override_attributes(:maven => {
+override_attributes(
+                    :tz => 'America/New_York',
+                    :maven => {
                       :m2_home => '/var/lib/maven'
                     },
                     :tomcat => {
