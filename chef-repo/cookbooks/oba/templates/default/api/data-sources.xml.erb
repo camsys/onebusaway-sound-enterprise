@@ -35,7 +35,7 @@
       <property name="resourceRef"
                 value="true" />
     </bean>
-    <bean id="agencyMetadatadataSource"
+    <bean id="agencyMetadataDataSource"
           class="org.springframework.jndi.JndiObjectFactoryBean" >
       <property name="jndiName"
                 value="java:comp/env/jdbc/agencyMetadataDB"/>
@@ -48,6 +48,7 @@
       <property name="resourceRef"
                 value="true" />
     </bean>
+
 
    <bean id="agencyMetadataSessionFactory"
         class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
