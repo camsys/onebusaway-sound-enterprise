@@ -49,5 +49,20 @@
         driverClassName="com.mysql.jdbc.Driver"
         url="jdbc:mysql://db.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>:3306/<%= node[:oba][:db_instance_name] %>" >
      </Resource>
+     <Resource name="jdbc/agencyMetadataDB"
+        auth="Container"
+        type="javax.sql.DataSource"
+        maxActive="2"
+        maxIdle="30"
+        maxWait="60"
+        validationQuery="select 1"
+        testWhileIdle="true"
+        timeBetweenEvictionRunsMillis="10000"
+        minEvictableIdleTimeMillis="60000"
+        username="<%= node[:oba][:db_user] %>"
+        password="<%= node[:oba][:db_password] %>"
+        driverClassName="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://db.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>:3306/<%= node[:oba][:db_instance_name] %>" >
+     </Resource>
 
 </Context>
