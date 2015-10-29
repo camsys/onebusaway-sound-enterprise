@@ -46,8 +46,8 @@ default_attributes({
                         "api_key" => "4b248c1b",
                         "encryptionPassword" => "SET THIS!",
                         "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/744689548994/obawmata_dev",
-                        "sqsKey" => "AKIAIEU7OTAVRCPOPLDA",
-                        "sqsSecret" => "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",
+                        "sqsKey" => "AKIAIR7AIWS2STDBINAQ",
+                        "sqsSecret" => "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",
                         "snsKey" => "",
                         "snsSecret" => "",
                         "snsArn" => ""
