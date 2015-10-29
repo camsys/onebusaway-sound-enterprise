@@ -19,8 +19,9 @@ java \
   -Dtransitime.avl.snsKey='<%= node[:transitime][:snsKey] %>' \
   -Dtransitime.avl.snsSecret='<%= node[:transitime][:snsSecret] %>' \
   -Dtransitime.avl.snsArn='<%= node[:transitime][:snsArn] %>' \
-  -Dtransitime.avl.jmsNumThreads=10 \
+  -Dtransitime.avl.jmsNumThreads=20 \
   -Dtransitime.avl.jmsQueueSize=10000 \
+  -Dtransitime.blockLoading.agressive=true \
   -Dtransitime.avl.numThreads=20 \
   -Dtransitime.avl.minLongitude=-77.449457 \
   -Dtransitime.avl.maxLongitude=-76.488045 \
