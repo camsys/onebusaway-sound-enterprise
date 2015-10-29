@@ -26,6 +26,8 @@ default_attributes({
                        "api_server" => "app.dev.wmata.obaweb.org:8080",
                        "admin_server" => "admin.dev.wmata.obaweb.org",
                        "prediction_api_server" => "gtfsrt.dev.wmata.obaweb.org",
+                       "prediction_api_port" => "8080",
+
                        "admin_server_port" => "8080",
                        "tds" => {
                          "bundle_path" => "/var/lib/oba/bundle"
@@ -43,12 +45,12 @@ default_attributes({
                         "agency" => "1",
                         "api_key" => "4b248c1b",
                         "encryptionPassword" => "SET THIS!",
-                        "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/443046490497/obawmata_prod",
-                        "sqsKey" => "AKIAJD2S6RVL5BB5VD6Q",
-                        "sqsSecret" => "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",
-                        "snsKey" => "AKIAJ34CZNNFNL5G2CUA",
-                        "snsSecret" => "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",
-                        "snsArn" => "arn:aws:sns:us-east-1:443046490497:wmata_avl"
+                        "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/744689548994/obawmata_dev",
+                        "sqsKey" => "AKIAIEU7OTAVRCPOPLDA",
+                        "sqsSecret" => "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",
+                        "snsKey" => "",
+                        "snsSecret" => "",
+                        "snsArn" => ""
                       },
                      "aws" => {
                        "cloudwatch_publish_key" => "AKIAJ2USYJ54JLTDL6CA",

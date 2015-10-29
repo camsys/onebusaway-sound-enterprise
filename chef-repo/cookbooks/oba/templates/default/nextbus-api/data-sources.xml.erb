@@ -37,8 +37,8 @@
 	
 	<bean id="configurationUtility" class="org.onebusaway.nextbus.impl.util.ConfigurationUtil">
 			<property name="transiTimeHost" value="<%= node["oba"]["prediction_api_server"] %>" />
-			<property name="transiTimePort" value="8080" />
-			<property name="transiTimeKey" value="8a3273b0" />
+			<property name="transiTimePort" value="<%= node["oba"]["prediction_api_port"] %>" />
+			<property name="transiTimeKey" value="<%= node["transitime"]["api_key"] %>" />
 			<property name="agencyMapper">
 				<map>
 					<entry key="2" value="1" />
