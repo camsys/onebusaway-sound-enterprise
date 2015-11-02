@@ -9,7 +9,3 @@ version "1.2.0"
 %w{ ubuntu debian redhat centos}.each do |os|
   supports os
 end
-
-%w{cron}.each do |cookbook|
-  depends cookbook
-end
