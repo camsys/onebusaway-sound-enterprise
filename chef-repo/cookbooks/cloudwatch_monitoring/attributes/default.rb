@@ -4,8 +4,8 @@ default[:cw_mon][:user]              = "cw_monitoring"
 default[:cw_mon][:group]             = "cw_monitoring"
 default[:cw_mon][:home_dir]          = "/home/#{node[:cw_mon][:user]}"
 default[:cw_mon][:version]           = "1.2.1"
-default[:cw_mon][:release_url]       = "http://ec2-downloads.s3.amazonaws.com/cloudwatch-samples/CloudWatchMonitoringScripts-v1.2.1.zip"
-
+default[:cw_mon][:release_url]       = "http://aws-cloudwatch.s3.amazonaws.com/downloads/CloudWatchMonitoringScripts-#{node[:cw_mon][:version]}.zip"
+default[:cw_mon][:cron_min_freq]     = "5"
 
 default[:cw_mon][:aws_users_databag] = "aws_users"
 default[:cw_mon][:access_key_id]     = nil
