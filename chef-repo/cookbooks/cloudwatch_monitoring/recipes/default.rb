@@ -51,16 +51,6 @@ case node[:platform_family]
     end
 end
 
-group node[:cw_mon][:group] do
-  action :create
-end
-
-user node[:cw_mon][:user] do
-  home node[:cw_mon][:home_dir]
-  group node[:cw_mon][:group]
-  action :create
-end
-
 directory node[:cw_mon][:home_dir] do
   group node[:cw_mon][:group]
   owner node[:cw_mon][:user]
