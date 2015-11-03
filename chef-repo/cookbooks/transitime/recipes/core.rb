@@ -72,3 +72,12 @@ service "predictions" do
   action [:start]
   only_if "test -f /etc/init/predictions.conf"
 end
+
+# monitoring directory
+directory '/var/lib/oba/monitoring' do
+  owner 'ubuntu'
+  group 'ubuntu'
+  mode '0755'
+  action :create
+end
+
