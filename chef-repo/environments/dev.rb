@@ -55,7 +55,9 @@ default_attributes({
                      "aws" => {
                        "cloudwatch_publish_key" => "AKIAJ2USYJ54JLTDL6CA",
                        "cloudwatch_publish_secret" => "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",
-                       "cloudwatch_endpoint" => "monitoring.us-east-1.amazonaws.com"
+                       "cloudwatch_endpoint" => "monitoring.us-east-1.amazonaws.com",
+                       "alarmCriticalSns" => "arn:aws:sns:us-east-1:744689548994:OBAWMATA-Alarm-dev",
+                       "alarmNonCriticalSns" => "arn:aws:sns:us-east-1:744689548994:OBAWMATA-Monitoring-dev"
                      },
                      "tomcat" => {
                        "user" => "tomcat7",

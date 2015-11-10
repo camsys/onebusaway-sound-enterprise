@@ -32,6 +32,12 @@
         <property name="serviceInterface" value="org.onebusaway.transit_data.services.TransitDataService" />
     </bean>
 -->
+	<context:component-scan base-package="org.onebusaway.aws.cloudwatch.impl" />
+	<context:component-scan base-package="org.onebusaway.aws.monitoring.impl" />
+	<context:component-scan base-package="org.onebusaway.aws.monitoring.api" />
+	<task:annotation-driven />
+	<bean id="publishMetricsTask" class="org.onebusaway.aws.monitoring.tasks.metrics.PublishMetricsTask"/>
+	
     <bean id="dataSource"
           class="org.springframework.jndi.JndiObjectFactoryBean">
       <property name="jndiName"
