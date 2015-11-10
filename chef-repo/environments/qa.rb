@@ -51,11 +51,13 @@ default_attributes({
                          "snsSecret" => "vZtu/sEcE6kkTIBzPdIhTzIyeHpLIW3IQKatx9j7",
                          "snsArn" => "arn:aws:sns:us-east-1:443046490497:wmata_avl"
                        },
-                     "aws" => {
-                       "cloudwatch_publish_key" => "AKIAIHDQDZCGSQMYJAHQ",
-                       "cloudwatch_publish_secret" => "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",
-                       "cloudwatch_endpoint" => "monitoring.us-east-1.amazonaws.com"
-                     },
+                      "aws" => {
+                        "cloudwatch_publish_key" => "AKIAIHDQDZCGSQMYJAHQ",
+                        "cloudwatch_publish_secret" => "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",
+                        "cloudwatch_endpoint" => "monitoring.us-east-1.amazonaws.com",
+                        "alarmCriticalSns" => "arn:aws:sns:us-east-1:372394388595:OBAWMATA-Alarm-qa",
+                        "alarmNonCriticalSns" => "arn:aws:sns:us-east-1:372394388595:OBAWMATA-Monitoring-qa"
+                       },
                      "tomcat" => {
                        "user" => "tomcat7",
                        "group" => "tomcat7",
