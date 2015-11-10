@@ -8,8 +8,8 @@ default_attributes({
                            "mvn" => {
                                "group_id" => "org.onebusaway",
                                "version_admin" => "1.1.15-cs-SNAPSHOT",
-                               "version_core" => "1.1.14-wmata.5-SNAPSHOT",
-                               "version_app" => "1.1.14-wmata.5-SNAPSHOT",
+                               "version_core" => "1.1.15-cs-SNAPSHOT",
+                               "version_app" => "1.1.15-cs-SNAPSHOT",
                                "version_transitime_core" => "0.0.2-SNAPSHOT",
                                "version_transitime_web" => "0.0.2-SNAPSHOT",
                                "repositories" => ["http://developer.onebusaway.org/archiva/repository/snapshots/"]
