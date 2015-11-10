@@ -43,7 +43,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <property name="vehiclePositionsUrl" value="http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/api/v1/key/<%= node[:transitime][:api_key] %>/agency/1/command/gtfs-rt/vehiclePositions" />
     <property name="alertsUrl" value="http://admin.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/api/alerts-from-rss/service-alerts" />
 
-    <property name="refreshInterval" value="10" />
+    <property name="refreshInterval" value="30" />
     <property name="agencyIds">
         <list>
                 <value>1</value>
