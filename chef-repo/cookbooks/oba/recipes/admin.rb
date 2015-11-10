@@ -31,6 +31,10 @@ end
 #  action :create
 #end
 
+link "/var/log/tomcat6" do
+ to "/var/log/tomcat7"
+end
+
 ["/var/lib/oba", "/var/lib/oba/bundle","/var/lib/oba/bundles/staged", "/var/lib/oba/bundles/active", "/var/lib/oba/bundles/builder"].each do |path|
   directory path do
     owner "tomcat7"
