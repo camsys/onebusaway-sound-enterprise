@@ -123,3 +123,12 @@ script "deploy_web_post" do
   sudo service tomcat7 start
 EOH
 end
+
+# monitoring directory
+directory '/var/lib/oba/monitoring' do
+  owner 'ubuntu'
+  group 'ubuntu'
+  mode '0755'
+  action :create
+end
+
