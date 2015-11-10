@@ -51,10 +51,95 @@
          "key":"defaultAgency",
          "value":"1"
       },
-  {
+  	  {
          "component":"agency",
          "key":"1",
          "value":"DC,2;MET,1"
+      },
+      {  
+         "component":"aws",
+         "key":"aws.accessKey",
+         "value":"<%= node[:aws][:cloudwatch_publish_key] %>"
+      },
+	  {  
+         "component":"aws",
+         "key":"aws.secretKey",
+         "value":"<%= node[:aws][:cloudwatch_publish_secret] %>"
+      },
+	  {  
+         "component":"aws",
+         "key":"aws.endPoint",
+         "value":"<%= node[:aws][:cloudwatch_endpoint] %>"
+      },
+      {  
+         "component":"monitoring",
+         "key":"monitoring.vehicleMonitoringUrl",
+         "value":"http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/onebusaway-api-webapp/siri/vehicle-monitoring?key=OBAKEY&type=xml&LineRef=70"
+      },
+      {  
+         "component":"monitoring",
+         "key":"monitoring.stopMonitoringUrl",
+         "value":"http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/onebusaway-api-webapp/siri/stop-monitoring?key=OBAKEY&MonitoringRef=9653&type=json"
+      },
+      {  
+         "component":"monitoring",
+         "key":"monitoring.smsWebappUrl",
+         "value":"http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/onebusaway-sms-webapp"
+      },
+	  {  
+         "component":"monitoring",
+         "key":"monitoring.nextbusApiUrl",
+         "value":"http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/onebusaway-nextbus-api-webapp/service/publicJSONFeed?command=agencyList"
+      },
+	  {  
+         "component":"monitoring",
+         "key":"monitoring.webappUrl",
+         "value":"http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/"
+      },
+	  {  
+         "component":"monitoring",
+         "key":"monitoring.adminApiUrl",
+         "value":"http://admin.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/api/"
+      },
+	  {  
+         "component":"monitoring",
+         "key":"monitoring.watchdogRealtimeLocationUrl",
+         "value":"http://localhost:8080/onebusaway-watchdog-webapp/api/metric/realtime/location/1/"
+      },
+	  {  
+         "component":"monitoring",
+         "key":"monitoring.watchdogRealtimeStopUrl",
+         "value":"http://localhost:8080/onebusaway-watchdog-webapp/api/metric/realtime/stop/1/"
+      },
+	  {  
+         "component":"monitoring",
+         "key":"monitoring.watchdogRealtimeTripUrl",
+         "value":"http://localhost:8080/onebusaway-watchdog-webapp/api/metric/realtime/trip/1/"
+      },
+	  {  
+         "component":"monitoring",
+         "key":"monitoring.watchdogRealtimeDeltaUrl",
+         "value":"http://localhost:8080/onebusaway-watchdog-webapp/api/metric/realtime/delta/1/"
+      },
+	  {  
+         "component":"monitoring",
+         "key":"monitoring.watchdogScheduleUrl",
+         "value":"http://localhost:8080/onebusaway-watchdog-webapp/api/metric/schedule/"
+      },
+	  {  
+         "component":"monitoring",
+         "key":"monitoring.transitimeUrl",
+         "value":"http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/api/v1/key/<%= node[:transitime][:api_key] %>/command/"
+      },
+	  {  
+         "component":"alarm",
+         "key":"alarm.criticalSns",
+         "value":"<%= node[:aws][:alarmCriticalSns] %>"
+      },
+	  {  
+         "component":"alarm",
+         "key":"alarm.nonCriticalSns",
+         "value":"<%= node[:aws][:alarmNonCriticalSns] %>"
       }
  ]
 }
