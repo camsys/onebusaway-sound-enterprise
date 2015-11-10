@@ -17,7 +17,7 @@
         username="<%= node[:oba][:db_user] %>"
         password="<%= node[:oba][:db_password] %>"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://db.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>:3306/<%= node[:oba][:db_instance_name] %>" >
+        url="jdbc:mysql://db.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>:3306/<%= node[:oba][:db_instance_name] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true" >
      </Resource>
      <Resource name="jdbc/apiDB"
         auth="Container"
@@ -32,7 +32,7 @@
         username="<%= node[:oba][:db_user] %>"
         password="<%= node[:oba][:db_password] %>"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://db.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>:3306/<%= node[:oba][:db_instance_name] %>" >
+        url="jdbc:mysql://db.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>:3306/<%= node[:oba][:db_instance_name] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true" >
      </Resource>
      <Resource name="jdbc/appDB"
         auth="Container"
@@ -47,7 +47,7 @@
         username="<%= node[:oba][:db_user] %>"
         password="<%= node[:oba][:db_password] %>"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://db.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>:3306/<%= node[:oba][:db_instance_name] %>" >
+        url="jdbc:mysql://db.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>:3306/<%= node[:oba][:db_instance_name] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true" >
      </Resource>
      <Resource name="jdbc/agencyMetadataDB"
         auth="Container"
@@ -62,7 +62,7 @@
         username="<%= node[:oba][:db_user] %>"
         password="<%= node[:oba][:db_password] %>"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://db.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>:3306/<%= node[:oba][:db_instance_name] %>" >
+        url="jdbc:mysql://db.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>:3306/<%= node[:oba][:db_instance_name] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true" >
      </Resource>
 
 </Context>
