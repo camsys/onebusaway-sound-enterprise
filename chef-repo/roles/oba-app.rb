@@ -21,6 +21,6 @@ override_attributes(
                       :home_dir => '/var/lib/oba/monitoring',
                       :user => 'ubuntu',
                       :group => 'ubuntu',
-                      :options => %w{/var/lib/oba/monitoring/aws-scripts-mon/mon-put-instance-data.pl --mem-util --mem-used --mem-avail --disk-path=/ --disk-space-util --disk-space-used --disk-space-avail}
+                      :options => %w{--mem-util --mem-used --mem-avail --disk-path=/ --disk-space-util --disk-space-used --disk-space-avail}
                     }
 )
