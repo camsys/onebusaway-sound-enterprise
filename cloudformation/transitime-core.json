@@ -58,6 +58,11 @@
             "Default": "1",
             "Type": "Number"
         },
+		"IamInstanceProfile":{
+            "Description":"The iam-profile name for the instance",
+            "Default":"chef",
+            "Type":"String"
+        },
 	"VpcId" : {
 	    "Type" : "String",
 	    "Description" : "VpcId of your existing Virtual Private Cloud (VPC).",
@@ -292,6 +297,9 @@
                     "Ref": "KeyName"
                 },
                 "ImageId": { "Ref": "BaseAMIHVM" },
+				"IamInstanceProfile":{
+                    "Ref":"IamInstanceProfile"
+                },
                 "BlockDeviceMappings": [
                     {
                         "DeviceName": "/dev/sdb",
