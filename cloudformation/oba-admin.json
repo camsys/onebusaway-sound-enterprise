@@ -5,7 +5,7 @@
         "OBAAdminInstanceType": {
             "Description": "AppServer EC2 instance type",
             "Type": "String",
-            "Default": "t2.medium",
+            "Default": "t2.large",
             "AllowedValues": [
                 "t2.micro",
                 "t2.small",
@@ -26,12 +26,12 @@
         },
         "BaseAMI": {
             "Description": "Ubuntu Cloud Image AMI",
-            "Default": "ami-89a1eeec",
+            "Default": "ami-10f78e7a",
             "Type": "String"
         },
         "BaseAMIHVM": {
             "Description": "Ubuntu Cloud Image AMI",
-            "Default": "ami-b5b5fad0 ",
+            "Default": "ami-2be99041",
             "Type": "String"
         },
         "KeyName":{
@@ -394,8 +394,8 @@
                     "Target": "TCP:22",
                     "HealthyThreshold": "3",
                     "UnhealthyThreshold": "10",
-                    "Interval": "300",
-                    "Timeout": "60"
+                    "Interval": "60",
+                    "Timeout": "10"
                 }
             }
         },
