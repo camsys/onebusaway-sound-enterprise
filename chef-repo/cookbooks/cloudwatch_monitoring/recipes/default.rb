@@ -26,7 +26,7 @@ zip_filepath="#{node[:cw_mon][:home_dir]}/CloudWatchMonitoringScripts-v#{node[:c
 
 case node[:platform_family]
   when 'rhel'
-    %w{unzip perl-CPAN}.each do |p|
+    %w{unzip perl-CPAN libdatetime-perl}.each do |p|
       package p
     end
 
