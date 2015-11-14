@@ -2,7 +2,7 @@
 
 cd /var/lib/oba/transitime/processGTFS
 java \
-  -Xmx2g \
+  -Xmx4g \
   -Dtransitime.core.agencyId=<%= node[:transitime][:agency] %> \
   -jar \
   processGTFSFile.jar \
