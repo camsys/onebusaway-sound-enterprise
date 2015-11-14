@@ -12,6 +12,7 @@ java \
   -Dtransitime.core.maxPredictionTimeForDbSecs=3600 \
   -Dtransitime.core.exclusiveBlockAssignments=true \
   -Dtransitime.core.allowableNumberOfBadMatches=3 \
+  -Dtransitime.core.maxDistanceFromSegment=100 \
   -Dtransitime.avl.queueSize=100000 \
   -Dtransitime.avl.shouldUseSqs=true \
   -Dtransitime.avl.sqsUrl='<%= node[:transitime][:sqsUrl] %>' \
