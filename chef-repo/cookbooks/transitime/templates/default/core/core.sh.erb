@@ -10,6 +10,8 @@ java \
   -Dtransitime.modules.optionalModulesList="org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.custom.aws.AvlSqsClientModule;org.transitime.monitoring.MonitoringModule" \
   -Dtransitime.avl.feedTimeoutInMSecs=30000 \
   -Dtransitime.core.maxPredictionTimeForDbSecs=3600 \
+  -Dtransitime.core.exclusiveBlockAssignments=true \
+  -Dtransitime.core.allowableNumberOfBadMatches=3 \
   -Dtransitime.avl.queueSize=100000 \
   -Dtransitime.avl.shouldUseSqs=true \
   -Dtransitime.avl.sqsUrl='<%= node[:transitime][:sqsUrl] %>' \
