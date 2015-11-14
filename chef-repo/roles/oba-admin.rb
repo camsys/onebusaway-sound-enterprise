@@ -3,7 +3,8 @@ description "oba admin server"
 run_list(
         "role[base]",
         "recipe[tomcat]",
-        "recipe[oba::admin]"
+        "recipe[oba::admin]",
+        "recipe[transitime::gtfs]"
 )
 
 override_attributes(

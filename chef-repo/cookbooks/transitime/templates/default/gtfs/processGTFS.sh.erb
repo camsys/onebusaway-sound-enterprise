@@ -1,0 +1,13 @@
+#!/bin/bash
+
+cd /var/lib/oba/transitime/processGTFS
+java \
+  -Xmx10g \
+  -Dtransitime.core.agencyId=<%= node[:transitime][:agency] %> \
+  -jar \
+  processGTFSFile.jar \
+  -c /var/lib/oba/transitime/processGTFS/mysql_hibernate.cfg.xml \
+  -gtfsDirectoryName /var/lib/oba/transitime/gtfs \
+  -storeNewRevs \
+  -maxTravelTimeSegmentLength 1000 \
+  >/dev/null 2>&1
