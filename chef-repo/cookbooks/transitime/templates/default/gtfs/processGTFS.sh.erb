@@ -2,7 +2,7 @@
 
 cd /var/lib/oba/transitime/processGTFS
 java \
-  -Xmx10g \
+  -Xmx2g \
   -Dtransitime.core.agencyId=<%= node[:transitime][:agency] %> \
   -jar \
   processGTFSFile.jar \
@@ -10,4 +10,4 @@ java \
   -gtfsDirectoryName /var/lib/oba/transitime/gtfs \
   -storeNewRevs \
   -maxTravelTimeSegmentLength 1000 \
-  >/dev/null 2>&1
+  > /var/lib/oba/transitime/processGTFS/gtfs.log 2>&1
