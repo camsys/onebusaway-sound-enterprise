@@ -28,12 +28,10 @@
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
-<!--
     <bean id="transitDataService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
         <property name="serviceUrl" value="http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/onebusaway-transit-data-federation-webapp/remoting/transit-data-service" />
         <property name="serviceInterface" value="org.onebusaway.transit_data.services.TransitDataService" />
     </bean>
--->
 	<context:component-scan base-package="org.onebusaway.aws.cloudwatch.impl" />
 	<context:component-scan base-package="org.onebusaway.aws.monitoring.impl" />
 	<context:component-scan base-package="org.onebusaway.aws.monitoring.api" />
@@ -86,8 +84,6 @@
                 </property>
         </bean>
         
-        
-        
      <bean class="org.onebusaway.container.spring.PropertyOverrideConfigurer">
         <property name="properties">
             <props>
@@ -98,6 +94,7 @@
 
     <!-- Set to Admin Server -->
 
+<!--
     <bean id="httpServiceClient" class="org.onebusaway.transit_data_federation.util.HttpServiceClientImpl" >
       <constructor-arg type="java.lang.String" value="admin.<%= node[:oba][:env] %>.wmata.obaweb.org"/>
       <constructor-arg type="java.lang.Integer" value="8080" />
@@ -108,7 +105,7 @@
       <property name="bundleStoreRoot" value="/var/lib/oba/bundle" />
       <property name="standaloneMode" value="false" />
     </bean>
-
+-->
     <bean id="refreshServiceImpl" class="org.onebusaway.container.refresh.RefreshServiceImpl" />
 
 </beans>
