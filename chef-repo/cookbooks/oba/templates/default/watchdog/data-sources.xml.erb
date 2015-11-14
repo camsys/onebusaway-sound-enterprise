@@ -28,7 +28,7 @@
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd">
 
-    <bean id="transitDataService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+    <bean id="transitDataServiceImpl" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
         <property name="serviceUrl" value="http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/onebusaway-transit-data-federation-webapp/remoting/transit-data-service" />
         <property name="serviceInterface" value="org.onebusaway.transit_data.services.TransitDataService" />
     </bean>
