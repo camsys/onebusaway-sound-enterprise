@@ -2,19 +2,19 @@ require 'chef/data_bag'
 name "dev"
 description "environment attributes/configuration for dev environment"
 default_attributes({
-                       "oba" => {
+                     "oba" => {
                        "user" => "ubuntu",
                        "home" => "/home/ubuntu",
-                           "mvn" => {
-                               "group_id" => "org.onebusaway",
-                               "version_admin" => "1.1.15.1-cs-SNAPSHOT",
-                               "version_core" => "1.1.15.1-cs-SNAPSHOT",
-                               "version_app" => "1.1.15.1-cs-SNAPSHOT",
-                               "version_transitime_core" => "0.0.2-SNAPSHOT",
-                               "version_transitime_web" => "0.0.2-SNAPSHOT",
-                               "repositories" => ["http://developer.onebusaway.org/archiva/repository/snapshots/"]
-
+                       "mvn" => {
+                           "group_id" => "org.onebusaway",
+                           "version_admin" => "1.1.15.1-cs-SNAPSHOT",
+                           "version_core" => "1.1.15.1-cs-SNAPSHOT",
+                           "version_app" => "1.1.15.1-cs-SNAPSHOT",
+                           "version_transitime_core" => "0.0.2-SNAPSHOT",
+                           "version_transitime_web" => "0.0.2-SNAPSHOT",
+                           "repositories" => ["http://developer.onebusaway.org/archiva/repository/snapshots/"]
                        },
+                       "db_instance" => "db",  
                        "db_master" => "db.dev.wmata.obaweb.org",
                        "db_user" => "oba",
                        "db_password" => "changeme",
@@ -27,13 +27,12 @@ default_attributes({
                        "admin_server" => "admin.dev.wmata.obaweb.org",
                        "prediction_api_server" => "gtfsrt.dev.wmata.obaweb.org",
                        "prediction_api_port" => "8080",
-
                        "admin_server_port" => "8080",
                        "tds" => {
-                         "bundle_path" => "/var/lib/oba/bundle"
+                          "bundle_path" => "/var/lib/oba/bundle"
                        },
                        "webapp" => {
-                         "artifact" => "onebusaway-enterprise-acta-webapp"
+                          "artifact" => "onebusaway-enterprise-acta-webapp"
                        }
                      },
                      "transitime" => {

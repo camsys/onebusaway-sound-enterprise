@@ -131,6 +131,36 @@
          "key":"monitoring.transitimeUrl",
          "value":"http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/api/v1/key/<%= node[:transitime][:api_key] %>/command/"
       },
+  	  {  
+         "component":"alarm",
+         "key":"alarm.dbInstances",
+         "value":"<%= node[:oba][:db_instance] %>"
+      },
+	  {  
+         "component":"alarm",
+         "key":"alarm.dbHighConnections",
+         "value":"400"
+      },
+	  {  
+         "component":"alarm",
+         "key":"alarm.dbFreeStorageSpace",
+         "value":"3000000000"
+      },
+	  {  
+         "component":"alarm",
+         "key":"alarm.dbReadLatency",
+         "value":"0.3"
+      },
+	  {  
+         "component":"alarm",
+         "key":"alarm.dbWriteLatency",
+         "value":"0.3"
+      },
+	  {  
+         "component":"alarm",
+         "key":"alarm.dbCPUUtilization",
+         "value":"75"
+      },
 	  {  
          "component":"alarm",
          "key":"alarm.criticalSns",
@@ -140,6 +170,11 @@
          "component":"alarm",
          "key":"alarm.nonCriticalSns",
          "value":"<%= node[:aws][:alarmNonCriticalSns] %>"
+      },
+	  {  
+         "component":"alarm",
+         "key":"alarm.sqsQueue",
+         "value":"obawmata_<%= node[:oba][:env] %>"
       }
  ]
 }

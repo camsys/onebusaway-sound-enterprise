@@ -2,19 +2,19 @@ require 'chef/data_bag'
 name "qa"
 description "environment attributes/configuration for qa environment"
 default_attributes({
-                       "oba" => {
+                     "oba" => {
                        "user" => "ubuntu",
                        "home" => "/home/ubuntu",
-                           "mvn" => {
-                               "group_id" => "org.onebusaway",
-                               "version_admin" => "1.1.15-cs-SNAPSHOT",
-                               "version_core" => "1.1.15-cs-SNAPSHOT",
-                               "version_app" => "1.1.15-cs-SNAPSHOT",
-                               "version_transitime_core" => "0.0.2-SNAPSHOT",
-                               "version_transitime_web" => "0.0.2-SNAPSHOT",
-                               "repositories" => ["http://developer.onebusaway.org/archiva/repository/snapshots/"]
-
+                       "mvn" => {
+                           "group_id" => "org.onebusaway",
+                           "version_admin" => "1.1.15-cs-SNAPSHOT",
+                           "version_core" => "1.1.15-cs-SNAPSHOT",
+                           "version_app" => "1.1.15-cs-SNAPSHOT",
+                           "version_transitime_core" => "0.0.2-SNAPSHOT",
+                           "version_transitime_web" => "0.0.2-SNAPSHOT",
+                           "repositories" => ["http://developer.onebusaway.org/archiva/repository/snapshots/"]
                        },
+                       "db_instance" => "db",
                        "db_master" => "db.qa.wmata.obaweb.org",
                        "db_user" => "oba",
                        "db_password" => "changemeqa",
