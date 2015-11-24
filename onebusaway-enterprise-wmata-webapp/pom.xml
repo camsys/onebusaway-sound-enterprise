@@ -9,7 +9,7 @@
   <artifactId>onebusaway-enterprise-wmata-webapp</artifactId>
   <packaging>war</packaging>
   
-  <name>onebusaway-enterprise-hart-webapp</name>
+  <name>onebusaway-enterprise-wmata-webapp</name>
   
   
   	<properties>
@@ -29,8 +29,8 @@
   <dependencies>
     <dependency>
 		<groupId>org.onebusaway</groupId>
-		<artifactId>onebusaway-enterprise-webapp</artifactId>
-		<version>1.1.15.1-cs-SNAPSHOTT</version>
+		<artifactId>onebusaway-enterprise-acta-webapp</artifactId>
+		<version>1.1.15.1-cs-SNAPSHOT</version>
 		<type>war</type>
 	</dependency>
   </dependencies>
@@ -178,7 +178,7 @@
 			     <dependency>
 		<groupId>org.onebusaway</groupId>
 		<artifactId>onebusaway-enterprise-webapp</artifactId>
-		<version>1.1.14-hart.4-SNAPSHOT</version>
+		<version>1.1.15.1-wmata-SNAPSHOT</version>
 		<type>war</type>
 	</dependency>
 			</dependencies>
@@ -294,7 +294,7 @@
                         <overlays>
                         	<overlay>
               					<groupId>org.onebusaway</groupId>
-              					<artifactId>onebusaway-enterprise-webapp</artifactId>
+              					<artifactId>onebusaway-enterprise-acta-webapp</artifactId>
               				</overlay>
                         </overlays>
                     </configuration>

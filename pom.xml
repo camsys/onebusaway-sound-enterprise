@@ -6,9 +6,9 @@
 	<groupId>org.onebusaway</groupId>
 	<version>1.1.15.1-cs-SNAPSHOT</version>
   </parent>
-  <artifactId>onebusaway-hart-enterprise</artifactId>
+  <artifactId>onebusaway-wmata-enterprise</artifactId>
   <packaging>pom</packaging>
-  <version>1.1.14-wmata.4-SNAPSHOT</version>
+  <version>1.1.15.1-wmata-SNAPSHOT</version>
   <name>onebusaway-wmata-enterprise</name>
     <repositories>
         <repository>
