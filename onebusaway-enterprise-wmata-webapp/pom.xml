@@ -29,7 +29,7 @@
   <dependencies>
     <dependency>
 		<groupId>org.onebusaway</groupId>
-		<artifactId>onebusaway-enterprise-acta-webapp</artifactId>
+		<artifactId>onebusaway-enterprise-webapp</artifactId>
 		<version>1.1.15.1-cs-SNAPSHOT</version>
 		<type>war</type>
 	</dependency>
@@ -185,7 +185,7 @@
 		</profile>
 	</profiles>
   <build>
-    <finalName>onebusaway-enterprise-hart-webapp</finalName>
+    <finalName>onebusaway-enterprise-wmata-webapp</finalName>
     <plugins>
 		<plugin>
 			<groupId>pl.project13.maven</groupId>
@@ -294,7 +294,7 @@
                         <overlays>
                         	<overlay>
               					<groupId>org.onebusaway</groupId>
-              					<artifactId>onebusaway-enterprise-acta-webapp</artifactId>
+              					<artifactId>onebusaway-enterprise-webapp</artifactId>
               				</overlay>
                         </overlays>
                     </configuration>
