@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+	<artifactId>onebusaway-application-modules</artifactId>
+	<groupId>org.onebusaway</groupId>
+	<version>1.1.15.1-cs-SNAPSHOT</version>
+  </parent>
+  <artifactId>onebusaway-hart-enterprise</artifactId>
+  <packaging>pom</packaging>
+  <version>1.1.14-wmata.4-SNAPSHOT</version>
+  <name>onebusaway-wmata-enterprise</name>
+    <repositories>
+        <repository>
+            <id>releases.staging.obanyc.com</id>
+            <url>http://developer.onebusaway.org/archiva/repository/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>snapshots.staging.obanyc.com</id>
+            <url>http://developer.onebusaway.org/archiva/repository/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+  <distributionManagement>
+    <repository>
+      <id>releases-camsys-repo</id>
+      <url>http://developer.onebusaway.org/archiva/repository/releases/</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots-camsys-repo</id>
+      <url>http://developer.onebusaway.org/archiva/repository/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
+  
+	<modules>
+	  <module>onebusaway-enterprise-wmata-webapp</module>
+	</modules>
+</project>
+
