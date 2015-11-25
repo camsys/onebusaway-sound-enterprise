@@ -44,9 +44,9 @@ default_attributes({
                          "agency" => "1",
                          "api_key" => "qa3273b0",
                          "encryptionPassword" => "transitimeqa",
-                         "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/443046490497/obawmata_prod",
-                         "sqsKey" => "AKIAJD2S6RVL5BB5VD6Q",
-                         "sqsSecret" => "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",
+                         "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/372394388595/obawmata_qa",
+                         "sqsKey" => "AKIAIAFMZDHCK3F55EIA",
+                         "sqsSecret" => "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",
                          "snsKey" => "AKIAJ34CZNNFNL5G2CUA",
                          "snsSecret" => "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",
                          "snsArn" => "arn:aws:sns:us-east-1:443046490497:wmata_avl"
