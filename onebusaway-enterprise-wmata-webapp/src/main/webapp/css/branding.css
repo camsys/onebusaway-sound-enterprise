@@ -232,9 +232,10 @@ html, body {
     height: 121px;
 }
 #topbar #branding {
-    float: left;
-    height: 90px;
+	float: left;
+	height: 110px;
 }
+
 #topbar #branding a img,
 #topbar #branding a {
 	border: none;
@@ -242,8 +243,12 @@ html, body {
 }
 #topbar #search {
     float: right;
+    /*
+    // Remove search styles because search bar is not present
+    // and it pushes the map.
     margin: 4px 20px 0 0;
     width: 460px;
+    */
 }
 #topbar #search ul#topbar-links {
     float: right;
@@ -379,4 +384,12 @@ html, body {
     background-color: #DDDDDD;
     background-image: none;
     color: #0071C1;
+}
+#branding {
+	width: 100%;
+	background: url("img/header_bg.gif");
+}
+#branding img {
+	display: block;
+	margin-left: auto;
 }
