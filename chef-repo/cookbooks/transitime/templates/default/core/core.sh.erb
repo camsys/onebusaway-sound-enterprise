@@ -7,7 +7,7 @@ java \
   -Dtransitime.core.agencyId=<%= node[:transitime][:agency] %> \
   -Dtransitime.db.dbName=<%= node[:transitime][:dbname] %> \
   -Dtransitime.db.encryptionPassword='<%= node[:transitime][:encryptionPassword] %>' \
-  -Dtransitime.db.batchSize=4000 \
+  -Dtransitime.db.batchSize=8000 \
   -Dtransitime.modules.optionalModulesList="org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.custom.aws.AvlSqsClientModule;org.transitime.monitoring.MonitoringModule" \
   -Dtransitime.avl.feedTimeoutInMSecs=30000 \
   -Dtransitime.core.maxPredictionTimeForDbSecs=3600 \
