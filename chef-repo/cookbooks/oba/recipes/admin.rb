@@ -200,6 +200,7 @@ template "/home/ubuntu/.s3cfg" do
   mode '0600'
 end
 
+logfiles = []
 cron "bundle-sync" do
   minute "0"
   logfile = "/var/lib/oba/Logs/bundle_sync.log"
