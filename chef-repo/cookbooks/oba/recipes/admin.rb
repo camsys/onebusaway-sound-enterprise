@@ -185,5 +185,36 @@ directory '/var/lib/oba/monitoring' do
   action :create
 end
 
+# apt-get install s3cmd
+%w{s3cmd}.each do |p|
+  package p do
+    action :install
+  end
+end
 
+# template s3cfg to ~/.s3cfg
+template "/home/ubuntu/.s3cfg" do
+  source "admin/s3cfg.erb"
+  owner 'ubuntu'
+  group 'ubuntu'
+  mode '0600'
+end
 
+cron "bundle-sync" do
+  minute "0"
+  logfile = "/var/lib/oba/Logs/bundle_sync.log"
+  command "/usr/bin/s3cmd --config ~/.s3cfg --no-progress --recursive --rexclude \"/$\" --skip-existing sync /var/lib/oba/bundles s3://obawmata-bundle/#{node[:oba][:env]}/"
+  user "ubuntu"
+  logfiles << logfile
+end
+
+## synch bundles
+script "sync-bundles-now" do
+  interpreter "bash"
+  user "root"
+  cwd node[:oba][:home]
+  puts "syncing bundles"
+  code <<-EOH
+  /usr/bin/s3cmd --config ~/.s3cfg --no-progress --recursive --rexclude "/$" --skip-existing sync /var/lib/oba/bundles s3://obawmata-bundle/#{node[:oba][:env]}/ >/var/lib/oba/Logs/bundle_sync.log 2>&1
+  EOH
+end
