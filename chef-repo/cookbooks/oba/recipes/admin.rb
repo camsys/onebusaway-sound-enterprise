@@ -200,11 +200,12 @@ template "/home/ubuntu/.s3cfg" do
   mode '0600'
 end
 
+# in case we decide to run logrotate on these files
 logfiles = []
 cron "bundle-sync" do
   minute "0"
   logfile = "/var/lib/oba/Logs/bundle_sync.log"
-  command "/usr/bin/s3cmd --config ~/.s3cfg --no-progress --recursive --rexclude \"/$\" --skip-existing sync /var/lib/oba/bundles s3://obawmata-bundle/#{node[:oba][:env]}/"
+  command "/usr/bin/s3cmd --config ~/.s3cfg --no-progress --recursive --rexclude \"/$\" --skip-existing sync /var/lib/oba/bundles s3://obawmata-bundle/#{node[:oba][:env]}/ > #{logfile} 2>&1"
   user "ubuntu"
   logfiles << logfile
 end
