@@ -18,7 +18,7 @@
     -->
 
   <property name="LOG_FILE_ROOT" 
-            value="${transitime.logging.dir:-/Logs}/${transitime.core.agencyId:-DEFAULT}/core" />
+            value="${transitime.logging.dir:-/var/lib/oba/transitime/logs}/${transitime.core.agencyId:-DEFAULT}/core" />
 
   <!-- The pattern layout how the log file should log info is set here. Note that 
        a newline is used at beginning so that there is a blank line between
@@ -50,10 +50,11 @@
        Logs are compressed automatically since "gz" specified.
     -->
   <appender name="CORE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>core.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <fileNamePattern>${LOG_FILE_ROOT}/core.%i.log.gz</fileNamePattern> 
       <minIndex>1</minIndex>
-      <maxIndex>5</maxIndex>
+      <maxIndex>2</maxIndex>
     </rollingPolicy>
     <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
       <maxFileSize>100MB</maxFileSize>
@@ -85,10 +86,11 @@
        the CORE appender.
     -->
   <appender name="CORE_DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>core.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <fileNamePattern>${LOG_FILE_ROOT}/core.%i.log.gz</fileNamePattern>
       <minIndex>1</minIndex>
-      <maxIndex>3</maxIndex>
+      <maxIndex>2</maxIndex>
     </rollingPolicy>
     <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
       <maxFileSize>100MB</maxFileSize>
@@ -171,10 +173,11 @@
 
   <!-- Separate file for config parameters logging -->
   <appender name="CONFIG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>configParams.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <fileNamePattern>${LOG_FILE_ROOT}/configParams.%i.log.gz</fileNamePattern>
       <minIndex>1</minIndex>
-      <maxIndex>3</maxIndex>
+      <maxIndex>2</maxIndex>
     </rollingPolicy>
     <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
       <maxFileSize>100MB</maxFileSize>
@@ -186,10 +189,14 @@
   </appender>
 
   <!-- Separate file for AVL logging -->
-  <appender name="AVL" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${LOG_FILE_ROOT}/avl.log.gz</fileNamePattern>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      <fileNamePattern>${LOG_FILE_ROOT}/avl.%i.log.gz</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>2</maxIndex>
     </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
     <encoder>
       <charset>UTF-8</charset>
       <pattern>${DEFAULT_PATTERN}</pattern>
@@ -198,9 +205,15 @@
 
   <!-- Separate file for ArrivalDeparture logging -->
   <appender name="ARRIVAL_DEPARTURE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    <file>arrivalDeparture.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <fileNamePattern>${LOG_FILE_ROOT}/arrivalDeparture.log.gz</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>2</maxIndex>
     </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
     <encoder>
       <charset>UTF-8</charset>
       <pattern>${DATA_PATTERN}</pattern>
@@ -209,9 +222,15 @@
 
   <!-- Separate file for VehicleEvents logging -->
   <appender name="VEHICLE_EVENT" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    <file>vehicleEvents.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <fileNamePattern>${LOG_FILE_ROOT}/vehicleEvents.log.gz</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>2</maxIndex>
     </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
     <encoder>
       <charset>UTF-8</charset>
       <pattern>${DATA_PATTERN}</pattern>
@@ -220,9 +239,15 @@
 
   <!-- Separate file for Prediction logging -->
   <appender name="PREDICTION" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    <file>prediction.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <fileNamePattern>${LOG_FILE_ROOT}/prediction.log.gz</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>2</maxIndex>
     </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
     <encoder>
       <charset>UTF-8</charset>
       <pattern>${DATA_PATTERN}</pattern>
@@ -231,9 +256,15 @@
 
   <!-- Separate file for schedule based predictions logging -->
   <appender name="SCHED_BASED_PREDS" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    <file>schedBasedPreds.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <fileNamePattern>${LOG_FILE_ROOT}/schedBasedPreds.log.gz</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>2</maxIndex>
     </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
     <encoder>
       <charset>UTF-8</charset>
       <pattern>${DATA_PATTERN}</pattern>
@@ -242,9 +273,15 @@
 
   <!-- Separate file for PRED_ACCURACY logging -->
   <appender name="PRED_ACCURACY" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    <file>predAccuracy.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <fileNamePattern>${LOG_FILE_ROOT}/predAccuracy.log.gz</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>2</maxIndex>
     </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
     <encoder>
       <charset>UTF-8</charset>
       <pattern>${DEFAULT_PATTERN}</pattern>
@@ -253,9 +290,15 @@
 
   <!-- Separate file for Match logging -->
   <appender name="MATCH" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    <file>match.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <fileNamePattern>${LOG_FILE_ROOT}/match.log.gz</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>2</maxIndex>
     </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
     <encoder>
       <charset>UTF-8</charset>
       <pattern>${DATA_PATTERN}</pattern>
@@ -264,9 +307,15 @@
 
   <!-- Separate file for Monitoring logging -->
   <appender name="MONITORING" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    <file>monitoring.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <fileNamePattern>${LOG_FILE_ROOT}/monitoring.log.gz</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>2</maxIndex>
     </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
     <encoder>
       <charset>UTF-8</charset>
       <pattern>${DEFAULT_PATTERN}</pattern>
@@ -275,9 +324,15 @@
 
   <!-- Separate file for Auto Block Assigner logging -->
   <appender name="AUTO_ASSIGNER" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+    <file>autoAssigner.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
       <fileNamePattern>${LOG_FILE_ROOT}/autoAssigner.log.gz</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>2</maxIndex>
     </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
     <encoder>
       <charset>UTF-8</charset>
       <pattern>${DEFAULT_PATTERN}</pattern>
