@@ -17,7 +17,7 @@ default_attributes({
                        "db_instance" => "db",
                        "db_master" => "db.prod.wmata.obaweb.org",
                        "db_user" => "oba",
-                       "db_password" => "changemeprod",
+                       "db_password" => "changeme",
                        "env" => "prod",
                        "base_domain" => "wmata.obaweb.org",
                        "db_instance_name" => "org_onebusaway_users",
