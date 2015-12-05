@@ -26,7 +26,7 @@ directory "/var/lib/oba/transitime/core" do
   recursive true
 end
 
-directory "/Logs" do
+directory "/var/lib/oba/transitime/logs" do
   owner 'ubuntu'
   group 'ubuntu'
   action :create
@@ -62,6 +62,13 @@ end
 # template transitime configuration
 template "/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml" do
   source "core/mysql_hibernate.cfg.xml.erb"
+  owner 'ubuntu'
+  group 'ubuntu'
+  mode '0644'
+end
+# template logback configuration
+template "/var/lib/oba/transitime/core/logback.xml" do
+  source "core/logback.xml.erb"
   owner 'ubuntu'
   group 'ubuntu'
   mode '0644'
