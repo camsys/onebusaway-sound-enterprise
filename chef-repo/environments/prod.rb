@@ -52,8 +52,8 @@ default_attributes({
                          "snsArn" => ""
                        },
                       "aws" => {
-                        "cloudwatch_publish_key" => "AKIAIHDQDZCGSQMYJAHQ",
-                        "cloudwatch_publish_secret" => "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",
+                        "cloudwatch_publish_key" => "AKIAIC575DBB5Q2GQ64Q",
+                        "cloudwatch_publish_secret" => "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",
                         "cloudwatch_endpoint" => "monitoring.us-east-1.amazonaws.com",
                         "alarmCriticalSns" => "arn:aws:sns:us-east-1:372394388595:OBAWMATA-Alarm-prod",
                         "alarmNonCriticalSns" => "arn:aws:sns:us-east-1:372394388595:OBAWMATA-Monitoring-prod"
