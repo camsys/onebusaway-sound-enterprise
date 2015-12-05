@@ -214,7 +214,7 @@ logfiles = []
 cron "bundle-sync" do
   minute "0"
   logfile = "/var/lib/oba/Logs/bundle_sync.log"
-  command "/usr/bin/s3cmd --config ~/.s3cfg --no-progress --recursive --rexclude \"/$\" --skip-existing sync /var/lib/oba/bundles s3://obawmata-bundle/#{node[:oba][:env]}/ > #{logfile} 2>&1"
+  command "/usr/bin/s3cmd --config /home/ubuntu/.s3cfg --no-progress --recursive --rexclude \"/$\" --skip-existing sync /var/lib/oba/bundles s3://obawmata-bundle/#{node[:oba][:env]}/ > #{logfile} 2>&1"
   user "ubuntu"
   logfiles << logfile
 end
@@ -226,6 +226,6 @@ script "sync-bundles-now" do
   cwd node[:oba][:home]
   puts "syncing bundles"
   code <<-EOH
-  /usr/bin/s3cmd --config ~/.s3cfg --no-progress --recursive --rexclude "/$" --skip-existing sync /var/lib/oba/bundles s3://obawmata-bundle/#{node[:oba][:env]}/ >/var/lib/oba/Logs/bundle_sync.log 2>&1
+  /usr/bin/s3cmd --config /home/ubuntu/.s3cfg --no-progress --recursive --rexclude "/$" --skip-existing sync /var/lib/oba/bundles s3://obawmata-bundle/#{node[:oba][:env]}/ >/var/lib/oba/Logs/bundle_sync.log 2>&1
   EOH
 end
