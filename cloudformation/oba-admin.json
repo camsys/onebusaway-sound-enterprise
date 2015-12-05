@@ -16,27 +16,27 @@
         },
         "AccountId": {
             "Description": "The Account for that environment environment",
-            "Default": "372394388595",
+            "Default": "443046490497",
             "Type": "String"
         },
         "Env": {
             "Description": "The OBAWMATA environment (e.g. prod, dev, etc)",
-            "Default": "qa",
+            "Default": "prod",
             "Type": "String"
         },
         "BaseAMI": {
             "Description": "Ubuntu Cloud Image AMI",
-            "Default": "ami-10f78e7a",
+            "Default": "ami-82bcf0e8",
             "Type": "String"
         },
         "BaseAMIHVM": {
             "Description": "Ubuntu Cloud Image AMI",
-            "Default": "ami-2be99041",
+            "Default": "ami-82bcf0e8",
             "Type": "String"
         },
         "KeyName":{
             "Description":"The EC2 Key Pair to allow SSH access to the instances (must match environment)",
-            "Default":"obawmata_qa",
+            "Default":"obawmata_prod_2016",
             "Type":"String"
         },
         "MinSize": {
@@ -57,11 +57,11 @@
 	"VpcId" : {
 	    "Type" : "String",
 	    "Description" : "VpcId of your existing Virtual Private Cloud (VPC).",
-	    "Default" : "vpc-2ec0644a"
+	    "Default" : "vpc-6e9d5b0a"
 	},
 	"Subnets" : {
 	    "Type" : "CommaDelimitedList",
-	    "Default" : "subnet-97705fbc",
+	    "Default" : "subnet-f12c0da8,subnet-ebcc98c0",
 	    "Description" : "The list of SubnetIds where the stack will be launched"
 		}
     },
@@ -71,7 +71,8 @@
             "Properties": {
 	        "Tags" : [ { "Key" : "ENV", "Value" : "staging", "PropagateAtLaunch" : "true" }, { "Key" : "owner", "Value" : "sbrown@camsys.com", "PropagateAtLaunch" : "true" }, { "Key" : "project", "Value" : "150115.01", "PropagateAtLaunch" : "true" }, { "Key" : "project-name", "Value" : "obawmata", "PropagateAtLaunch" : "true" } ],
                 "AvailabilityZones": [
-                    "us-east-1a"
+                    "us-east-1a",
+		    "us-east-1c"
                 ],
 		"VPCZoneIdentifier" : { "Ref" : "Subnets" },
                 "HealthCheckType": "ELB",
