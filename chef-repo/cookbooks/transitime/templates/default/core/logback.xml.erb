@@ -208,7 +208,7 @@
   <appender name="ARRIVAL_DEPARTURE" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>arrivalDeparture.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-      <fileNamePattern>${LOG_FILE_ROOT}/arrivalDeparture.log.gz</fileNamePattern>
+      <fileNamePattern>${LOG_FILE_ROOT}/arrivalDeparture.%i.log.gz</fileNamePattern>
       <minIndex>1</minIndex>
       <maxIndex>2</maxIndex>
     </rollingPolicy>
@@ -225,7 +225,7 @@
   <appender name="VEHICLE_EVENT" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>vehicleEvents.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-      <fileNamePattern>${LOG_FILE_ROOT}/vehicleEvents.log.gz</fileNamePattern>
+      <fileNamePattern>${LOG_FILE_ROOT}/vehicleEvents.%i.log.gz</fileNamePattern>
       <minIndex>1</minIndex>
       <maxIndex>2</maxIndex>
     </rollingPolicy>
@@ -242,7 +242,7 @@
   <appender name="PREDICTION" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>prediction.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-      <fileNamePattern>${LOG_FILE_ROOT}/prediction.log.gz</fileNamePattern>
+      <fileNamePattern>${LOG_FILE_ROOT}/prediction.%i.log.gz</fileNamePattern>
       <minIndex>1</minIndex>
       <maxIndex>2</maxIndex>
     </rollingPolicy>
@@ -259,7 +259,7 @@
   <appender name="SCHED_BASED_PREDS" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>schedBasedPreds.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-      <fileNamePattern>${LOG_FILE_ROOT}/schedBasedPreds.log.gz</fileNamePattern>
+      <fileNamePattern>${LOG_FILE_ROOT}/schedBasedPreds.%i.log.gz</fileNamePattern>
       <minIndex>1</minIndex>
       <maxIndex>2</maxIndex>
     </rollingPolicy>
@@ -276,7 +276,7 @@
   <appender name="PRED_ACCURACY" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>predAccuracy.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-      <fileNamePattern>${LOG_FILE_ROOT}/predAccuracy.log.gz</fileNamePattern>
+      <fileNamePattern>${LOG_FILE_ROOT}/predAccuracy.%i.log.gz</fileNamePattern>
       <minIndex>1</minIndex>
       <maxIndex>2</maxIndex>
     </rollingPolicy>
@@ -293,7 +293,7 @@
   <appender name="MATCH" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>match.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-      <fileNamePattern>${LOG_FILE_ROOT}/match.log.gz</fileNamePattern>
+      <fileNamePattern>${LOG_FILE_ROOT}/match.%i.log.gz</fileNamePattern>
       <minIndex>1</minIndex>
       <maxIndex>2</maxIndex>
     </rollingPolicy>
@@ -310,7 +310,7 @@
   <appender name="MONITORING" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>monitoring.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-      <fileNamePattern>${LOG_FILE_ROOT}/monitoring.log.gz</fileNamePattern>
+      <fileNamePattern>${LOG_FILE_ROOT}/monitoring.%i.log.gz</fileNamePattern>
       <minIndex>1</minIndex>
       <maxIndex>2</maxIndex>
     </rollingPolicy>
@@ -327,7 +327,7 @@
   <appender name="AUTO_ASSIGNER" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <file>autoAssigner.log</file>
     <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
-      <fileNamePattern>${LOG_FILE_ROOT}/autoAssigner.log.gz</fileNamePattern>
+      <fileNamePattern>${LOG_FILE_ROOT}/autoAssigner.%i.log.gz</fileNamePattern>
       <minIndex>1</minIndex>
       <maxIndex>2</maxIndex>
     </rollingPolicy>
