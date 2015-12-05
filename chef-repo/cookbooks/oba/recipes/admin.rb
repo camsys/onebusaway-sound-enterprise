@@ -44,6 +44,15 @@ end
   end
 end
 
+["/var/lib/oba/Logs"].each do |path|
+  directory path do
+    owner "ubuntu"
+    group "ubuntu"
+    action :create
+    recursive true
+  end
+end
+
 # template context.xml adding datasource
 template "/etc/tomcat7/context.xml" do
   source "admin/context.xml.erb"
