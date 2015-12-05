@@ -85,7 +85,7 @@
                 ],
 		"VPCZoneIdentifier" : { "Ref" : "Subnets" },
                 "HealthCheckType": "ELB",
-                "HealthCheckGracePeriod": 600,
+                "HealthCheckGracePeriod": 720,
                 "LaunchConfigurationName": {
                     "Ref": "LaunchConfig"
                 },
@@ -414,11 +414,11 @@
                     }
                 ],
                 "HealthCheck": {
-                    "Target": "TCP:22",
-                    "HealthyThreshold": "3",
-                    "UnhealthyThreshold": "4",
-                    "Interval": "30",
-                    "Timeout": "20"
+                    "Target": "TCP:2098",
+                    "HealthyThreshold": "2",
+                    "UnhealthyThreshold": "3",
+                    "Interval": "10",
+                    "Timeout": "5"
                 }
             }
         },
