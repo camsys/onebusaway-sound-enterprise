@@ -13,8 +13,11 @@ java \
   -Dtransitime.core.maxPredictionTimeForDbSecs=900 \
   -Dtransitime.core.exclusiveBlockAssignments=true \
   -Dtransitime.core.matchHistoryMaxSize=40 \
-  -Dtransitime.avl.queueSize=100000 \
+  -Dtransitime.avl.queueSize=2400 \
+  -Dtransitime.avl.jmsQueueSize=2400 \
+  -Dtransitime.avl.jmsNumThreads=20 \
   -Dtransitime.avl.shouldUseSqs=true \
+  -Dtransitime.blockLoading.agressive=false \
   -Dtransitime.avl.sqsUrl='<%= node[:transitime][:sqsUrl] %>' \
   -Dtransitime.avl.messageLogFrequency=1000 \
   -Dtransitime.avl.sqsKey='<%= node[:transitime][:sqsKey] %>' \
@@ -22,12 +25,8 @@ java \
   -Dtransitime.avl.snsKey='<%= node[:transitime][:snsKey] %>' \
   -Dtransitime.avl.snsSecret='<%= node[:transitime][:snsSecret] %>' \
   -Dtransitime.avl.snsArn='<%= node[:transitime][:snsArn] %>' \
-  -Dtransitime.avl.jmsNumThreads=20 \
-  -Dtransitime.avl.jmsQueueSize=10000 \
-  -Dtransitime.blockLoading.agressive=true \
-  -Dtransitime.avl.numThreads=20 \
+  -Dtransitime.avl.numThreads=5 \
   -Dtransitime.avl.maxSpeed=45 \
-  -Dtransitime.avl.allowableNoAvl=10 \
   -Dtransitime.environmentName=<%= node["oba"]["env"] %> \
   -Dtransitime.cloudwatch.awsAccessKey='<%= node["aws"]["cloudwatch_publish_key"] %>' \
   -Dtransitime.cloudwatch.awsSecretKey='<%= node["aws"]["cloudwatch_publish_secret"] %>' \
