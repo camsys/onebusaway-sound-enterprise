@@ -18,7 +18,7 @@
     -->
 
   <property name="LOG_FILE_ROOT" 
-            value="/Logs/${transitime.core.agencyId:-DEFAULT}/core/%d{yyyy/MM/dd}" />
+            value="${transitime.logging.dir:-/Logs}/${transitime.core.agencyId:-DEFAULT}/core" />
 
   <!-- The pattern layout how the log file should log info is set here. Note that 
        a newline is used at beginning so that there is a blank line between
@@ -50,11 +50,14 @@
        Logs are compressed automatically since "gz" specified.
     -->
   <appender name="CORE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <!-- daily rollover. Compress the file when rolling it over.
-        -->
-      <fileNamePattern>${LOG_FILE_ROOT}/core.log.gz</fileNamePattern> 
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      <fileNamePattern>${LOG_FILE_ROOT}/core.%i.log.gz</fileNamePattern> 
+      <minIndex>1</minIndex>
+      <maxIndex>5</maxIndex>
     </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
 
     <!-- Only want this appender to take effect if not DEBUG level. This
          way when DEBUG level the CORE_DEBUG can instead handle things
@@ -82,11 +85,14 @@
        the CORE appender.
     -->
   <appender name="CORE_DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <!-- daily rollover. Compress the file when rolling it over.
-        -->
-      <fileNamePattern>${LOG_FILE_ROOT}/core.log.gz</fileNamePattern>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      <fileNamePattern>${LOG_FILE_ROOT}/core.%i.log.gz</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>3</maxIndex>
     </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
 
     <!-- Only want this appender to take effect if DEBUG level. This
          way when DEBUG level this CORE_DEBUG appender can handle things
@@ -165,9 +171,14 @@
 
   <!-- Separate file for config parameters logging -->
   <appender name="CONFIG" class="ch.qos.logback.core.rolling.RollingFileAppender">
-    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <fileNamePattern>${LOG_FILE_ROOT}/configParams.log.gz</fileNamePattern>
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      <fileNamePattern>${LOG_FILE_ROOT}/configParams.%i.log.gz</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>3</maxIndex>
     </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>100MB</maxFileSize>
+    </triggeringPolicy>
     <encoder>
       <charset>UTF-8</charset>
       <pattern>${DATA_PATTERN}</pattern>
