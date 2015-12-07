@@ -47,9 +47,9 @@ default_attributes({
                          "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/372394388595/obawmata_qa",
                          "sqsKey" => "AKIAIAFMZDHCK3F55EIA",
                          "sqsSecret" => "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",
-                         "snsKey" => "AKIAJ34CZNNFNL5G2CUA",
-                         "snsSecret" => "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",
-                         "snsArn" => "arn:aws:sns:us-east-1:443046490497:wmata_avl"
+                         "snsKey" => "",
+                         "snsSecret" => "",
+                         "snsArn" => ""
                        },
                       "aws" => {
                         "cloudwatch_publish_key" => "AKIAIHDQDZCGSQMYJAHQ",
