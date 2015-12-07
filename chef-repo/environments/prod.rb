@@ -47,9 +47,9 @@ default_attributes({
                          "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/443046490497/obawmata_prod",
                          "sqsKey" => "AKIAIAFMZDHCK3F55EIA",
                          "sqsSecret" => "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",
-                         "snsKey" => "",
-                         "snsSecret" => "",
-                         "snsArn" => ""
+                         "snsKey" => "AKIAJ34CZNNFNL5G2CUA",
+                         "snsSecret" => "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",
+                         "snsArn" => "arn:aws:sns:us-east-1:443046490497:wmata_avl"
                        },
                       "aws" => {
                         "cloudwatch_publish_key" => "AKIAIC575DBB5Q2GQ64Q",
