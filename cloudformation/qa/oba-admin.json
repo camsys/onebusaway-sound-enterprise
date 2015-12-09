@@ -1,0 +1,476 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "OBAWMATA Template for oba admin server inside vpc",
+    "Parameters": {
+        "OBAAdminInstanceType": {
+            "Description": "AppServer EC2 instance type",
+            "Type": "String",
+            "Default": "t2.large",
+            "AllowedValues": [
+                "t2.micro",
+                "t2.small",
+                "t2.medium",
+		"t2.large"
+            ],
+            "ConstraintDescription": "must be a valid EC2 instance type."
+        },
+        "AccountId": {
+            "Description": "The Account for that environment environment",
+            "Default": "443046490497",
+            "Type": "String"
+        },
+        "Env": {
+            "Description": "The OBAWMATA environment (e.g. prod, dev, etc)",
+            "Default": "prod",
+            "Type": "String"
+        },
+        "BaseAMI": {
+            "Description": "Ubuntu Cloud Image AMI",
+            "Default": "ami-7e440d14",
+            "Type": "String"
+        },
+        "BaseAMIHVM": {
+            "Description": "Ubuntu Cloud Image AMI",
+            "Default": "ami-7e440d14",
+            "Type": "String"
+        },
+        "KeyName":{
+            "Description":"The EC2 Key Pair to allow SSH access to the instances (must match environment)",
+            "Default":"obawmata_prod_2016",
+            "Type":"String"
+        },
+        "MinSize": {
+            "Description": "Minimum number of instances in the scaling group",
+            "Default": "1",
+            "Type": "Number"
+        },
+        "MaxSize": {
+            "Description": "Maximum number of instances in the scaling group",
+            "Default": "1",
+            "Type": "Number"
+        },
+		"IamInstanceProfile":{
+            "Description":"The iam-profile name for the instance",
+            "Default":"chef",
+            "Type":"String"
+        },
+	"VpcId" : {
+	    "Type" : "String",
+	    "Description" : "VpcId of your existing Virtual Private Cloud (VPC).",
+	    "Default" : "vpc-2ec0644a"
+	},
+	"Subnets" : {
+	    "Type" : "CommaDelimitedList",
+	    "Default" : "subnet-97705fbc,subnet-dcbe5aaa",
+	    "Description" : "The list of SubnetIds where the stack will be launched"
+		}
+    },
+    "Resources": {
+        "AppServerGroup": {
+            "Type": "AWS::AutoScaling::AutoScalingGroup",
+            "Properties": {
+	        "Tags" : [ { "Key" : "ENV", "Value" : "staging", "PropagateAtLaunch" : "true" }, { "Key" : "owner", "Value" : "sbrown@camsys.com", "PropagateAtLaunch" : "true" }, { "Key" : "project", "Value" : "150115.01", "PropagateAtLaunch" : "true" }, { "Key" : "project-name", "Value" : "obawmata", "PropagateAtLaunch" : "true" } ],
+                "AvailabilityZones": [
+                    "us-east-1a",
+		    "us-east-1b"
+                ],
+		"VPCZoneIdentifier" : { "Ref" : "Subnets" },
+                "HealthCheckType": "ELB",
+                "HealthCheckGracePeriod": 600,
+                "LaunchConfigurationName": {
+                    "Ref": "LaunchConfig"
+                },
+                "MinSize": {
+                    "Ref": "MinSize"
+                },
+                "MaxSize": {
+                    "Ref": "MaxSize"
+                },
+                "LoadBalancerNames": [
+                    {
+                        "Ref": "ElasticLoadBalancer"
+                    }
+                ],
+                "NotificationConfiguration": {
+                    "TopicARN": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:sns:us-east-1:",
+				{
+					"Ref": "AccountId"
+				},
+				":OBAWMATA-Monitoring-",
+                                {
+                                    "Ref": "Env"
+                                }
+                            ]
+                        ]
+                    },
+                    "NotificationTypes": [
+                        "autoscaling:EC2_INSTANCE_LAUNCH",
+                        "autoscaling:EC2_INSTANCE_LAUNCH_ERROR",
+                        "autoscaling:EC2_INSTANCE_TERMINATE",
+                        "autoscaling:EC2_INSTANCE_TERMINATE_ERROR"
+                    ]
+                }
+            }
+        },
+        "ScaleUpPolicy": {
+            "Type": "AWS::AutoScaling::ScalingPolicy",
+            "Properties": {
+                "AdjustmentType": "ChangeInCapacity",
+                "AutoScalingGroupName": {
+                    "Ref": "AppServerGroup"
+                },
+                "Cooldown": "180",
+                "ScalingAdjustment": "1"
+            }
+        },
+        "ScaleUpCPUAlarm": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "EvaluationPeriods": "1",
+                "Statistic": "Average",
+                "Threshold": "60",
+                "AlarmDescription": "Alarm if CPU too high or metric disappears indicating instance is down",
+                "Period": "300",
+                "AlarmActions": [
+                    {
+                        "Ref": "ScaleUpPolicy"
+                    }
+                ],
+                "Namespace": "AWS/EC2",
+                "Dimensions": [
+                    {
+                        "Name": "AutoScalingGroupName",
+                        "Value": {
+                            "Ref": "AppServerGroup"
+                        }
+                    }
+                ],
+                "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+                "MetricName": "CPUUtilization"
+            }
+        },
+        "ScaleDownPolicy": {
+            "Type": "AWS::AutoScaling::ScalingPolicy",
+            "Properties": {
+                "AdjustmentType": "ChangeInCapacity",
+                "AutoScalingGroupName": {
+                    "Ref": "AppServerGroup"
+                },
+                "Cooldown": "180",
+                "ScalingAdjustment": "-1"
+            }
+        },
+        "ScaleDownCPUAlarm": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "EvaluationPeriods": "2",
+                "Statistic": "Average",
+                "Threshold": "30",
+                "AlarmDescription": "Alarm if CPU low or metric disappears indicating instance is down",
+                "Period": "300",
+                "AlarmActions": [
+                    {
+                        "Ref": "ScaleDownPolicy"
+                    }
+                ],
+                "Namespace": "AWS/EC2",
+                "Dimensions": [
+                    {
+                        "Name": "AutoScalingGroupName",
+                        "Value": {
+                            "Ref": "AppServerGroup"
+                        }
+                    }
+                ],
+                "ComparisonOperator": "LessThanOrEqualToThreshold",
+                "MetricName": "CPUUtilization"
+            }
+        },
+        "ScaleUpPolicyLatency": {
+            "Type": "AWS::AutoScaling::ScalingPolicy",
+            "Properties": {
+                "AdjustmentType": "ChangeInCapacity",
+                "AutoScalingGroupName": {
+                    "Ref": "AppServerGroup"
+                },
+                "Cooldown": "120",
+                "ScalingAdjustment": "1"
+            }
+        },
+        "ScaleUpLatencyAlarm": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "EvaluationPeriods": "1",
+                "Statistic": "Average",
+                "Threshold": "2",
+                "AlarmDescription": "Alarm if Latency too high or metric disappears indicating instance is down",
+                "Period": "60",
+                "AlarmActions": [
+                    {
+                        "Ref": "ScaleUpPolicyLatency"
+                    }
+                ],
+                "Namespace": "AWS/ELB",
+                "Dimensions": [
+                    {
+                        "Name": "LoadBalancerName",
+                        "Value": {
+                            "Ref": "ElasticLoadBalancer"
+                        }
+                    }
+                ],
+                "ComparisonOperator": "GreaterThanThreshold",
+                "MetricName": "Latency"
+            }
+        },
+        "ScaleUpPastSoftLimit": {
+            "Type": "AWS::CloudWatch::Alarm",
+            "Properties": {
+                "EvaluationPeriods": "1",
+                "Statistic": "Minimum",
+                "Threshold": "1",
+                "AlarmDescription": "Alarm when instance count > 1",
+                "Period": "60",
+                "AlarmActions": [
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:sns:us-east-1:",
+				{
+					"Ref": "AccountId"
+				},
+				":OBAWMATA-Alarm-",
+                                {
+                                    "Ref": "Env"
+                                }
+                            ]
+                        ]
+                    }
+                ],
+                "OKActions": [
+                    {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "arn:aws:sns:us-east-1:",
+				{
+					"Ref": "AccountId"
+				},
+				":OBAWMATA-Monitoring-",
+                                {
+                                    "Ref": "Env"
+                                }
+                            ]
+                        ]
+                    }
+                ],
+                "Namespace": "AWS/ELB",
+                "Dimensions": [
+                    {
+                        "Name": "LoadBalancerName",
+                        "Value": {
+                            "Ref": "ElasticLoadBalancer"
+                        }
+                    }
+                ],
+                "ComparisonOperator": "GreaterThanThreshold",
+                "MetricName": "HealthyHostCount"
+            }
+        },
+        "LaunchConfig": {
+            "Type": "AWS::AutoScaling::LaunchConfiguration",
+            "Properties": {
+                "KeyName": {
+                    "Ref": "KeyName"
+                },
+                "ImageId": { "Ref": "BaseAMIHVM" },
+				"IamInstanceProfile":{
+                    "Ref":"IamInstanceProfile"
+                },
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sdb",
+                        "VirtualName": "ephemeral0"
+                    }
+                ],
+		"UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+"#!/bin/bash\n",
+"#user-data.sh for oba server\n",
+"exec > >(tee /tmp/user-data.log|logger -t user-data -s 2>/dev/console) 2>&1\n",
+"curl -L https://www.opscode.com/chef/install.sh | sudo bash\n",
+"cat - >/root/.ssh/id_rsa.pub <<EOF\n",
+"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDhQInDiVu/Q8EnbdShXTkU8qjUhPD18YHSKCRCohO2KJO89TQKKWiG2lL2SSoxL+Ago5sntdFKefSIzIYTGE2p6zfWB21F8m/6+mcPqZvyF2sshbxOYi3l1DrWCnNPSq+nEWWvZr0rJdwP1jLgm4AUMNEz+y0XxMLUq7iftTIYzuW5//jqAya3OSKxQA2xkDT++FGrq3gu4jneS2eIcDOojoB3dYzq2CxMJve0QwFUt2RYlWXRdDHvGevZMosNhu4X653xz5owMzXJtLq2y/wBekrIURDOotbUcEykStYBRXTpUjCavQuikVSha4ydeRZSFndHy5pdYhK5mEEwyP3zXlCsnXE1YdZonNWTrDKGVAepYV/BnCX/yniWJVn8pVM55pSggZS8j18Cq9LVm/qOy125TyNBUvmkhGdZmcN2DEyMzkMELe0DYE2nGRizOBiwIkdR3B6jCIcscP0cwY/guGzyxSLkKy9UXK5VL2cpddSU+nZp09shpFxT4JWZ/1/ZZxWn0O26BaB6uJhqdNgEphFslNbTvKaFQVLECoCyRYsu3ov9nZaPPWp2r6SYRTvbPOLg2b9U9wK2CCtWIWx+6cskcVvi8khLI1mRXLCW0GQTYUyDw1QkdeD8Xh0RiiaIP32TQ9CmoE2sdnGeJnk6nMfjkP/VYHOwNg2mSFegzw== sheldonb@gmail.com\n",
+"EOF\n",
+"cat - >/root/.ssh/id_rsa <<EOF\n",
+"-----BEGIN RSA PRIVATE KEY-----\n",
+"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\n",
+"-----END RSA PRIVATE KEY-----\n",
+"EOF\n",
+"chmod 600 /root/.ssh/id_rsa*\n",
+"chmod 666 /etc/ssh/ssh_config\n",
+"echo '    StrictHostKeyChecking no' >>/etc/ssh/ssh_config\n",
+"chmod 644 /etc/ssh/ssh_config\n",
+"apt-get install git -y\n",
+"cd /root\n",
+"git clone git@github.com:camsys/wmata-devops.git\n",
+"sudo chef-solo -l debug -L /tmp/chef.log -c /root/wmata-devops/chef-repo/solo.rb -E ",
+{
+  "Ref":"Env"
+},
+" -j /root/wmata-devops/chef-repo/oba-admin.json\n"                            ]
+                        ]
+                    }
+                },
+                "SecurityGroups": [
+                    {
+                        "Ref": "InstanceSecurityGroupVPC"
+                    }
+                ],
+                "InstanceType": {
+                    "Ref": "OBAAdminInstanceType"
+                }
+            }
+        },
+        "ElasticLoadBalancer": {
+            "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
+            "Properties": {
+	        "Subnets" : { "Ref" : "Subnets" },
+                "Listeners": [
+                    {
+                        "LoadBalancerPort": "8080",
+                        "InstancePort": "8080",
+                        "Protocol": "HTTP"
+                    }
+                ],
+                "HealthCheck": {
+                    "Target": "TCP:22",
+                    "HealthyThreshold": "3",
+                    "UnhealthyThreshold": "10",
+                    "Interval": "60",
+                    "Timeout": "10"
+                }
+            }
+        },
+        "InstanceSecurityGroupVPC": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Enable SSH access and HTTP from the load balancer only",
+		"VpcId" : { "Ref" : "VpcId" },
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "209.65.164.27/32"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "12.0.47.2/32"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "8080",
+                        "ToPort": "8080",
+                        "CidrIp": "209.65.164.27/32"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "8080",
+                        "ToPort": "8080",
+                        "CidrIp": "12.0.47.2/32"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "8080",
+                        "ToPort": "8080",
+                        "SourceSecurityGroupOwnerId": {
+                            "Fn::GetAtt": [
+                                "ElasticLoadBalancer",
+                                "SourceSecurityGroup.OwnerAlias"
+                            ]
+                        },
+                        "SourceSecurityGroupName": {
+                            "Fn::GetAtt": [
+                                "ElasticLoadBalancer",
+                                "SourceSecurityGroup.GroupName"
+                            ]
+                        }
+                    }
+                ],
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "22",
+                        "ToPort": "22",
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": "8080",
+                        "ToPort": "8080",
+                        "CidrIp": "0.0.0.0/0"
+                    }
+		]
+            }
+        }
+    }
+}
