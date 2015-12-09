@@ -12,12 +12,12 @@
 
 
  <!-- Transit Data Service -->
-<!--
+
     <bean id="transitDataService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
         <property name="serviceUrl" value="http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/onebusaway-transit-data-federation-webapp/remoting/transit-data-service" />
         <property name="serviceInterface" value="org.onebusaway.transit_data.services.TransitDataService" />
     </bean>
--->
+
         <!-- Database Configuration -->
     <bean id="dataSource"
           class="org.springframework.jndi.JndiObjectFactoryBean">
@@ -150,17 +150,5 @@
                         </list>
                 </property>
         </bean>
-    <bean id="httpServiceClient" class="org.onebusaway.transit_data_federation.u
-til.HttpServiceClientImpl" >
-      <constructor-arg type="java.lang.String" value="admin.<%= node[:oba][:env] %>.wmata.obaweb.org
-"/>
-      <constructor-arg type="java.lang.Integer" value="8080" />
-      <constructor-arg type="java.lang.String" value="/api/" />
-    </bean>
- 
-   <bean id="bundleManagementService" class="org.onebusaway.transit_data_federation.impl.bundle.BundleManagementServiceImpl">
-kkk      <property name="bundleStoreRoot" value="/var/lib/oba/bundle" />
-      <property name="standaloneMode" value="false" />
-   </bean>
    
 </beans>
