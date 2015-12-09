@@ -226,6 +226,6 @@ script "sync-bundles-now" do
   cwd node[:oba][:home]
   puts "syncing bundles"
   code <<-EOH
-  /usr/bin/s3cmd --config /home/ubuntu/.s3cfg --no-progress --recursive --rexclude "/$" --skip-existing get s3://obawmata-bundle/#{node[:oba][:env]}/ /var/lib/oba/ >/var/lib/oba/logs/bundle_sync.log 2>&1
+  nohup /usr/bin/s3cmd --config /home/ubuntu/.s3cfg --no-progress --recursive --rexclude "/$" --skip-existing get s3://obawmata-bundle/#{node[:oba][:env]}/ /var/lib/oba/ >/var/lib/oba/logs/bundle_sync.log 2>&1 &
   EOH
 end
