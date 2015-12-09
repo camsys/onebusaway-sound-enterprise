@@ -33,7 +33,10 @@ default_attributes({
                        },
                        "webapp" => {
                           "artifact" => "onebusaway-enterprise-acta-webapp"
-                       }
+                       },
+                       "archiva" => {
+                           "s3_user" =>  "AKIAJGPEIERX2KIPI52A",
+                           "s3_password" => "qOhfseblnczHLlWpFvqwp8KFxAXUWzgK6P7xAlz9"
                      },
                      "transitime" => {
                         "dbhost" => "db.dev.wmata.obaweb.org:3306",
