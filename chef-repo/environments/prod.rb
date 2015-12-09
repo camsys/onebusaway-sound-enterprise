@@ -12,7 +12,7 @@ default_attributes({
                            "version_app" => "1.1.15.1-cs-SNAPSHOT",
                            "version_transitime_core" => "0.0.2-SNAPSHOT",
                            "version_transitime_web" => "0.0.2-SNAPSHOT",
-                           "repositories" => ["http://repo.prod.wmata.obaweb.org:8080/archiva/repository/snapshots/"]
+                           "repositories" => ["http://repo.prod.wmata.obaweb.org:8080/archiva/repository/snapshots/", "http://backuprepo.prod.wmata.obaweb.org:8080/archiva/repository/snapshots/"]
                        },
                        "db_instance" => "db",
                        "db_master" => "db.prod.wmata.obaweb.org",
