@@ -239,7 +239,7 @@ script "fixup watchdog" do
   puts "fixing memory args"
   code <<-EOH
   sed -i /etc/init.d/tomcat7-watchdog -e 's!Xmx128m!Xmx2g!g'
-  sudo tomcat7-watchdog restart
+  sudo service tomcat7-watchdog restart
   EOH
 end
 
