@@ -206,7 +206,7 @@ template "/home/ubuntu/.s3cfg" do
   source "admin/s3cfg.erb"
   owner 'ubuntu'
   group 'ubuntu'
-  mode '0600'
+  mode '0644'
 end
 
 # in case we decide to run logrotate on these files
