@@ -143,6 +143,7 @@ script "deploy_watchdog" do
   rm -rf /var/cache/tomcat7-watchdog/temp/*
   rm -rf /var/cache/tomcat7-watchdog/work/Catalina/localhost/
   unzip #{mvn_watchdog_dest_file} -d /var/lib/tomcat7-watchdog/webapps/onebusaway-watchdog-webapp || exit 1
+  sed -i /etc/init.d/tomcat7-watchdog -e 's!Xmx128m!Xmx2g!g'
   EOH
 end
 
@@ -227,7 +228,7 @@ script "sync-bundles-now" do
   puts "syncing bundles"
   code <<-EOH
   sed -i /etc/passwd -e 's!/usr/share/tomcat7:/bin/false!/usr/share/tomcat7:/bin/bash!'
-  nohup /usr/bin/s3cmd --config /home/ubuntu/.s3cfg --no-progress --recursive --rexclude "/$" --skip-existing get s3://obawmata-bundle/#{node[:oba][:env]}/ /var/lib/oba/ >/tmp/bundle_sync.log 2>&1 &
+  /usr/bin/s3cmd --config /home/ubuntu/.s3cfg --no-progress --recursive --rexclude "/$" --skip-existing get s3://obawmata-bundle/#{node[:oba][:env]}/ /var/lib/oba/ >/tmp/bundle_sync.log 2>&1 &
   EOH
 end
 
@@ -239,7 +240,6 @@ script "fixup watchdog" do
   cwd node[:oba][:home]
   puts "fixing memory args"
   code <<-EOH
-  sed -i /etc/init.d/tomcat7-watchdog -e 's!Xmx128m!Xmx2g!g'
   sudo service tomcat7-watchdog restart
   EOH
 end
