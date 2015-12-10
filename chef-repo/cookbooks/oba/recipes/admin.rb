@@ -222,7 +222,7 @@ end
 ## synch bundles
 script "sync-bundles-now" do
   interpreter "bash"
-  user "ubuntu"
+  user "tomcat7"
   cwd node[:oba][:home]
   puts "syncing bundles"
   code <<-EOH
