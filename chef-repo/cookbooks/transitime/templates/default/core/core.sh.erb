@@ -18,7 +18,7 @@ java \
   -Dtransitime.avl.jmsQueueSize=2400 \
   -Dtransitime.avl.jmsNumThreads=20 \
   -Dtransitime.avl.shouldUseSqs=true \
-  -Dtransitime.blockLoading.agressive=true \
+  -Dtransitime.blockLoading.agressive=false \
   -Dtransitime.avl.sqsUrl='<%= node[:transitime][:sqsUrl] %>' \
   -Dtransitime.avl.messageLogFrequency=1000 \
   -Dtransitime.avl.sqsKey='<%= node[:transitime][:sqsKey] %>' \
