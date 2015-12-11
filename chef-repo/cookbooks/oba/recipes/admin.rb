@@ -184,6 +184,8 @@ script "start_tomcats" do
   code <<-EOH
   service tomcat7 start
   service tomcat7-watchdog start
+  # somewhere along the way ROOT owns this dir, fix it
+  sudo chown -R tomcat7:tomcat7 /var/lib/oba/bundles
   EOH
 end
 
