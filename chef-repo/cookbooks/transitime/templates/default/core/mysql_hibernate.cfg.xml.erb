@@ -47,7 +47,9 @@
    <property name="hibernate.c3p0.max_statements">1000</property>  
    <!-- test connections in case the database has restarted -->
   <property name="hibernate.c3p0.preferredTestQuery">SELECT 1</property>  
-  <property name="hibernate.c3p0.testConnectionOnCheckout">true</property>  
+  <property name="hibernate.c3p0.testConnectionOnCheckout">false</property>  
+  <property name="hibernate.c3p0.testConnectionOnCheckin">true</property>  
+  <property name="hibernate.c3p0.idleConnectionTestPeriod">60</property>  
    <!-- When doing lots of writes, such as logging AVL data and other
         such regularlly occurring data then want to batch the requests
         to improve efficiency. Info online indicates that a value of
