@@ -50,6 +50,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         </property>
         </bean>
 
+<!--
     <bean class="org.onebusaway.transit_data_federation.impl.realtime.gtfs_realtime.GtfsRealtimeSource">
     <property name="alertsUrl" value="http://admin.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/api/alerts-from-rss/service-alerts" />
 
@@ -60,7 +61,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         </list>
         </property>
     </bean>
-
+-->
 
     <bean id="httpServiceClient" class="org.onebusaway.transit_data_federation.util.HttpServiceClientImpl" >
       <constructor-arg type="java.lang.String" value="<%= node[:oba][:admin_server] %>"/>
