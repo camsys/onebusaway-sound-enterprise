@@ -387,9 +387,16 @@ html, body {
 }
 #branding {
 	width: 100%;
-	background: url("img/header_bg.gif");
+	background: url("img/header_bg.gif") repeat-x;
 }
-#branding img {
-	display: block;
-	margin-left: auto;
+#branding_left {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+#branding_right {
+	position: absolute;
+	top: 0;
+	right: 0;
 }
