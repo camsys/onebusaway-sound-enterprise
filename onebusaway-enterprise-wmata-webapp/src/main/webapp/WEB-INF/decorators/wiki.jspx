@@ -97,8 +97,14 @@
 <div id="mainbox">
 	<div id="topbar">
 		<div id="branding">
-			<s:url var="url" value="/css/img/agency_logo.gif"></s:url>
-			<img src="${url}" usemap="#m_wmata_masthead" alt="Agency logo" />
+			<div id="branding_left">
+				<s:url var="url" value="/css/img/agency_logo_left.gif"></s:url>
+				<img src="${url}" usemap="#m_wmata_masthead" alt="Agency logo" />
+			</div>
+			<div id="branding_right">
+				<s:url var="url" value="/css/img/agency_logo_right.gif"></s:url>
+				<img src="${url}" alt="Agency logo right" />
+			</div>
 		</div>
 		
 		<div id="search">
