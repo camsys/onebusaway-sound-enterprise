@@ -32,7 +32,7 @@ default_attributes({
                          "bundle_path" => "/var/lib/oba/bundle"
                        },
                        "webapp" => {
-                         "artifact" => "onebusaway-enterprise-acta-webapp"
+                         "artifact" => "onebusaway-enterprise-wmata-webapp"
                        }
                      },
                        "transitime" => {
