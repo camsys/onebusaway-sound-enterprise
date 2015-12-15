@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Context>
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
-    <Environment name="xwikiUrl" value="http://xwiki.<%= node[:oba][:env] %>.obanyc.com" type="java.lang.String" override="true" />
-    <Environment name="wikiDocumentEditUrl" value="http://xwiki.<%= node[:oba][:env] %>.obanyc.com/bin/edit/%{namespace}/%{documentName}" type="java.lang.String" override="true" />
-    <Environment name="wikiAttachmentUrl" value="http://xwiki.<%= node[:oba][:env] %>.obanyc.com/bin/download/%{namespace}/%{documentName}/%{attachmentName}" type="java.lang.String" override="true" />
+    <Environment name="xwikiUrl" value="http://xwiki.prod.wmata.obaweb.org/xwiki" type="java.lang.String" override="true" />
+    <Environment name="wikiDocumentEditUrl" value="http://xwiki.prod.wmata.obaweb.org/xwiki/bin/edit/%{namespace}/%{documentName}" type="java.lang.String" override="true" />
+    <Environment name="wikiAttachmentUrl" value="http://xwiki.prod.wmata.obaweb.org/xwiki/bin/download/%{namespace}/%{documentName}/%{attachmentName}" type="java.lang.String" override="true" />
      <Resource name="jdbc/appDB"
         auth="Container"
         type="javax.sql.DataSource"
