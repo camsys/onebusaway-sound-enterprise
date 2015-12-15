@@ -4,22 +4,22 @@ log "Downloading wars"
 node.override["tomcat"]["java_options"] = "-Xmx6G -Xms1G -XX:MaxPermSize=256m -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Dtransitime.rmi.timeoutSec=300 -Dtransitime.db.encryptionPassword='#{node["transitime"]["encryptionPassword"]}'"
 
 mvn_version = node[:oba][:mvn][:version_transitime_web]
-mvn_web_dest_file = "/tmp/transitimeWebapp-#{mvn_version}.war"
+mvn_web_dest_file = "/tmp/chef/transitimeWebapp-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_web_dest_file}"
 maven "transitimeWebapp" do
   group_id "transitime"
-  dest "/tmp"
+  dest "/tmp/chef"
   version mvn_version
   packaging "war"
   owner "tomcat7"
   repositories node[:oba][:mvn][:repositories]
 end
 
-mvn_api_dest_file = "/tmp/transitimeApi-#{mvn_version}.war"
+mvn_api_dest_file = "/tmp/chef/transitimeApi-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_api_dest_file}"
 maven "transitimeApi" do
   group_id "transitime"
-  dest "/tmp"
+  dest "/tmp/chef"
   version mvn_version
   packaging "war"
   owner "tomcat7"
