@@ -37,6 +37,7 @@ default_attributes({
                      },
                        "transitime" => {
                          "dbhost" => "db.prod.wmata.obaweb.org:3306",
+                         "dbrohost" => "db-ro.prod.wmata.obaweb.org:3306",
                          "dbtype" => "mysql",
                          "dbusername" => "transitime",
                          "dbpassword" => "transitimeprod",

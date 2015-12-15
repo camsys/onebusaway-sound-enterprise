@@ -64,7 +64,7 @@
         uncomment this part and set the db parameters here. -->
 
    <property name="hibernate.connection.url">
-      jdbc:mysql://<%= node[:transitime][:dbhost] %>/transitime?autoReconnect=true
+      jdbc:mysql://<%= node[:transitime][:dbrohost] %>/transitime?autoReconnect=true
    </property>
    <property name="hibernate.connection.username">
       <%= node[:transitime][:dbusername] %>
