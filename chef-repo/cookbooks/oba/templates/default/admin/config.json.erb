@@ -58,6 +58,11 @@
       },
       {  
          "component":"aws",
+         "key":"oba.env",
+         "value":"<%= node[:oba][:env] %>"
+      },
+      {  
+         "component":"aws",
          "key":"aws.accessKey",
          "value":"<%= node[:aws][:cloudwatch_publish_key] %>"
       },
