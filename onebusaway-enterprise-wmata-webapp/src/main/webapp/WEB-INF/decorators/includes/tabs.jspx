@@ -29,6 +29,10 @@
 	    <s:set var="link" value="getText('main.agency.link')" />
 	    <area shape="rect" coords="5,77,89,110" href="${link}" title="Home" alt="Home" />
     </map>
-   
+    
+   <map name="m_wmata_searchbox" id="m_wmata_searchbox">
+   		<area shape="circle" coords="256,56,10" href="#" onclick="document.wmataSearch.submit()" title="Search" alt="Search" />
+   </map>
+    
 
 </div>
