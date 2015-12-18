@@ -400,3 +400,14 @@ html, body {
 	top: 0;
 	right: 0;
 }
+#wmataSearch input {
+	position: absolute;
+	top: 46px;
+	right: 94px;
+	width: 210px;
+	z-index: 1;
+	border: none;
+	background-color: rgba(0,0,0,0);
+	color: #5295C2;
+	font: bold 100% Arial,sans-serif;
+}

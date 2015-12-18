@@ -103,7 +103,7 @@
 			</div>
 			<div id="branding_right">
 				<s:url var="url" value="/css/img/agency_logo_right.gif"></s:url>
-				<img src="${url}" alt="Agency logo right" />
+				<img src="${url}" usemap="#m_wmata_searchbox" alt="Agency logo" />
 			</div>
 		</div>
 		
@@ -114,6 +114,10 @@
 					<li class="list_h" style="margin-left:4px;"><a href="${link}">The Weekender</a></li>
 				</c:if>		
 			</ul>
+			<s:set var="link" value="getText('main.search.link')" />
+			<form name="wmataSearch" id="wmataSearch" action="${link}">
+				<input type="text" name="s" placeholder="search"></input>
+			</form>
 		</div>
 
 		<!-- Include the tabs.jspx that provides branded links -->
