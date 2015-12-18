@@ -45,11 +45,10 @@
         of data using the same query caching some prepared statements could
         easily speed things up. --> 
    <property name="hibernate.c3p0.max_statements">1000</property>  
+   <property name="hibernate.c3p0.validate">true</property>
+
+   <property name="hibernate.connection.provider_class">org.hibernate.service.jdbc.connections.internal.C3P0ConnectionProvider</property>
    <!-- test connections in case the database has restarted -->
-  <property name="hibernate.c3p0.preferredTestQuery">SELECT 1</property>  
-  <property name="hibernate.c3p0.testConnectionOnCheckout">false</property>  
-  <property name="hibernate.c3p0.testConnectionOnCheckin">true</property>  
-  <property name="hibernate.c3p0.idleConnectionTestPeriod">60</property>  
    <!-- When doing lots of writes, such as logging AVL data and other
         such regularlly occurring data then want to batch the requests
         to improve efficiency. Info online indicates that a value of
@@ -72,7 +71,7 @@
         uncomment this part and set the db parameters here. -->
 
    <property name="hibernate.connection.url">
-      jdbc:mysql://<%= node[:transitime][:dbhost] %>/transitime?rewriteBatchedStatements=true&amp;cachePrepStmts=true
+      jdbc:mysql://<%= node[:transitime][:dbhost] %>/transitime?rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;autoReconnect=true&amp;connectTimeout=60000&amp;socketTimeout=60000
    </property>
    <property name="hibernate.connection.username">
       <%= node[:transitime][:dbusername] %>
