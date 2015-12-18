@@ -419,6 +419,11 @@ small {
 	zoom: 1;   /* hasLayout fix for IE */
 	line-height: 1.2em;
 }
+.arrivalsAtStop li small {
+	display: inline-block;
+	text-align: center;
+}
+
 
 .arrivalsAtStopSchedule li {
 	margin-left: 10px;
