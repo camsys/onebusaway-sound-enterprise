@@ -181,86 +181,26 @@
          "key":"alarm.sqsQueue",
          "value":"obawmata_<%= node[:oba][:env] %>"
       },
-  {
-        "component": "permission",
-        "key": "LoginAction",
+      {
+        "component": "privilege",
+        "key": "ROLE_ADMINISTRATOR",
         "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "IndexAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "ResourceAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "ApiKeyAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "BarcodeAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "DeployConfigAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "ParametersAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "ReportsAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "ManageBundlesAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "ValidateBundleAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "ServiceAlertAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "ServiceAlertAffectsAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "ServiceAlertsAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "ManageUsersAction",
-        "value": "*"
-     },
-     {
-        "component": "permission",
-        "key": "RegisterUserAction",
-        "value": "*"
-     },
-    {
-        "component": "permission",
-        "key": "VehicleStatusAction",
-        "value": "none"
-     }
+      },
+      {
+        "component": "privilege",
+        "key": "ROLE_OPERATOR",
+        "value": "org.onebusaway.webapp.actions.admin.ApiKeyAction,org.onebusaway.webapp.actions.admin.BarcodeAction,org.onebusaway.webapp.actions.admin.DeployConfigAction,org.onebusaway.webapp.actions.admin.ParametersAction,org.onebusaway.webapp.actions.admin.ReportsAction,onebusaway.webapp.actions.admin.bundles.ManageBundlesAction,org.onebusaway.webapp.actions.admin.bundles.ValidateBundleAction,org.onebusaway.webapp.actions.admin.servicealerts.ServiceAlertAction,org.onebusaway.webapp.actions.admin.servicealerts.ServiceAlertAffectsAction,org.onebusaway.webapp.actions.admin.servicealerts.ServiceAlertsAction,org.onebusaway.webapp.actions.admin.vehiclestatus.VehicleStatusAction,org.onebusaway.webapp.actions.admin.vehiclestatus.PopupAction,org.onebusaway.admin.service.api.ConfigResource,org.onebusaway.admin.service.api.UserResource,org.onebusaway.admin.service.bundle.api.BuildResource,org.onebusaway.admin.service.bundle.api.BundleResource,org.onebusaway.admin.service.bundle.api.ValidateResource,org.onebusaway.admin.service.bundle.api.remote.BuildRemoteResource,org.onebusaway.admin.service.bundle.api.remote.ValidateRemoteResource"
+      },
+      {
+        "component": "privilege",
+        "key": "ROLE_SUPPORT",
+        "value": "org.onebusaway.webapp.actions.admin.usermanagement.ManageUsersAction,org.onebusaway.webapp.actions.admin.usermanagement.RegisterUserAction,org.onebusaway.webapp.actions.admin.usermanagement.UpdatePasswordAction,org.onebusaway.admin.service.api.UserResource"
+      },
+      {
+        "component": "privilege",
+        "key": "ROLE_REPORTING",
+        "value": "org.onebusaway.webapp.actions.admin.ReportsAction"
+      }
 
  ]
 }
