@@ -6,7 +6,7 @@ description      "Installs and Configures onebusaway components"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.0.1"
 
-%w{ java tomcat cloudwatch_monitoring }.each do |cb|
+%w{ java tomcat cloudwatch_monitoring tomcat-apache-mod-jk apache2 }.each do |cb|
   depends cb
 end
 

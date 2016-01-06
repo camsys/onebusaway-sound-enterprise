@@ -1,0 +1,49 @@
+<VirtualHost *:80>
+    ServerAdmin ops@example.com
+    Header add X-Source "<%= node.name %>"
+    JkMount /* ajp13_worker
+    JkUnMount /robots.txt ajp13_worker
+    JkUnMount /onebusaway-nyc-transit-data-federation-webapp/* ajp13_worker
+    JkUnMount /release.html ajp13_worker
+    RewriteEngine On
+    RewriteCond %{HTTP_HOST} <%= node[:oba][:lb] %>
+    RewriteCond %{QUERY_STRING} !LineRef
+    RewriteCond %{QUERY_STRING} !VehicleRef
+    RewriteRule ^/api/siri/vehicle-monitoring.json(.*)$ http://api.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>/api/siri/vehicle-monitoring.json$1 [NE]
+    RewriteCond %{HTTP_USER_AGENT} DTS\ Agent
+    RewriteRule ^ - [F]
+    RewriteRule ^/api/where/(.+)$ /onebusaway-nyc-api-webapp/api/where/$1 [PT]
+    DocumentRoot /var/www/
+        <Directory />
+                Options FollowSymLinks
+                AllowOverride None
+        </Directory>
+        <Directory /var/www/>
+                Options Indexes FollowSymLinks MultiViews
+                AllowOverride None
+                Order allow,deny
+                allow from all
+                # This directive allows us to have apache2's default start page
+                # in /apache2-default/, but still have / go to the right place
+                #RedirectMatch ^/$ /apache2-default/
+        </Directory>
+
+        ErrorLog /mnt/log/apache2/error.log 
+
+        # Possible values include: debug, info, notice, warn, error, crit,
+        # alert, emerg.
+        LogLevel warn
+
+        CustomLog /mnt/log/apache2/access.log combined
+        ServerSignature On
+
+        Alias /doc/ "/usr/share/doc/"
+        <Directory "/usr/share/doc/">
+            Options Indexes MultiViews FollowSymLinks
+            AllowOverride None
+            Order deny,allow
+            Deny from all
+            Allow from 127.0.0.0/255.0.0.0 ::1/128
+        </Directory>
+
+</VirtualHost>
