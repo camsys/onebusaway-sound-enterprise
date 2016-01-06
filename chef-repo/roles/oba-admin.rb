@@ -3,6 +3,8 @@ description "oba admin server"
 run_list(
         "role[base]",
         "recipe[tomcat]",
+        "recipe[apache2]",
+        "recipe[tomcat-apache-mod-jk]",
         "recipe[oba::admin]",
         "recipe[transitime::gtfs]"
 )

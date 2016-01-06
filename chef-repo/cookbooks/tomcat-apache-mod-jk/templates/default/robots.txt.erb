@@ -1,0 +1,9 @@
+User-agent: *
+<% if node.chef_environment == "obanyc_prod" -%>
+Disallow: /index#*
+Disallow: /m/index?*
+Disallow: /sign/*
+<% end -%>
+<% if node.chef_environment != "obanyc_prod" -%>
+Disallow: /
+<% end -%>
