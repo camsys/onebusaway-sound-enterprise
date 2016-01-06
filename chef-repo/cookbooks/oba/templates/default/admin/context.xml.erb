@@ -73,6 +73,7 @@
          mail.smtp.auth="true"
          mail.smtp.starttls.enable="true"
          mail.smtp.starttls.required="true"
+         mail.smtp.from="<%= node[:oba][:ses_from] %>"
          mail.smtp.host="<%= node[:oba][:ses_host] %>"
          mail.smtp.user="<%= node[:oba][:ses_user] %>"
          username="<%= node[:oba][:ses_user] %>"
