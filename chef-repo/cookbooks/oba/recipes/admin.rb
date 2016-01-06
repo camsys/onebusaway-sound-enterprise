@@ -167,7 +167,7 @@ end
 
 
 # TODO fix build dependency
-%w{mysql-connector-java-5.1.35.jar}.each do |jar_file|
+%w{mysql-connector-java-5.1.35.jar mail-1.4.jar}.each do |jar_file|
   cookbook_file ["/usr/share/tomcat7/lib", jar_file].compact.join("/") do
     owner 'tomcat7'
     group 'tomcat7'
