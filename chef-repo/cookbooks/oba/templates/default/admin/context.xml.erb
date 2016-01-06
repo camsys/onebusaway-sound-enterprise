@@ -66,6 +66,19 @@
         url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>" >
         <connection-property name="readOnly">false</connection-property>
      </Resource>
+     <Resource name="mail/Session" auth="Container"
+         type="javax.mail.Session"
+         mail.smtp.protocol="smtp"
+         mail.smtp.port="25"
+         mail.smtp.auth="true"
+         mail.smtp.starttls.enable="true"
+         mail.smtp.starttls.required="true"
+         mail.smtp.host="<%= node[:oba][:ses_host] %>"
+         mail.smtp.user="<%= node[:oba][:ses_user] %>"
+         username="<%= node[:oba][:ses_user] %>"
+         password="<%= node[:oba][:ses_password] %>"
+         />
+
     <Parameter name="server.url" value="https://admin.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>" override="false" />
     <Parameter name="admin.instanceId" value="localhost" override="false" />
     <Parameter name="admin.context" value="api" override="false" />
