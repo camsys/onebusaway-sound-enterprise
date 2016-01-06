@@ -38,6 +38,9 @@ default_attributes({
                            "s3_user" =>  "AKIAJGPEIERX2KIPI52A",
                            "s3_password" => "qOhfseblnczHLlWpFvqwp8KFxAXUWzgK6P7xAlz9"
                        },
+                       "ses_host" => "email-smtp.us-east-1.amazonaws.com",
+                       "ses_user" => "AKIAIVWZFHWN765XFGKQ",
+                       "ses_password" => "Av5MEXiMk4tgoDB/OouQ8/RcnIrKjXWTNEIBr8MKp/4L"
                      },
                      "transitime" => {
                         "dbhost" => "db.dev.wmata.obaweb.org:3306",
