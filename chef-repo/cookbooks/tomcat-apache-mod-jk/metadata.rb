@@ -1,3 +1,4 @@
+name             "tomcat-apache-mod-jk"
 maintainer       "sheldonabrown"
 maintainer_email "sheldonb@gmail.com"
 license          "apachev2"
