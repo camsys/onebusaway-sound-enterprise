@@ -78,6 +78,14 @@ template "/etc/apache2/sites-available/default.conf" do
   mode '0644'
 end
 
+# template apache ports.conf for https only
+template "/etc/apache2/ports.conf" do
+  source "admin/ports.conf.erb"
+  owner 'root'
+  group 'root'
+  mode '0644'
+end
+
 # deploy onebusaway-admin-webapp
 log "war file is #{mvn_admin_dest_file}"
 script "deploy_admin" do
