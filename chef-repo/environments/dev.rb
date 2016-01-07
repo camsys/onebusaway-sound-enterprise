@@ -74,5 +74,10 @@ default_attributes({
                      },
                      "java" => {
                        "jdk_version" => "7"
+                     },
+                     "apache" => {
+                        "proxy" => {
+                          "require" => "all granted"
+                        }
                      }
                    })
