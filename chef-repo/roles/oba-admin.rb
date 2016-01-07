@@ -3,11 +3,11 @@ description "oba admin server"
 run_list(
         "role[base]",
         "recipe[tomcat]",
-        "recipe[apache2]",
-        "recipe[tomcat-apache-mod-jk]",
         "recipe[oba::admin]",
         "recipe[transitime::gtfs]"
 )
+#        "recipe[apache2]",
+#        "recipe[tomcat-apache-mod-jk]",
 
 override_attributes(
                     :tz => 'America/New_York',
