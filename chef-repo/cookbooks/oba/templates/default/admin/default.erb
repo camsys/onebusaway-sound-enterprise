@@ -36,7 +36,12 @@
             Allow from 127.0.0.0/255.0.0.0 ::1/128
         </Directory>
 
-	ProxyPass /web http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/web/
-	ProxyPassReverse /web http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/web/
+	ProxyPass /transitime http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/
+	ProxyPassReverse /transitime http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/
+	ProxyHTMLURLMap http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/
 
+	<Location /transitime/>
+		ProxyHTMLEnable On
+		ProxyHTMLURLMap / /transitime/
+	</Location>
 </VirtualHost>
