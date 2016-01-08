@@ -255,3 +255,12 @@ script "fixup watchdog" do
   EOH
 end
 
+# add proxy_html.conf which is missing
+remote_file '/etc/apache2/mods-enabled/proxy_html.conf' do
+  source 'http://apache.webthing.com/svn/apache/filters/proxy_html/proxy_html.conf'
+  owner "www-data"
+  group "www-data"
+  mode "0644"
+  notifies :restart, resources(:service => "apache2")
+  action :create_if_missing
+end
