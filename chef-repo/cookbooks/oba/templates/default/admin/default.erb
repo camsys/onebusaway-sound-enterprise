@@ -38,10 +38,9 @@
 
 	ProxyPass /transitime/ http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/
 	ProxyPassReverse /transitime/ http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/
-	ProxyHTMLURLMap http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/
 
-	<Location /transitime/>
-		ProxyHTMLEnable On
-		ProxyHTMLURLMap / /transitime/
-	</Location>
+	# Use redirection instead of URL rewriting (mod_proxy_html). Also handles JS HTTP requests.
+	Redirect /web /transitime/web
+	Redirect /api/v1 /transitime/api/v1
+
 </VirtualHost>
