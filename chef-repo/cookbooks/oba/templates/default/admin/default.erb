@@ -11,8 +11,7 @@
         <Directory /var/www/>
                 Options Indexes FollowSymLinks MultiViews
                 AllowOverride None
-                Order allow,deny
-                allow from all
+                Require all granted 
                 # This directive allows us to have apache2's default start page
                 # in /apache2-default/, but still have / go to the right place
                 #RedirectMatch ^/$ /apache2-default/
@@ -31,9 +30,7 @@
         <Directory "/usr/share/doc/">
             Options Indexes MultiViews FollowSymLinks
             AllowOverride None
-            Order deny,allow
-            Deny from all
-            Allow from 127.0.0.0/255.0.0.0 ::1/128
+            Require host 127.0.0.0/255.0.0.0 ::1/128
         </Directory>
 
 	ProxyPass /transitime/ http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/
