@@ -90,40 +90,17 @@
   </s:url>
   <script type="text/javascript" src="${url}"><!-- //prevent jspx minimization --></script>
 
+  <!-- New font for WMATA branding: -->
+  <s:url var="url" value="http://fonts.googleapis.com/css?family=Lato:400,300,700"></s:url>
+  <link rel="stylesheet" type="text/css" href="${url}" />
+  
   <decorator:head />
 </head>
 
 <body>
 <div id="mainbox">
-	<div id="topbar">
-		<div id="branding">
-			<div id="branding_left">
-				<s:url var="url" value="/css/img/agency_logo_left.gif"></s:url>
-				<img src="${url}" usemap="#m_wmata_masthead" alt="Agency logo" />
-			</div>
-			<div id="branding_right">
-				<s:url var="url" value="/css/img/agency_logo_right.gif"></s:url>
-				<img src="${url}" usemap="#m_wmata_searchbox" alt="Agency logo" />
-			</div>
-		</div>
-		
-		<div id="search">
-			<ul id="topbar-links">
-				<c:if test="${showWeekender}">
-					<s:set var="link" value="getText('main.weekender.link')" />
-					<li class="list_h" style="margin-left:4px;"><a href="${link}">The Weekender</a></li>
-				</c:if>		
-			</ul>
-			<s:set var="link" value="getText('main.search.link')" />
-			<form name="wmataSearch" id="wmataSearch" action="${link}">
-				<input type="text" name="s" placeholder="search"></input>
-			</form>
-		</div>
-
-		<!-- Include the tabs.jspx that provides branded links -->
-		<c:import url="/WEB-INF/decorators/includes/tabs.jspx" />
-		
-	</div> <!-- close topbar -->
+	
+	<c:import url="/WEB-INF/decorators/includes/topbar.jspx" />
 	
 	<div id="contentbox" style="margin-bottom: 10px; padding:0;">
 	<!-- Enter Content here -->

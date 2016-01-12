@@ -81,47 +81,9 @@
 
 <body>
 <div id="mainbox">
-	<div id="topbar">
 	
-	 <!-- WMATA Name -->
-	<div id="topbar_top">
-		<div class="logo">
-        	<a href="http://www.wmata.com">
-        		<s:url var="url" value="/css/img/agency_logo.png"></s:url>
-        		<img src="${url}" alt="Metro logo"></img>
-       		 </a>
-    	</div>
-    
-		<div class="wmata-name wmata-font">
-			Washington Metropolitan Area Transit Authority
-		</div>
-	</div>
+	<c:import url="/WEB-INF/decorators/includes/topbar.jspx" />
 	
-	<div id="topbar_bottom">
-		<div class="wmata-menu">
-	   
-	    <nav class="wmata-font">
-	      <ul>
-	      	<s:set var="link" value="getText('main.service.link')" />
-	        <li><a href="${link}">Service</a></li>
-	        <s:set var="link" value="getText('main.schedules.link')" />
-	        <li><a href="${link}">Schedules</a></li>
-	        <s:set var="link" value="getText('main.riderguides.link')" />
-	        <li><a href="${link}">Rider Guides</a></li>
-	        <s:set var="link" value="getText('main.fares.link')" />
-	        <li><a href="${link}">Fares</a></li>
-	        <s:set var="link" value="getText('main.initiatives.link')" />
-	        <li><a href="${link}">Initiatives</a></li>
-	        <s:set var="link" value="getText('main.about.link')" />
-	        <li><a href="${link}">About</a></li>
-	      </ul>    
-	     </nav>
-			
-		</div> 
-	</div>
-	
-  </div>	
-
 	<div id="contentbox">
 	<!-- Enter Content here -->
 	

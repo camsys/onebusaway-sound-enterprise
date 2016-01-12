@@ -214,7 +214,7 @@
 }
 
 
-/* from MTA CSS: */
+/* Adapted from WMATA CSS: */
 
 html, body {
     background-image: url("img/grey_bg.jpg");
@@ -280,7 +280,7 @@ div.logo {
 	color: #FFF;
 }
 
-#topbar_top {
+#topbar-top {
 	height: 45px;
 	position: absolute;
 	top: 0;
@@ -289,7 +289,7 @@ div.logo {
 	z-index: 1;
 }
 
-#topbar_bottom {
+#topbar-bottom {
 	height: 88px;
 	position: absolute;
 	top: 45px;
