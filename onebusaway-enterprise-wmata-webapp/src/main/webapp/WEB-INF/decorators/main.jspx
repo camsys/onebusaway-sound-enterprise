@@ -50,6 +50,10 @@
 	<s:param name="v"><s:property value="frontEndVersion" /></s:param>
   </s:url>
   <link rel="stylesheet" type="text/css" href="${url}"/>
+  
+  <!-- New font for WMATA branding: -->
+  <s:url var="url" value="http://fonts.googleapis.com/css?family=Lato:400,300,700"></s:url>
+  <link rel="stylesheet" type="text/css" href="${url}" />
 
 <jsp:text>
 &lt;!--[if IE 6]&gt;
@@ -79,38 +83,39 @@
 <div id="mainbox">
 	<div id="topbar">
 	
-     <div class="logo">
-        <a href="http://www.wmata.com"><img src="images/logo.png" alt="Metro logo"></img></a>
-        <div class="site-name">WMATA</div>
-    </div>
-	
 	 <!-- WMATA Name -->
-	<div class="wmata-name">
-		Washington Metropolitan Area Transit Authority
-	
+	<div id="topbar_top">
+		<div class="logo">
+        	<a href="http://www.wmata.com">
+        		<s:url var="url" value="/css/img/agency_logo.png"></s:url>
+        		<img src="${url}" alt="Metro logo"></img>
+       		 </a>
+    	</div>
+    
+		<div class="wmata-name wmata-font">
+			Washington Metropolitan Area Transit Authority
+		</div>
 	</div>
 	
-  </div> <!--utility-nav-->
-  
-</div> <!--utility-nav-wrapper-->
-  
-  <div class="main-nav-wrapper">
-	<div class="container">
-   
-	<!--BEGIN DESKTOP MEGA MENU-->    
-    <nav>
-      <ul>
-      <!--NOTE TO DEVELOPER: Add the "active-panel" class to the relevant top-level <li> to make this section visible when the mobile menu is opened. For example, if the user is on a page in the Schedules section, it should look like <li class="active-panel"><a href="#">Schedules</a> -->
-        <li><a href="http://www.wmata.com/service/index.cfm">Service</a></li>
-        <li><a href="http://www.wmata.com/schedules/index.cfm">Schedules</a></li>
-        <li><a href="http://www.wmata.com/rider-guides/index.cfm">Rider Guides</a></li>
-        <li><a href="http://www.wmata.com/fares/index.cfm">Fares</a></li>
-        <li><a href="http://www.wmata.com/initiatives/index.cfm">Initiatives</a></li>
-        <li><a href="http://www.wmata.com/about/index.cfm">About</a></li>
-      </ul>    </nav>
-		
-	</div> <!-- close topbar -->
+	<div id="topbar_bottom">
+		<div class="wmata-menu">
+	   
+	    <nav class="wmata-font">
+	      <ul>
+	        <li><a href="http://www.wmata.com/service/index.cfm">Service</a></li>
+	        <li><a href="http://www.wmata.com/schedules/index.cfm">Schedules</a></li>
+	        <li><a href="http://www.wmata.com/rider-guides/index.cfm">Rider Guides</a></li>
+	        <li><a href="http://www.wmata.com/fares/index.cfm">Fares</a></li>
+	        <li><a href="http://www.wmata.com/initiatives/index.cfm">Initiatives</a></li>
+	        <li><a href="http://www.wmata.com/about/index.cfm">About</a></li>
+	      </ul>    
+	     </nav>
+			
+		</div> 
+	</div>
 	
+  </div>	
+
 	<div id="contentbox">
 	<!-- Enter Content here -->
 	
