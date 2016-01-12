@@ -262,8 +262,13 @@ div.logo {
 }
 
 .wmata-menu nav li {
-	display: inline;
-	height: 88px;
+	display: block;
+	float: left;
+	max-height: 88px
+}
+
+.wmata-menu nav li:hover {
+	background-color: #4f4f4f;
 }
 
 .wmata-menu nav a {

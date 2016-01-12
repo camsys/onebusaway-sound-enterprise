@@ -102,12 +102,18 @@
 	   
 	    <nav class="wmata-font">
 	      <ul>
-	        <li><a href="http://www.wmata.com/service/index.cfm">Service</a></li>
-	        <li><a href="http://www.wmata.com/schedules/index.cfm">Schedules</a></li>
-	        <li><a href="http://www.wmata.com/rider-guides/index.cfm">Rider Guides</a></li>
-	        <li><a href="http://www.wmata.com/fares/index.cfm">Fares</a></li>
-	        <li><a href="http://www.wmata.com/initiatives/index.cfm">Initiatives</a></li>
-	        <li><a href="http://www.wmata.com/about/index.cfm">About</a></li>
+	      	<s:set var="link" value="getText('main.service.link')" />
+	        <li><a href="${link}">Service</a></li>
+	        <s:set var="link" value="getText('main.schedules.link')" />
+	        <li><a href="${link}">Schedules</a></li>
+	        <s:set var="link" value="getText('main.riderguides.link')" />
+	        <li><a href="${link}">Rider Guides</a></li>
+	        <s:set var="link" value="getText('main.fares.link')" />
+	        <li><a href="${link}">Fares</a></li>
+	        <s:set var="link" value="getText('main.initiatives.link')" />
+	        <li><a href="${link}">Initiatives</a></li>
+	        <s:set var="link" value="getText('main.about.link')" />
+	        <li><a href="${link}">About</a></li>
 	      </ul>    
 	     </nav>
 			
