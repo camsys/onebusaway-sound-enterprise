@@ -4,7 +4,6 @@ run_list(
         "role[base]",
         "recipe[apache2]",
 	"recipe[apache2::mod_proxy_http]",
-	"recipe[apache2::mod_proxy_html]",
         "recipe[tomcat-apache-mod-jk]",
         "recipe[tomcat]",
         "recipe[oba::admin]",

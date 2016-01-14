@@ -11,7 +11,7 @@ end
 
 include_recipe "apache2::mod_headers"
 include_recipe "apache2::mod_rewrite"
-
+include_recipe "apache2::mod_jk"
 
 script "move_aside_config" do
   interpreter "bash"

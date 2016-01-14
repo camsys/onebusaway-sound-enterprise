@@ -49,9 +49,17 @@
     <!-- Other Stuff: -->
 
 
-    <bean id="externalGeocoderImpl" class="org.onebusaway.geocoder.enterprise.impl.EnterpriseGoogleGeocoderImpl">
-   <property name="wktFilterPolygon" value="POLYGON((-77.453013 38.598588, -77.453013 39.203639, -76.668289 39.203639, -76.668289 38.598588, -77.453013 38.598588))"/>
+    <bean id="defaultServiceBounds" class="org.onebusaway.geospatial.model.CoordinateBounds">
+    		<property name="minLat" value="38.598692" />
+    		<property name="minLon" value="-77.449457" />
+    		<property name="maxLat" value="39.19148899999999" />
+    		<property name="maxLon" value="-76.488045" />
     </bean>
+      
+    <bean id="externalGeocoderImpl" class="org.onebusaway.geocoder.enterprise.impl.EnterpriseGoogleGeocoderImpl">
+      <property name="resultBiasingBounds" ref="defaultServiceBounds" />
+    </bean>
+    
    <bean id="serviceAreaServiceImpl" class="org.onebusaway.presentation.impl.ServiceAreaServiceImpl">
     <property name="calculateDefaultBoundsFromAgencyCoverage" value="true" />
    </bean>

@@ -68,19 +68,10 @@ template "/var/lib/oba/config.json" do
   mode '0644'
 end
 
-
-# template apache sites-available for https only
+# template apache sites-available
 # see https://help.ubuntu.com/10.04/serverguide/httpd.html
 template "/etc/apache2/sites-available/default.conf" do
   source "admin/default.erb"
-  owner 'root'
-  group 'root'
-  mode '0644'
-end
-
-# template apache ports.conf for https only
-template "/etc/apache2/ports.conf" do
-  source "admin/ports.conf.erb"
   owner 'root'
   group 'root'
   mode '0644'
