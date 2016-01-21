@@ -39,9 +39,9 @@ default_attributes({
                            "s3_password" => "qOhfseblnczHLlWpFvqwp8KFxAXUWzgK6P7xAlz9"
                        },
                        "ses_host" => "email-smtp.us-east-1.amazonaws.com",
-                       "ses_user" => "AKIAIC2YIK5DJCNUJCXQ",
-                       "ses_password" => "AgbrvuI6SGndZm60lvmnPjdFwYoGEDD2zwcd00EV3ImE",
-                       "ses_from" => "camsys.wmata.prod@gmail.com"
+                       "ses_user" => "AKIAISKUXW2UHBZRHHNA",
+                       "ses_password" => "AhxzNCmnlqzK8qjPwsQ41yHUbk3meOlHZvVRuoVoM7/t",
+                       "ses_from" => "no.reply.wmata@gmail.com"
                      },
                      "transitime" => {
                         "dbhost" => "db.dev.wmata.obaweb.org:3306",
