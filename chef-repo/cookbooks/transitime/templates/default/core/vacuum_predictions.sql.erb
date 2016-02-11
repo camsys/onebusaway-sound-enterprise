@@ -1,0 +1,1 @@
+delete from Predictions where creationTime < DATE_ADD(now(), INTERVAL -'<%= node[:transitime][:retentionDays] %>' DAY);

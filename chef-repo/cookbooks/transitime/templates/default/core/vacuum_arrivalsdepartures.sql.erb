@@ -1,0 +1,1 @@
+delete from ArrivalsDepartures where time < DATE_ADD(now(), INTERVAL -'<%= node[:transitime][:retentionDays] %>' DAY);

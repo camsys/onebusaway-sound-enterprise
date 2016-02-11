@@ -58,7 +58,8 @@ default_attributes({
                         "sqsSecret" => "35Q47QJ7+n0dlR+IXHST/fKv0bokqSeeOdrVplpd",
                         "snsKey" => "",
                         "snsSecret" => "",
-                        "snsArn" => ""
+                        "snsArn" => "",
+                        "retentionDays" => "30"
                       },
                      "aws" => {
                        "cloudwatch_publish_key" => "AKIAJ2USYJ54JLTDL6CA",

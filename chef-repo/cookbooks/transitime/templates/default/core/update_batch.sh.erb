@@ -1,0 +1,8 @@
+#!/bin/bash
+TODAY=$(date -I)
+d=2015-10-20
+while [ "$d" != "$TODAY" ]; do
+  echo "Update for $d"
+  time ./update.sh $d $d
+  d=$(date -I -d "$d + 1 day")
+done

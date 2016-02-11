@@ -1,0 +1,54 @@
+#!/bin/bash
+TODAY=$(date -I)
+if [ -z $1 ]
+then
+  # by default we run for yesterday
+  START=$(date -I -d "$TODAY - 1 day")
+else
+  START=$1
+fi
+if [ -z $2 ]
+then
+  END=$START
+else
+  END=$2
+fi
+cd /var/lib/oba/transitime/core
+nice java \
+  -classpath logback-core-1.1.2.jar:logback-classic-1.1.2.jar:slf4j-api-1.7.2.jar \
+  -Xmx10g \
+  -Xms6g \
+  -Dtransitime.core.agencyId=<%= node[:transitime][:agency] %> \
+  -Dtransitime.db.dbName=<%= node[:transitime][:dbname] %> \
+  -Dtransitime.db.encryptionPassword='<%= node[:transitime][:encryptionPassword] %>' \
+  -Dtransitime.db.batchSize=4000 \
+  -Dxtransitime.modules.optionalModulesList="org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.custom.aws.AvlSqsClientModule;org.transitime.monitoring.MonitoringModule" \
+  -Dtransitime.avl.feedTimeoutInMSecs=30000 \
+  -Dtransitime.core.maxPredictionTimeForDbSecs=900 \
+  -Dtransitime.core.exclusiveBlockAssignments=true \
+  -Dtransitime.core.matchHistoryMaxSize=40 \
+  -Dtransitime.avl.queueSize=2400 \
+  -Dtransitime.avl.jmsQueueSize=2400 \
+  -Dtransitime.avl.jmsNumThreads=20 \
+  -Dtransitime.avl.shouldUseSqs=true \
+  -Dtransitime.blockLoading.agressive=false \
+  -Dtransitime.avl.sqsUrl='<%= node[:transitime][:sqsUrl] %>' \
+  -Dtransitime.avl.messageLogFrequency=1000 \
+  -Dtransitime.avl.sqsKey='<%= node[:transitime][:sqsKey] %>' \
+  -Dtransitime.avl.sqsSecret='<%= node[:transitime][:sqsSecret] %>' \
+  -Dtransitime.avl.snsKey='<%= node[:transitime][:snsKey] %>' \
+  -Dtransitime.avl.snsSecret='<%= node[:transitime][:snsSecret] %>' \
+  -Dtransitime.avl.snsArn='<%= node[:transitime][:snsArn] %>' \
+  -Dtransitime.avl.numThreads=5 \
+  -Dtransitime.avl.maxSpeed=45 \
+  -Dtransitime.environmentName=<%= node["oba"]["env"] %> \
+  -Dtransitime.cloudwatch.awsAccessKey='<%= node["aws"]["cloudwatch_publish_key"] %>' \
+  -Dtransitime.cloudwatch.awsSecretKey='<%= node["aws"]["cloudwatch_publish_secret"] %>' \
+  -Dtransitime.cloudwatch.awsEndpoint='<%= node["aws"]["cloudwatch_endpoint"] %>' \
+  -Dtransitime.predAccuracy.externalPredictionApiUrl="http://webservices.nextbus.com/service/xmlFeed?" \
+  -Dtransitime.predAccuracy.nextBusAgencyIdForApi=wmata \
+  -Dtransitime.hibernate.configFile=/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml \
+  -Dtransitime.logging.dir=/var/lib/oba/transitime/logs \
+  -Dlogback.configurationFile=/var/lib/oba/transitime/core/logback.xml \
+  -jar \
+  update.jar $START $END >/var/lib/oba/transitime/logs/upstart.log 2>&1

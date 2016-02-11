@@ -1,0 +1,22 @@
+#!/bin/bash
+
+DBUSER='<%= node[:transitime][:dbusername] %>'
+DBPASSWORD='<%= node[:transitime][:dbpassword] %>'
+DBHOST='<%= node[:transitime][:dbhost] %>'
+DBNAME='<%= node[:transitime][:dbname] %>'
+DBPORT=3306
+LOGDIR='/var/lib/oba/transitime/logs'
+LOGFILE="$LOGDIR"/maintenance.log
+
+###
+# Update the travel times
+###
+echo "Starting update at `date`" >> ${LOGFILE}
+./update.sh
+echo "Completed update at `date`" >> ${LOGFILE}
+
+for SCRIPT in vacuum_predictions.sql vacuum_avlreports.sql vacuum_arrivalsdepartures.sql do
+  echo "Starting ${SCRIPT} at `date`" >> ${LOGFILE}
+  mysql -u ${DBUSER} -p${DBPASSWORD} -h ${DBHOST} -P${DBPORT} ${DBNAME} <${SCRIPT} >> ${LOGFILE} 2>&1
+  echo "Completed ${SCRIPT} at `data`" >> ${LOGFILE}
+done
