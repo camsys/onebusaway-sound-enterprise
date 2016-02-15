@@ -1,0 +1,12 @@
+#!/bin/bash
+
+START=`date +%s`
+cd /var/lib/oba/transitime/processGTFS
+echo "checking swap"
+./swap.sh
+echo "getting GTFS"
+./get.sh
+echo "processing GTFS"
+./processGTFS.sh
+DELTA=$((`date +%s` -$START));
+echo "complete in $DELTA seconds"

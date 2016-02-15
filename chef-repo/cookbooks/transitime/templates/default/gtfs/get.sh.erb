@@ -1,0 +1,40 @@
+#!/bin/bash 
+
+#SERVER=admin.staging.obast.org:9999
+SERVER=localhost:8080
+FEED=http://${SERVER}/api/bundle/staged/list
+BASEDIR=/var/lib/oba/transitime/gtfs
+#BASEDIR=/home/dev/src/sound/dev-ops/modified_staged
+sudo rm -rf ${BASEDIR}/*
+
+for AGENCY in 1
+do
+  CACHE_FILE=${BASEDIR}/${AGENCY}_cache.log
+  FEED_FILE=${BASEDIR}/${AGENCY}_latest.txt
+  LATEST=`wget -q ${FEED} -O ${FEED_FILE}`
+
+  diff -q ${CACHE_FILE} ${FEED_FILE} >/dev/null 2>&1
+  rc=$?
+  if [ $rc -eq 0 ]
+  then
+    echo "${AGENCY} up to date: `cat ${FEED_FILE}` at `date`"
+  else
+   echo "${AGENCY} updating: `cat ${FEED_FILE}`"
+    DATASET_ID=`cat ${FEED_FILE}  | sed -e 's!{!!g' -e 's!}!\n!g' -e 's!\[!\n!g' -e 's!\]!\n!g' -e 's!,!\n!g' | grep '"id"' | awk -F: '{print $2}' | sed -e 's!"!!g'`
+
+    echo "wget -q -O - http://${SERVER}/api/bundle/archive/list-by-id/${DATASET_ID} | sed -e 's!,!\n!g' | grep outputs/final/${AGENCY} | grep -v outputs/outputs | sed -e 's!\"!!g'"
+    FILENAME=`wget -q -O - http://${SERVER}/api/bundle/archive/list-by-id/${DATASET_ID} | sed -e 's!,!\n!g' | grep outputs/final/${AGENCY}_ | grep -v outputs/outputs | sed -e 's!"!!g'`
+    if [ -z ${FILENAME} ]
+    then
+      FILENAME=`wget -q -O - http://${SERVER}/api/bundle/archive/list-by-id/${DATASET_ID} | sed -e 's!,!\n!g' | grep outputs/final/${AGENCY}_ | grep -v outputs/outputs | sed -e 's!"!!g'`
+    fi
+    echo "DATASET_ID=${DATASET_ID} FILENAME=${FILENAME}"
+    cd ${BASEDIR}
+
+    rm ${AGENCY}_gtfs.zip
+    wget -q http://${SERVER}/api/bundle/archive/get-by-id/${DATASET_ID}/${FILENAME} -O ${AGENCY}_gtfs.zip;
+    unzip ${AGENCY}_gtfs.zip || exit 1;
+    wget -q ${FEED} -O ${CACHE_FILE}
+    echo "${AGENCY} update complete at `date`"
+  fi
+done
