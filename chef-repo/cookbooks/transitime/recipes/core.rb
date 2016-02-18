@@ -45,9 +45,6 @@ directory "/var/lib/oba/transitime/logs" do
   recursive true
 end
 
-## TODO
-# ensure /Logs is present or mound /dev/vxdb as /Logs
-
 script "install_core" do
   interpreter "bash"
   user 'root'
@@ -56,6 +53,7 @@ script "install_core" do
   code <<-EOH
   mv #{mvn_core_dest_file} /var/lib/oba/transitime/core/core.jar || exit 1
   mv #{mvn_update_dest_file} /var/lib/oba/transitime/core/update.jar || exit 1
+  lsblk | grep xvdb | awk '{print $1 $7}' | grep -q mnt && echo "found" || sudo mkfs.ext4 -E nodiscard /dev/xvdb && sudo mount /dev/xvdb /mnt  && echo "mounted"
   EOH
 end
 
@@ -68,6 +66,12 @@ end
 
 template "/var/lib/oba/transitime/core/core.sh" do
     source "core/core.sh.erb"
+    owner "root"
+    group "root"
+    mode '0755'
+end
+template "/var/lib/oba/transitime/core/swap.sh" do
+    source "gtfs/update.sh.erb"
     owner "root"
     group "root"
     mode '0755'

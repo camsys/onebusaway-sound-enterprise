@@ -1,15 +1,18 @@
 #/bin/bash
 
-if [ ! -e "/var/lib/oba/swapfile2" ]
+SWAPFILE=${1:/var/lib/oba/swapfile2}
+SWAPSIZE=${2:8}
+
+if [ ! -e "${SWAPFILE}" ]
 then
-  echo "creating swapfile"
-  sudo fallocate -l 8G /var/lib/oba/swapfile2
-  sudo chmod 600 /var/lib/oba/swapfile2
-  sudo mkswap /var/lib/oba/swapfile2
-  sudo swapon /var/lib/oba/swapfile2
-  echo "swap created"
+  echo "creating swapfile ${SWAPFILE}"
+  sudo fallocate -l ${SWAPSIZE}G ${SWAPFILE}
+  sudo chmod 600 ${SWAPFILE}
+  sudo mkswap ${SWAPFILE}
+  sudo swapon ${SWAPFILE}
+  echo "swap created at file ${SWAPFILE}"
 else
-  echo "swapfile exists, exiting"
+  echo "swapfile ${SWAPFILE} exists, exiting"
 fi
 
 
