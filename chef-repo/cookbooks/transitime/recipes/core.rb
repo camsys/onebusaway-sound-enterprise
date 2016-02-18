@@ -53,7 +53,10 @@ script "install_core" do
   code <<-EOH
   mv #{mvn_core_dest_file} /var/lib/oba/transitime/core/core.jar || exit 1
   mv #{mvn_update_dest_file} /var/lib/oba/transitime/core/update.jar || exit 1
-  lsblk | grep xvdb | awk '{print $1 $7}' | grep -q mnt && echo "found" || sudo mkfs.ext4 -E nodiscard /dev/xvdb && sudo mount /dev/xvdb /mnt  && echo "mounted"
+  if [ ! -e /mnt/swapfile2 ]
+  then
+    lsblk | grep xvdb | awk '{print $1 $7}' | grep -q mnt && echo "found" || sudo mkfs.ext4 -E nodiscard /dev/xvdb && sudo mount /dev/xvdb /mnt  && echo "mounted"
+  fi
   EOH
 end
 
