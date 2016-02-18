@@ -53,11 +53,13 @@ template "/var/lib/oba/transitime/processGTFS/mysql_hibernate.cfg.xml" do
   mode '0644'
 end
 
-template "/var/lib/oba/transitime/processGTFS/processGTFS.sh" do
-    source "gtfs/processGTFS.sh.erb"
+["processGTFS", "get", "update", "swap"].each do |file|
+  template "/var/lib/oba/transitime/processGTFS/#{file}.sh" do
+    source "gtfs/#{file}.sh.erb"
     owner "root"
     group "root"
     mode '0755'
+  end
 end
 
 # monitoring directory
