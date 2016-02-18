@@ -1,7 +1,7 @@
 #/bin/bash
 
-SWAPFILE=${1:/var/lib/oba/swapfile2}
-SWAPSIZE=${2:8}
+SWAPFILE=${1:="/var/lib/oba/swapfile2"}
+SWAPSIZE=${2:=8}
 
 if [ ! -e "${SWAPFILE}" ]
 then
