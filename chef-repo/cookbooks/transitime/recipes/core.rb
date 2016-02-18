@@ -74,7 +74,7 @@ template "/var/lib/oba/transitime/core/core.sh" do
     mode '0755'
 end
 template "/var/lib/oba/transitime/core/swap.sh" do
-    source "gtfs/update.sh.erb"
+    source "gtfs/swap.sh.erb"
     owner "root"
     group "root"
     mode '0755'
