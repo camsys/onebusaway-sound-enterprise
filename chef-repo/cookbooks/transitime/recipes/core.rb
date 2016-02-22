@@ -98,7 +98,7 @@ template "/var/lib/oba/transitime/core/daily_maintenance.sh" do
     mode '0755'
 end
 ["predictions", "avlreports", "arrivalsdepartures"].each do |script|
-  template "/var/lib/oba/transitime/core/vacuum_#{script}" do
+  template "/var/lib/oba/transitime/core/vacuum_#{script}.sql" do
     source "core/vacuum_#{script}.sql.erb"
     owner "root"
     group "root"
