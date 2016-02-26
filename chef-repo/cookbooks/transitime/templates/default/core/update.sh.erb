@@ -3,7 +3,7 @@ TODAY=$(date -I)
 if [ -z $1 ]
 then
   # by default we run for yesterday
-  START=$(date -I -d "$TODAY - 1 day")
+  START=$(date -I -d "$TODAY - 30 day")
 else
   START=$1
 fi
