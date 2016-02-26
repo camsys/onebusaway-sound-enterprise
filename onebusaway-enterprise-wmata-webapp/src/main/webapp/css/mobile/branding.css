@@ -16,13 +16,52 @@
  
 /* Insert agency-specific branding overrides here */
 
-#branding h1 a {
-	display: block;
-	text-indent: -9999px;
-	background-image: url("../img/onebusaway-wmata.png");
-	background-repeat: no-repeat;
-	width: 302px;
-	height: 58px;
+#topbar {
+	height: 133px;
 }
 
+#topbar-top {
+	height: 45px;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	background: #3E3E3E none repeat scroll 0% 0%;
+	z-index: 1;
+}
 
+#topbar-bottom {
+	height: 88px;
+	position: absolute;
+	top: 45px;
+	width: 100%;
+	background: #4679B0 none repeat scroll 0% 0%;
+}
+
+.wmata-font {
+	font-size: 16px;
+	font-family: "Lato",sans-serif,Helvetica,Arial;
+	color: #FFF;
+	font-weight: 300;
+}
+
+.wmata-name {
+	position: absolute;
+	top: 12px;
+	width: auto;
+	margin-left: 100px;
+}
+
+div.logo {
+	max-width: 80px;
+	top: 10px;
+	left: 0px;
+}
+
+div.logo img {
+	vertical-align: middle;
+	display: block;
+	max-width: 100%;
+	height: auto;
+	margin-top: 10px;
+	margin-left: 10px;
+}

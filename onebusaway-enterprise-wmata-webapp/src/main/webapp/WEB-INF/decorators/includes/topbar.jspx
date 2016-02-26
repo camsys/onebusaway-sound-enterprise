@@ -1,0 +1,44 @@
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+	 xmlns:c="http://java.sun.com/jsp/jstl/core"
+	 xmlns:decorator="http://www.opensymphony.com/sitemesh/decorator" 
+	 xmlns:s="/struts-tags" 
+	 id="topbar" style="clear: both;">
+	
+	 <!-- WMATA Name -->
+	<div id="topbar-top">
+		<div class="logo">
+        	<a href="http://www.wmata.com">
+        		<s:url var="url" value="/css/img/agency_logo.png"></s:url>
+        		<img src="${url}" alt="Metro logo"></img>
+       		 </a>
+    	</div>
+    
+		<div class="wmata-name wmata-font">
+			Washington Metropolitan Area Transit Authority
+		</div>
+	</div>
+	
+	<div id="topbar-bottom">
+		<div class="wmata-menu">
+	   
+	    <nav class="wmata-font">
+	      <ul>
+	      	<s:set var="link" value="getText('main.service.link')" />
+	        <li><a href="${link}">Service</a></li>
+	        <s:set var="link" value="getText('main.schedules.link')" />
+	        <li><a href="${link}">Schedules</a></li>
+	        <s:set var="link" value="getText('main.riderguides.link')" />
+	        <li><a href="${link}">Rider Guides</a></li>
+	        <s:set var="link" value="getText('main.fares.link')" />
+	        <li><a href="${link}">Fares</a></li>
+	        <s:set var="link" value="getText('main.initiatives.link')" />
+	        <li><a href="${link}">Initiatives</a></li>
+	        <s:set var="link" value="getText('main.about.link')" />
+	        <li><a href="${link}">About</a></li>
+	      </ul>    
+	     </nav>
+			
+		</div> 
+	</div>
+	
+  </div>	
