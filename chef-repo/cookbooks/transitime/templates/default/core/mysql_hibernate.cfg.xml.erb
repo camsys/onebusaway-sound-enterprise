@@ -40,7 +40,7 @@
    <!-- Default timeout is 0s (forever) but want to reclaim connections 
         if not used for more than 5 minutes so don't get too many 
         connections. -->
-   <property name="hibernate.c3p0.timeout">240</property>
+   <property name="hibernate.c3p0.timeout">300</property>
    <!-- Default max_statements is 0 but since will be doing lots of logging
         of data using the same query caching some prepared statements could
         easily speed things up. --> 
@@ -71,7 +71,7 @@
         uncomment this part and set the db parameters here. -->
 
    <property name="hibernate.connection.url">
-      jdbc:mysql://<%= node[:transitime][:dbhost] %>/transitime?rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;autoReconnect=true&amp;connectTimeout=240000&amp;socketTimeout=240000
+      jdbc:mysql://<%= node[:transitime][:dbhost] %>/transitime?rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;autoReconnect=true&amp;connectTimeout=300000&amp;socketTimeout=300000
    </property>
    <property name="hibernate.connection.username">
       <%= node[:transitime][:dbusername] %>
