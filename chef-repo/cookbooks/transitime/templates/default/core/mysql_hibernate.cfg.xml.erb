@@ -73,6 +73,9 @@
    <property name="hibernate.connection.url">
       jdbc:mysql://<%= node[:transitime][:dbhost] %>/transitime?rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;autoReconnect=true&amp;connectTimeout=300000&amp;socketTimeout=300000
    </property>
+   <property name="hibernate.ro.connection.url">
+      jdbc:mysql://<%= node[:transitime][:dbrohost] %>/transitime?rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;autoReconnect=true
+   </property>
    <property name="hibernate.connection.username">
       <%= node[:transitime][:dbusername] %>
    </property>

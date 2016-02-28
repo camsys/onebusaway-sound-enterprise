@@ -41,7 +41,7 @@ default_attributes({
                      },
                        "transitime" => {
                          "dbhost" => "db.qa.wmata.obaweb.org:3306",
-                         "dbrohost" => "db.qa.wmata.obaweb.org:3306",
+                         "dbrohost" => "db-ro.qa.wmata.obaweb.org:3306",
                          "dbtype" => "mysql",
                          "dbusername" => "transitime",
                          "dbpassword" => "transitimeqa",
