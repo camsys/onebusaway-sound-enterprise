@@ -41,7 +41,7 @@ nice java \
   -Dtransitime.avl.snsArn='<%= node[:transitime][:snsArn] %>' \
   -Dtransitime.avl.numThreads=5 \
   -Dtransitime.avl.maxSpeed=45 \
-  -Dtransitime.updates.pageDbReads=false \
+  -Dtransitime.updates.pageSize=50000 \
   -Dtransitime.environmentName=<%= node["oba"]["env"] %> \
   -Dtransitime.cloudwatch.awsAccessKey='<%= node["aws"]["cloudwatch_publish_key"] %>' \
   -Dtransitime.cloudwatch.awsSecretKey='<%= node["aws"]["cloudwatch_publish_secret"] %>' \
