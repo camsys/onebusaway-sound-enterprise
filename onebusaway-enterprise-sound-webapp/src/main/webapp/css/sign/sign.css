@@ -375,6 +375,12 @@ th.futureArrivalHeader {
     padding: .1em;
     /* border-right: 1px solid #999 */
 }
+th.arrivalsHeader {
+	text-align: right;
+}
+th.arrivalsHeader span {
+   	margin-right: 10%;
+}
 td {
     vertical-align: middle;
     padding: 0.9em 1.5em;
@@ -382,6 +388,15 @@ td {
     font-weight: bold;
     line-height: 1.1em;
 }
+
+tr.headerFirstRow, tr.headerFirstRow th {
+	border-bottom: none;
+}
+
+tr.headerSecondRow, tr.headerSecondRow th {
+	border-top: none;
+}
+
 
 tr.even {
 	background-color: #eeeeee;
