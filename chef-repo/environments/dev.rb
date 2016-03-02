@@ -7,9 +7,9 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "1.1.15.12-cs-SNAPSHOT",
-                           "version_core" => "1.1.15.12-cs-SNAPSHOT",
-                           "version_app" => "1.1.15.12-cs-SNAPSHOT",
+                           "version_admin" => "1.1.15.13-cs-SNAPSHOT",
+                           "version_core" => "1.1.15.13-cs-SNAPSHOT",
+                           "version_app" => "1.1.15.13-cs-SNAPSHOT",
                            "version_transitime_core" => "0.0.12-SNAPSHOT",
                            "version_transitime_web" => "0.0.12-SNAPSHOT",
                            "repositories" => ["http://repo.obaweb.org:8080/archiva/repository/snapshots/"]
