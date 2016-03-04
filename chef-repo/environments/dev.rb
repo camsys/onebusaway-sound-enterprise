@@ -10,8 +10,8 @@ default_attributes({
                            "version_admin" => "1.1.15.14-cs-SNAPSHOT",
                            "version_core" => "1.1.15.14-cs-SNAPSHOT",
                            "version_app" => "1.1.15.14-cs-SNAPSHOT",
-                           "version_transitime_core" => "0.0.14-SNAPSHOT",
-                           "version_transitime_web" => "0.0.14-SNAPSHOT",
+                           "version_transitime_core" => "0.0.13-SNAPSHOT",
+                           "version_transitime_web" => "0.0.13-SNAPSHOT",
                            "repositories" => ["http://repo.obaweb.org:8080/archiva/repository/snapshots/"]
                        },
                        "db_instance" => "db",  
