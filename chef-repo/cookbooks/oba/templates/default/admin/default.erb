@@ -34,7 +34,9 @@
         </Directory>
 
     RewriteEngine on
-    RewriteRule "^/web/(.+)" "/onebusaway-admin-webapp/transitime?_path=web/$1" [PT]
-    RewriteRule "^/api/v1/(.+)" "/onebusaway-admin-webapp/transitime?_path=api/v1/$1" [PT]
+    RewriteRule "^/web/reports/(.+)" "/transitime?_path=web/reports/$1" [PT,QSA]
+    RewriteRule "^/web/(.+)" "/transitime?_path=web/$1" [PT,QSA]
+    RewriteRule "^/api/v1/(.+)" "/transitime?_path=api/v1/$1" [R]
+
 
 </VirtualHost>
