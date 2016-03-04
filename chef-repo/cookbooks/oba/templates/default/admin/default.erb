@@ -33,14 +33,8 @@
             Require host 127.0.0.0/255.0.0.0 ::1/128
         </Directory>
 
-	ProxyPass /transitime/ http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/
-	ProxyPassReverse /transitime/ http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/
-	<Location /transitime>
-                Require all granted
-    </Location>
-
     RewriteEngine on
-    RewriteRule "^/web/(.+)" "/transitime/web/$1" [PT]
-    RewriteRule "^/api/v1/(.+)" "/transitime/api/v1/$1" [PT]
+    RewriteRule "^/web/(.+)" "/onebusaway-admin-webapp/transitime?_path=web/$1" [PT]
+    RewriteRule "^/api/v1/(.+)" "/onebusaway-admin-webapp/transitime?_path=api/v1/$1" [PT]
 
 </VirtualHost>

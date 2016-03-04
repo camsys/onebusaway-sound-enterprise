@@ -92,6 +92,8 @@
    <!-- TODO localize for wmata -->
     <Parameter name="obanyc.resource" value="onebusaway-sound" override="false" />
    
+    <Parameter name="CustomProxyServlet.targetUri" value="http://gtfsrt.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/{_path}" override="false" /> 
+
     <!-- Uncomment this to disable session persistence across Tomcat restarts -->
     <!--
     <Manager pathname="" />
