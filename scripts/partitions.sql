@@ -1,3 +1,16 @@
+/** find foreign keys */
+/*
+SELECT
+  ke.referenced_table_name parent,
+  ke.table_name child,
+  ke.constraint_name
+FROM
+  information_schema.KEY_COLUMN_USAGE ke
+WHERE
+  ke.referenced_table_name IS NOT NULL
+ORDER BY
+  ke.referenced_table_name;
+*/
 alter table Predictions drop primary key, add primary key (id, avlTime);
 alter table Predictions partition by range (to_days(avlTime)) (
 partition p20151101 values less than (to_days('20151101')) engine = InnoDB,
@@ -954,7 +967,365 @@ partition p20160403 values less than (to_days('20160403')) engine = InnoDB,
 partition pmax values less than maxvalue engine = InnoDB
 );
 
+alter table VehicleEvents partition by range (to_days(time)) (
+partition p20151101 values less than (to_days('20151101')) engine = InnoDB,
+partition p20151102 values less than (to_days('20151102')) engine = InnoDB,
+partition p20151103 values less than (to_days('20151103')) engine = InnoDB,
+partition p20151104 values less than (to_days('20151104')) engine = InnoDB,
+partition p20151105 values less than (to_days('20151105')) engine = InnoDB,
+partition p20151106 values less than (to_days('20151106')) engine = InnoDB,
+partition p20151107 values less than (to_days('20151107')) engine = InnoDB,
+partition p20151108 values less than (to_days('20151108')) engine = InnoDB,
+partition p20151109 values less than (to_days('20151109')) engine = InnoDB,
+partition p20151110 values less than (to_days('20151110')) engine = InnoDB,
+partition p20151111 values less than (to_days('20151111')) engine = InnoDB,
+partition p20151112 values less than (to_days('20151112')) engine = InnoDB,
+partition p20151113 values less than (to_days('20151113')) engine = InnoDB,
+partition p20151114 values less than (to_days('20151114')) engine = InnoDB,
+partition p20151115 values less than (to_days('20151115')) engine = InnoDB,
+partition p20151116 values less than (to_days('20151116')) engine = InnoDB,
+partition p20151117 values less than (to_days('20151117')) engine = InnoDB,
+partition p20151118 values less than (to_days('20151118')) engine = InnoDB,
+partition p20151119 values less than (to_days('20151119')) engine = InnoDB,
+partition p20151120 values less than (to_days('20151120')) engine = InnoDB,
+partition p20151121 values less than (to_days('20151121')) engine = InnoDB,
+partition p20151122 values less than (to_days('20151122')) engine = InnoDB,
+partition p20151123 values less than (to_days('20151123')) engine = InnoDB,
+partition p20151124 values less than (to_days('20151124')) engine = InnoDB,
+partition p20151125 values less than (to_days('20151125')) engine = InnoDB,
+partition p20151126 values less than (to_days('20151126')) engine = InnoDB,
+partition p20151127 values less than (to_days('20151127')) engine = InnoDB,
+partition p20151128 values less than (to_days('20151128')) engine = InnoDB,
+partition p20151129 values less than (to_days('20151129')) engine = InnoDB,
+partition p20151130 values less than (to_days('20151130')) engine = InnoDB,
+partition p20151201 values less than (to_days('20151201')) engine = InnoDB,
+partition p20151202 values less than (to_days('20151202')) engine = InnoDB,
+partition p20151203 values less than (to_days('20151203')) engine = InnoDB,
+partition p20151204 values less than (to_days('20151204')) engine = InnoDB,
+partition p20151205 values less than (to_days('20151205')) engine = InnoDB,
+partition p20151206 values less than (to_days('20151206')) engine = InnoDB,
+partition p20151207 values less than (to_days('20151207')) engine = InnoDB,
+partition p20151208 values less than (to_days('20151208')) engine = InnoDB,
+partition p20151209 values less than (to_days('20151209')) engine = InnoDB,
+partition p20151210 values less than (to_days('20151210')) engine = InnoDB,
+partition p20151211 values less than (to_days('20151211')) engine = InnoDB,
+partition p20151212 values less than (to_days('20151212')) engine = InnoDB,
+partition p20151213 values less than (to_days('20151213')) engine = InnoDB,
+partition p20151214 values less than (to_days('20151214')) engine = InnoDB,
+partition p20151215 values less than (to_days('20151215')) engine = InnoDB,
+partition p20151216 values less than (to_days('20151216')) engine = InnoDB,
+partition p20151217 values less than (to_days('20151217')) engine = InnoDB,
+partition p20151218 values less than (to_days('20151218')) engine = InnoDB,
+partition p20151219 values less than (to_days('20151219')) engine = InnoDB,
+partition p20151220 values less than (to_days('20151220')) engine = InnoDB,
+partition p20151221 values less than (to_days('20151221')) engine = InnoDB,
+partition p20151222 values less than (to_days('20151222')) engine = InnoDB,
+partition p20151223 values less than (to_days('20151223')) engine = InnoDB,
+partition p20151224 values less than (to_days('20151224')) engine = InnoDB,
+partition p20151225 values less than (to_days('20151225')) engine = InnoDB,
+partition p20151226 values less than (to_days('20151226')) engine = InnoDB,
+partition p20151227 values less than (to_days('20151227')) engine = InnoDB,
+partition p20151228 values less than (to_days('20151228')) engine = InnoDB,
+partition p20151229 values less than (to_days('20151229')) engine = InnoDB,
+partition p20151230 values less than (to_days('20151230')) engine = InnoDB,
+partition p20151231 values less than (to_days('20151231')) engine = InnoDB,
+partition p20160101 values less than (to_days('20160101')) engine = InnoDB,
+partition p20160102 values less than (to_days('20160102')) engine = InnoDB,
+partition p20160103 values less than (to_days('20160103')) engine = InnoDB,
+partition p20160104 values less than (to_days('20160104')) engine = InnoDB,
+partition p20160105 values less than (to_days('20160105')) engine = InnoDB,
+partition p20160106 values less than (to_days('20160106')) engine = InnoDB,
+partition p20160107 values less than (to_days('20160107')) engine = InnoDB,
+partition p20160108 values less than (to_days('20160108')) engine = InnoDB,
+partition p20160109 values less than (to_days('20160109')) engine = InnoDB,
+partition p20160110 values less than (to_days('20160110')) engine = InnoDB,
+partition p20160111 values less than (to_days('20160111')) engine = InnoDB,
+partition p20160112 values less than (to_days('20160112')) engine = InnoDB,
+partition p20160113 values less than (to_days('20160113')) engine = InnoDB,
+partition p20160114 values less than (to_days('20160114')) engine = InnoDB,
+partition p20160115 values less than (to_days('20160115')) engine = InnoDB,
+partition p20160116 values less than (to_days('20160116')) engine = InnoDB,
+partition p20160117 values less than (to_days('20160117')) engine = InnoDB,
+partition p20160118 values less than (to_days('20160118')) engine = InnoDB,
+partition p20160119 values less than (to_days('20160119')) engine = InnoDB,
+partition p20160120 values less than (to_days('20160120')) engine = InnoDB,
+partition p20160121 values less than (to_days('20160121')) engine = InnoDB,
+partition p20160122 values less than (to_days('20160122')) engine = InnoDB,
+partition p20160123 values less than (to_days('20160123')) engine = InnoDB,
+partition p20160124 values less than (to_days('20160124')) engine = InnoDB,
+partition p20160125 values less than (to_days('20160125')) engine = InnoDB,
+partition p20160126 values less than (to_days('20160126')) engine = InnoDB,
+partition p20160127 values less than (to_days('20160127')) engine = InnoDB,
+partition p20160128 values less than (to_days('20160128')) engine = InnoDB,
+partition p20160129 values less than (to_days('20160129')) engine = InnoDB,
+partition p20160130 values less than (to_days('20160130')) engine = InnoDB,
+partition p20160131 values less than (to_days('20160131')) engine = InnoDB,
+partition p20160201 values less than (to_days('20160201')) engine = InnoDB,
+partition p20160202 values less than (to_days('20160202')) engine = InnoDB,
+partition p20160203 values less than (to_days('20160203')) engine = InnoDB,
+partition p20160204 values less than (to_days('20160204')) engine = InnoDB,
+partition p20160205 values less than (to_days('20160205')) engine = InnoDB,
+partition p20160206 values less than (to_days('20160206')) engine = InnoDB,
+partition p20160207 values less than (to_days('20160207')) engine = InnoDB,
+partition p20160208 values less than (to_days('20160208')) engine = InnoDB,
+partition p20160209 values less than (to_days('20160209')) engine = InnoDB,
+partition p20160210 values less than (to_days('20160210')) engine = InnoDB,
+partition p20160211 values less than (to_days('20160211')) engine = InnoDB,
+partition p20160212 values less than (to_days('20160212')) engine = InnoDB,
+partition p20160213 values less than (to_days('20160213')) engine = InnoDB,
+partition p20160214 values less than (to_days('20160214')) engine = InnoDB,
+partition p20160215 values less than (to_days('20160215')) engine = InnoDB,
+partition p20160216 values less than (to_days('20160216')) engine = InnoDB,
+partition p20160217 values less than (to_days('20160217')) engine = InnoDB,
+partition p20160218 values less than (to_days('20160218')) engine = InnoDB,
+partition p20160219 values less than (to_days('20160219')) engine = InnoDB,
+partition p20160220 values less than (to_days('20160220')) engine = InnoDB,
+partition p20160221 values less than (to_days('20160221')) engine = InnoDB,
+partition p20160222 values less than (to_days('20160222')) engine = InnoDB,
+partition p20160223 values less than (to_days('20160223')) engine = InnoDB,
+partition p20160224 values less than (to_days('20160224')) engine = InnoDB,
+partition p20160225 values less than (to_days('20160225')) engine = InnoDB,
+partition p20160226 values less than (to_days('20160226')) engine = InnoDB,
+partition p20160227 values less than (to_days('20160227')) engine = InnoDB,
+partition p20160228 values less than (to_days('20160228')) engine = InnoDB,
+partition p20160229 values less than (to_days('20160229')) engine = InnoDB,
+partition p20160301 values less than (to_days('20160301')) engine = InnoDB,
+partition p20160302 values less than (to_days('20160302')) engine = InnoDB,
+partition p20160303 values less than (to_days('20160303')) engine = InnoDB,
+partition p20160304 values less than (to_days('20160304')) engine = InnoDB,
+partition p20160305 values less than (to_days('20160305')) engine = InnoDB,
+partition p20160306 values less than (to_days('20160306')) engine = InnoDB,
+partition p20160307 values less than (to_days('20160307')) engine = InnoDB,
+partition p20160308 values less than (to_days('20160308')) engine = InnoDB,
+partition p20160309 values less than (to_days('20160309')) engine = InnoDB,
+partition p20160310 values less than (to_days('20160310')) engine = InnoDB,
+partition p20160311 values less than (to_days('20160311')) engine = InnoDB,
+partition p20160312 values less than (to_days('20160312')) engine = InnoDB,
+partition p20160313 values less than (to_days('20160313')) engine = InnoDB,
+partition p20160314 values less than (to_days('20160314')) engine = InnoDB,
+partition p20160315 values less than (to_days('20160315')) engine = InnoDB,
+partition p20160316 values less than (to_days('20160316')) engine = InnoDB,
+partition p20160317 values less than (to_days('20160317')) engine = InnoDB,
+partition p20160318 values less than (to_days('20160318')) engine = InnoDB,
+partition p20160319 values less than (to_days('20160319')) engine = InnoDB,
+partition p20160320 values less than (to_days('20160320')) engine = InnoDB,
+partition p20160321 values less than (to_days('20160321')) engine = InnoDB,
+partition p20160322 values less than (to_days('20160322')) engine = InnoDB,
+partition p20160323 values less than (to_days('20160323')) engine = InnoDB,
+partition p20160324 values less than (to_days('20160324')) engine = InnoDB,
+partition p20160325 values less than (to_days('20160325')) engine = InnoDB,
+partition p20160326 values less than (to_days('20160326')) engine = InnoDB,
+partition p20160327 values less than (to_days('20160327')) engine = InnoDB,
+partition p20160328 values less than (to_days('20160328')) engine = InnoDB,
+partition p20160329 values less than (to_days('20160329')) engine = InnoDB,
+partition p20160330 values less than (to_days('20160330')) engine = InnoDB,
+partition p20160331 values less than (to_days('20160331')) engine = InnoDB,
+partition p20160401 values less than (to_days('20160401')) engine = InnoDB,
+partition p20160402 values less than (to_days('20160402')) engine = InnoDB,
+partition p20160403 values less than (to_days('20160403')) engine = InnoDB,
+partition pmax values less than maxvalue engine = InnoDB
+);
+
+alter table VehicleStates partition by range (to_days(avlTime)) (
+partition p20151101 values less than (to_days('20151101')) engine = InnoDB,
+partition p20151102 values less than (to_days('20151102')) engine = InnoDB,
+partition p20151103 values less than (to_days('20151103')) engine = InnoDB,
+partition p20151104 values less than (to_days('20151104')) engine = InnoDB,
+partition p20151105 values less than (to_days('20151105')) engine = InnoDB,
+partition p20151106 values less than (to_days('20151106')) engine = InnoDB,
+partition p20151107 values less than (to_days('20151107')) engine = InnoDB,
+partition p20151108 values less than (to_days('20151108')) engine = InnoDB,
+partition p20151109 values less than (to_days('20151109')) engine = InnoDB,
+partition p20151110 values less than (to_days('20151110')) engine = InnoDB,
+partition p20151111 values less than (to_days('20151111')) engine = InnoDB,
+partition p20151112 values less than (to_days('20151112')) engine = InnoDB,
+partition p20151113 values less than (to_days('20151113')) engine = InnoDB,
+partition p20151114 values less than (to_days('20151114')) engine = InnoDB,
+partition p20151115 values less than (to_days('20151115')) engine = InnoDB,
+partition p20151116 values less than (to_days('20151116')) engine = InnoDB,
+partition p20151117 values less than (to_days('20151117')) engine = InnoDB,
+partition p20151118 values less than (to_days('20151118')) engine = InnoDB,
+partition p20151119 values less than (to_days('20151119')) engine = InnoDB,
+partition p20151120 values less than (to_days('20151120')) engine = InnoDB,
+partition p20151121 values less than (to_days('20151121')) engine = InnoDB,
+partition p20151122 values less than (to_days('20151122')) engine = InnoDB,
+partition p20151123 values less than (to_days('20151123')) engine = InnoDB,
+partition p20151124 values less than (to_days('20151124')) engine = InnoDB,
+partition p20151125 values less than (to_days('20151125')) engine = InnoDB,
+partition p20151126 values less than (to_days('20151126')) engine = InnoDB,
+partition p20151127 values less than (to_days('20151127')) engine = InnoDB,
+partition p20151128 values less than (to_days('20151128')) engine = InnoDB,
+partition p20151129 values less than (to_days('20151129')) engine = InnoDB,
+partition p20151130 values less than (to_days('20151130')) engine = InnoDB,
+partition p20151201 values less than (to_days('20151201')) engine = InnoDB,
+partition p20151202 values less than (to_days('20151202')) engine = InnoDB,
+partition p20151203 values less than (to_days('20151203')) engine = InnoDB,
+partition p20151204 values less than (to_days('20151204')) engine = InnoDB,
+partition p20151205 values less than (to_days('20151205')) engine = InnoDB,
+partition p20151206 values less than (to_days('20151206')) engine = InnoDB,
+partition p20151207 values less than (to_days('20151207')) engine = InnoDB,
+partition p20151208 values less than (to_days('20151208')) engine = InnoDB,
+partition p20151209 values less than (to_days('20151209')) engine = InnoDB,
+partition p20151210 values less than (to_days('20151210')) engine = InnoDB,
+partition p20151211 values less than (to_days('20151211')) engine = InnoDB,
+partition p20151212 values less than (to_days('20151212')) engine = InnoDB,
+partition p20151213 values less than (to_days('20151213')) engine = InnoDB,
+partition p20151214 values less than (to_days('20151214')) engine = InnoDB,
+partition p20151215 values less than (to_days('20151215')) engine = InnoDB,
+partition p20151216 values less than (to_days('20151216')) engine = InnoDB,
+partition p20151217 values less than (to_days('20151217')) engine = InnoDB,
+partition p20151218 values less than (to_days('20151218')) engine = InnoDB,
+partition p20151219 values less than (to_days('20151219')) engine = InnoDB,
+partition p20151220 values less than (to_days('20151220')) engine = InnoDB,
+partition p20151221 values less than (to_days('20151221')) engine = InnoDB,
+partition p20151222 values less than (to_days('20151222')) engine = InnoDB,
+partition p20151223 values less than (to_days('20151223')) engine = InnoDB,
+partition p20151224 values less than (to_days('20151224')) engine = InnoDB,
+partition p20151225 values less than (to_days('20151225')) engine = InnoDB,
+partition p20151226 values less than (to_days('20151226')) engine = InnoDB,
+partition p20151227 values less than (to_days('20151227')) engine = InnoDB,
+partition p20151228 values less than (to_days('20151228')) engine = InnoDB,
+partition p20151229 values less than (to_days('20151229')) engine = InnoDB,
+partition p20151230 values less than (to_days('20151230')) engine = InnoDB,
+partition p20151231 values less than (to_days('20151231')) engine = InnoDB,
+partition p20160101 values less than (to_days('20160101')) engine = InnoDB,
+partition p20160102 values less than (to_days('20160102')) engine = InnoDB,
+partition p20160103 values less than (to_days('20160103')) engine = InnoDB,
+partition p20160104 values less than (to_days('20160104')) engine = InnoDB,
+partition p20160105 values less than (to_days('20160105')) engine = InnoDB,
+partition p20160106 values less than (to_days('20160106')) engine = InnoDB,
+partition p20160107 values less than (to_days('20160107')) engine = InnoDB,
+partition p20160108 values less than (to_days('20160108')) engine = InnoDB,
+partition p20160109 values less than (to_days('20160109')) engine = InnoDB,
+partition p20160110 values less than (to_days('20160110')) engine = InnoDB,
+partition p20160111 values less than (to_days('20160111')) engine = InnoDB,
+partition p20160112 values less than (to_days('20160112')) engine = InnoDB,
+partition p20160113 values less than (to_days('20160113')) engine = InnoDB,
+partition p20160114 values less than (to_days('20160114')) engine = InnoDB,
+partition p20160115 values less than (to_days('20160115')) engine = InnoDB,
+partition p20160116 values less than (to_days('20160116')) engine = InnoDB,
+partition p20160117 values less than (to_days('20160117')) engine = InnoDB,
+partition p20160118 values less than (to_days('20160118')) engine = InnoDB,
+partition p20160119 values less than (to_days('20160119')) engine = InnoDB,
+partition p20160120 values less than (to_days('20160120')) engine = InnoDB,
+partition p20160121 values less than (to_days('20160121')) engine = InnoDB,
+partition p20160122 values less than (to_days('20160122')) engine = InnoDB,
+partition p20160123 values less than (to_days('20160123')) engine = InnoDB,
+partition p20160124 values less than (to_days('20160124')) engine = InnoDB,
+partition p20160125 values less than (to_days('20160125')) engine = InnoDB,
+partition p20160126 values less than (to_days('20160126')) engine = InnoDB,
+partition p20160127 values less than (to_days('20160127')) engine = InnoDB,
+partition p20160128 values less than (to_days('20160128')) engine = InnoDB,
+partition p20160129 values less than (to_days('20160129')) engine = InnoDB,
+partition p20160130 values less than (to_days('20160130')) engine = InnoDB,
+partition p20160131 values less than (to_days('20160131')) engine = InnoDB,
+partition p20160201 values less than (to_days('20160201')) engine = InnoDB,
+partition p20160202 values less than (to_days('20160202')) engine = InnoDB,
+partition p20160203 values less than (to_days('20160203')) engine = InnoDB,
+partition p20160204 values less than (to_days('20160204')) engine = InnoDB,
+partition p20160205 values less than (to_days('20160205')) engine = InnoDB,
+partition p20160206 values less than (to_days('20160206')) engine = InnoDB,
+partition p20160207 values less than (to_days('20160207')) engine = InnoDB,
+partition p20160208 values less than (to_days('20160208')) engine = InnoDB,
+partition p20160209 values less than (to_days('20160209')) engine = InnoDB,
+partition p20160210 values less than (to_days('20160210')) engine = InnoDB,
+partition p20160211 values less than (to_days('20160211')) engine = InnoDB,
+partition p20160212 values less than (to_days('20160212')) engine = InnoDB,
+partition p20160213 values less than (to_days('20160213')) engine = InnoDB,
+partition p20160214 values less than (to_days('20160214')) engine = InnoDB,
+partition p20160215 values less than (to_days('20160215')) engine = InnoDB,
+partition p20160216 values less than (to_days('20160216')) engine = InnoDB,
+partition p20160217 values less than (to_days('20160217')) engine = InnoDB,
+partition p20160218 values less than (to_days('20160218')) engine = InnoDB,
+partition p20160219 values less than (to_days('20160219')) engine = InnoDB,
+partition p20160220 values less than (to_days('20160220')) engine = InnoDB,
+partition p20160221 values less than (to_days('20160221')) engine = InnoDB,
+partition p20160222 values less than (to_days('20160222')) engine = InnoDB,
+partition p20160223 values less than (to_days('20160223')) engine = InnoDB,
+partition p20160224 values less than (to_days('20160224')) engine = InnoDB,
+partition p20160225 values less than (to_days('20160225')) engine = InnoDB,
+partition p20160226 values less than (to_days('20160226')) engine = InnoDB,
+partition p20160227 values less than (to_days('20160227')) engine = InnoDB,
+partition p20160228 values less than (to_days('20160228')) engine = InnoDB,
+partition p20160229 values less than (to_days('20160229')) engine = InnoDB,
+partition p20160301 values less than (to_days('20160301')) engine = InnoDB,
+partition p20160302 values less than (to_days('20160302')) engine = InnoDB,
+partition p20160303 values less than (to_days('20160303')) engine = InnoDB,
+partition p20160304 values less than (to_days('20160304')) engine = InnoDB,
+partition p20160305 values less than (to_days('20160305')) engine = InnoDB,
+partition p20160306 values less than (to_days('20160306')) engine = InnoDB,
+partition p20160307 values less than (to_days('20160307')) engine = InnoDB,
+partition p20160308 values less than (to_days('20160308')) engine = InnoDB,
+partition p20160309 values less than (to_days('20160309')) engine = InnoDB,
+partition p20160310 values less than (to_days('20160310')) engine = InnoDB,
+partition p20160311 values less than (to_days('20160311')) engine = InnoDB,
+partition p20160312 values less than (to_days('20160312')) engine = InnoDB,
+partition p20160313 values less than (to_days('20160313')) engine = InnoDB,
+partition p20160314 values less than (to_days('20160314')) engine = InnoDB,
+partition p20160315 values less than (to_days('20160315')) engine = InnoDB,
+partition p20160316 values less than (to_days('20160316')) engine = InnoDB,
+partition p20160317 values less than (to_days('20160317')) engine = InnoDB,
+partition p20160318 values less than (to_days('20160318')) engine = InnoDB,
+partition p20160319 values less than (to_days('20160319')) engine = InnoDB,
+partition p20160320 values less than (to_days('20160320')) engine = InnoDB,
+partition p20160321 values less than (to_days('20160321')) engine = InnoDB,
+partition p20160322 values less than (to_days('20160322')) engine = InnoDB,
+partition p20160323 values less than (to_days('20160323')) engine = InnoDB,
+partition p20160324 values less than (to_days('20160324')) engine = InnoDB,
+partition p20160325 values less than (to_days('20160325')) engine = InnoDB,
+partition p20160326 values less than (to_days('20160326')) engine = InnoDB,
+partition p20160327 values less than (to_days('20160327')) engine = InnoDB,
+partition p20160328 values less than (to_days('20160328')) engine = InnoDB,
+partition p20160329 values less than (to_days('20160329')) engine = InnoDB,
+partition p20160330 values less than (to_days('20160330')) engine = InnoDB,
+partition p20160331 values less than (to_days('20160331')) engine = InnoDB,
+partition p20160401 values less than (to_days('20160401')) engine = InnoDB,
+partition p20160402 values less than (to_days('20160402')) engine = InnoDB,
+partition p20160403 values less than (to_days('20160403')) engine = InnoDB,
+partition pmax values less than maxvalue engine = InnoDB
+);
+
+/* drop constraints for partitioning then re-add */
 /*
+*************************** 1. row ***************************
+       Table: Block_to_Trip_joinTable
+Create Table: CREATE TABLE `Block_to_Trip_joinTable` (
+  `Blocks_serviceId` varchar(60) NOT NULL,
+  `Blocks_configRev` int(11) NOT NULL,
+  `Blocks_blockId` varchar(60) NOT NULL,
+  `trips_tripId` varchar(60) NOT NULL,
+  `trips_startTime` int(11) NOT NULL,
+  `trips_configRev` int(11) NOT NULL,
+  `listIndex` int(11) NOT NULL,
+  PRIMARY KEY (`Blocks_serviceId`,`Blocks_configRev`,`Blocks_blockId`,`listIndex`),
+  KEY `FK_abaj8ke6oh4imbbgnaercsowo` (`trips_tripId`,`trips_startTime`,`trips_configRev`),
+  CONSTRAINT `FK_1c1e1twdap19vq0xkav0amvm` FOREIGN KEY (`Blocks_serviceId`, `Blocks_configRev`, `Blocks_blockId`) REFERENCES `Blocks` (`serviceId`, `configRev`, `blockId`),
+  CONSTRAINT `FK_abaj8ke6oh4imbbgnaercsowo` FOREIGN KEY (`trips_tripId`, `trips_startTime`, `trips_configRev`) REFERENCES `Trips` (`tripId`, `startTime`, `configRev`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+1 row in set (0.04 sec)
+*/
+/* TripPattern
+CREATE TABLE `TripPattern_to_Path_joinTable` (
+  `TripPatterns_id` varchar(120) NOT NULL,
+  `TripPatterns_configRev` int(11) NOT NULL,
+  `stopPaths_tripPatternId` varchar(120) NOT NULL,
+  `stopPaths_stopPathId` varchar(120) NOT NULL,
+  `stopPaths_configRev` int(11) NOT NULL,
+  `listIndex` int(11) NOT NULL,
+  PRIMARY KEY (`TripPatterns_id`,`TripPatterns_configRev`,`listIndex`),
+  UNIQUE KEY `UK_s0gaw8iv60vc17a5ltryqwg27` (`stopPaths_tripPatternId`,`stopPaths_stopPathId`,`stopPaths_configRev`),
+  CONSTRAINT `FK_qsr8l6u1nelb5pt8rlnei08sy` FOREIGN KEY (`TripPatterns_id`, `TripPatterns_configRev`) REFERENCES `TripPatterns` (`id`, `configRev`),
+  CONSTRAINT `FK_s0gaw8iv60vc17a5ltryqwg27` FOREIGN KEY (`stopPaths_tripPatternId`, `stopPaths_stopPathId`, `stopPaths_configRev`) REFERENCES `StopPaths` (`tripPatternId`, `stopPathId`, `configRev`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1
+
+alter table TripPattern_to_Path_joinTable drop foreign key FK_s0gaw8iv60vc17a5ltryqwg27;
+alter table TripPattern_to_Path_joinTable drop foreign key FK_qsr8l6u1nelb5pt8rlnei08sy;
+*/
+alter table Block_to_Trip_joinTable drop foreign key FK_abaj8ke6oh4imbbgnaercsowo;
+
+alter table Block_to_Trip_joinTable drop foreign key FK_1c1e1twdap19vq0xkav0amvm;
+alter table Block_to_Trip_joinTable drop primary key, add primary key (`Blocks_serviceId`,`Blocks_configRev`,`Blocks_blockId`,`listIndex`, `trips_configRev`);
+
 alter table Block_to_Trip_joinTable partition by range COLUMNS(Blocks_configRev, trips_configRev) (
  partition p0 values less than (0,0) engine = InnoDB, 
  partition p1 values less than (1,1) engine = InnoDB, 
@@ -995,7 +1366,52 @@ alter table Blocks partition by range(configRev) (
  partition p15 values less than (15) engine = InnoDB, 
  partition pmax values less than maxvalue engine = InnoDB
 );
-*/
+
+alter table Trips partition by range(configRev) (
+ partition p0 values less than (0) engine = InnoDB, 
+ partition p1 values less than (1) engine = InnoDB, 
+ partition p2 values less than (2) engine = InnoDB, 
+ partition p3 values less than (3) engine = InnoDB, 
+ partition p4 values less than (4) engine = InnoDB, 
+ partition p5 values less than (5) engine = InnoDB, 
+ partition p6 values less than (6) engine = InnoDB, 
+ partition p7 values less than (7) engine = InnoDB, 
+ partition p8 values less than (8) engine = InnoDB, 
+ partition p9 values less than (9) engine = InnoDB, 
+ partition p10 values less than (10) engine = InnoDB, 
+ partition p11 values less than (11) engine = InnoDB, 
+ partition p12 values less than (12) engine = InnoDB, 
+ partition p13 values less than (13) engine = InnoDB, 
+ partition p14 values less than (14) engine = InnoDB, 
+ partition p15 values less than (15) engine = InnoDB, 
+ partition pmax values less than maxvalue engine = InnoDB
+);
+
+alter table Trip_scheduledTimesList partition by range(Trip_configRev) (
+ partition p0 values less than (0) engine = InnoDB, 
+ partition p1 values less than (1) engine = InnoDB, 
+ partition p2 values less than (2) engine = InnoDB, 
+ partition p3 values less than (3) engine = InnoDB, 
+ partition p4 values less than (4) engine = InnoDB, 
+ partition p5 values less than (5) engine = InnoDB, 
+ partition p6 values less than (6) engine = InnoDB, 
+ partition p7 values less than (7) engine = InnoDB, 
+ partition p8 values less than (8) engine = InnoDB, 
+ partition p9 values less than (9) engine = InnoDB, 
+ partition p10 values less than (10) engine = InnoDB, 
+ partition p11 values less than (11) engine = InnoDB, 
+ partition p12 values less than (12) engine = InnoDB, 
+ partition p13 values less than (13) engine = InnoDB, 
+ partition p14 values less than (14) engine = InnoDB, 
+ partition p15 values less than (15) engine = InnoDB, 
+ partition pmax values less than maxvalue engine = InnoDB
+);
+
+
+alter table Block_to_Trip_joinTable add CONSTRAINT `FK_1c1e1twdap19vq0xkav0amvm` FOREIGN KEY (`Blocks_serviceId`, `Blocks_configRev`, `Blocks_blockId`) REFERENCES `Blocks` (`serviceId`, `configRev`, `blockId`);
+alter table Block_to_Trip_joinTable add CONSTRAINT `FK_abaj8ke6oh4imbbgnaercsowo` FOREIGN KEY (`trips_tripId`, `trips_startTime`, `trips_configRev`) REFERENCES `Trips` (`tripId`, `startTime`, `configRev`)
+
+
 /* todo by configRev
 Blocks
 CalendarDates
@@ -1004,24 +1420,32 @@ FareAttributes
 FareRules
 Frequencies
 Routes
-StopPath_locations?
-StopPaths
 Stops
 Transfers
-TripPatterns
-Trip_scheduledTimeList
+Trip_scheduledTimesList
 Trips
+
 */
 
+/* compound
+Block_to_Trip_joinTable (Blocks_configRev,trips_configRev)
+TravelTimesForStopPath(configRev, travelTimesRev)
+TravelTimeForTrips(configRev, travelTimesRev)
+*/
+
+
 /* todo time 
-MonitoringEvents
-VehicleEvents
+
 */
 
 /* todo dunno
-Block_to_Trip_joinTables
-TravelTimeForStopPaths
+StopPath_locations?
+StopPaths
+TripPatterns
+
+
 TravelTimesForTrip_to_TravelTimesForPath_joinTable
-TravelTimeForTrips
+
 TripPattern_to_Path_joinTable
 */
+
