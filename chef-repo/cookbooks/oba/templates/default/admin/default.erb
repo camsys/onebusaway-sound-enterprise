@@ -36,7 +36,7 @@
     RewriteEngine on
     RewriteRule "^/web/reports/(.+)" "/transitime?_path=web/reports/$1" [PT,QSA]
     RewriteRule "^/web/(.+)" "/transitime?_path=web/$1" [PT,QSA]
-    RewriteRule "^/api/v1/(.+)" "/transitime?_path=api/v1/$1" [R]
+    RewriteRule "^/api/v1/(.+)" "/transitime?_path=api/v1/$1" [R,QSA]
 
 
 </VirtualHost>
