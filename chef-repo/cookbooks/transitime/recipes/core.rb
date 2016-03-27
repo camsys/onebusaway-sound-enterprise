@@ -134,10 +134,10 @@ directory '/var/lib/oba/monitoring' do
   action :create
 end
 
-cron "daily-maintenance" do
-  hour "1"
-  minute "0"
-  logfile = "/var/lib/oba/transitime/logs/daily_cron.log"
-  command "cd /var/lib/oba/transitime/core && ./daily_maintenance.sh >> #{logfile} 2>&1"
-  user "ubuntu"
-end
+#cron "daily-maintenance" do
+#  hour "1"
+#  minute "0"
+#  logfile = "/var/lib/oba/transitime/logs/daily_cron.log"
+#  command "cd /var/lib/oba/transitime/core && ./daily_maintenance.sh >> #{logfile} 2>&1"
+#  user "ubuntu"
+#end
