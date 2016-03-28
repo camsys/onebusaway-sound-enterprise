@@ -2,7 +2,7 @@
 
 cd /var/lib/oba/transitime/processGTFS
 java \
-  -Xmx6g \
+  -Xmx14g \
   -Dtransitime.core.agencyId=<%= node[:transitime][:agency] %> \
   -Dtransitime.logging.dir=/var/lib/oba/transitime/processGTFS \
   -Dtransitime.db.batchSize=16000 \
