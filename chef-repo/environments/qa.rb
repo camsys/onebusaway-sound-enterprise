@@ -37,7 +37,7 @@ default_attributes({
                        "ses_host" => "email-smtp.us-east-1.amazonaws.com",
                        "ses_user" => "AKIAISKUXW2UHBZRHHNA",
                        "ses_password" => "AhxzNCmnlqzK8qjPwsQ41yHUbk3meOlHZvVRuoVoM7/t",
-                       "ses_from" => "no.reply.wmata@gmail.com"
+                       "ses_from" => "noreply@wmata.com"
                      },
                        "transitime" => {
                          "dbhost" => "db.qa.wmata.obaweb.org:3306",
