@@ -7,11 +7,11 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "1.1.15.19-cs-SNAPSHOT",
-                           "version_core" => "1.1.15.19-cs-SNAPSHOT",
-                           "version_app" => "1.1.15.19-cs-SNAPSHOT",
-                           "version_transitime_core" => "0.0.19-SNAPSHOT",
-                           "version_transitime_web" => "0.0.19-SNAPSHOT",
+                           "version_admin" => "1.1.15.20-cs-SNAPSHOT",
+                           "version_core" => "1.1.15.20-cs-SNAPSHOT",
+                           "version_app" => "1.1.15.20-cs-SNAPSHOT",
+                           "version_transitime_core" => "0.0.20-SNAPSHOT",
+                           "version_transitime_web" => "0.0.20-SNAPSHOT",
                            "repositories" => ["http://repo.obaweb.org:8080/archiva/repository/snapshots/"]
                        },
                        "db_instance" => "db",  
