@@ -33,6 +33,19 @@
             Require host 127.0.0.0/255.0.0.0 ::1/128
         </Directory>
 
+    # https for login page
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    # this statemet only evaluate if RewriteCond evals to true
+    RewriteRule ^/login.action(.*) https://%{SERVER_NAME}/login.action$1 [R,L]
+
+    # match the index page
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^/$ https://%{SERVER_NAME}/ [R,L]
+
+    # catch anything that goes to /admin
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^/admin/(.*) https://%{SERVER_NAME}/admin/$1 [R,L]
+
     RewriteEngine on
     RewriteRule "^/web/reports/(.+)" "/transitime?_path=web/reports/$1" [PT,QSA]
     RewriteRule "^/web/(.+)" "/transitime?_path=web/$1" [PT,QSA]
