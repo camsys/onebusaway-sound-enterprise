@@ -46,10 +46,25 @@
     RewriteCond %{HTTP:X-Forwarded-Proto} !https
     RewriteRule ^/admin/(.*) https://%{SERVER_NAME}/admin/$1 [R,L]
 
+    # catch anything that goes to reports and isn't https
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule ^/transitime(.*) https://%{SERVER_NAME}/transitime$1 [R,L]
+
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule "^/web/reports/(.+)" "https://%{SERVER_NAME}/transitime?_path=web/reports/$1" [PT,QSA]
+
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule "^/web/(.+)" "https://%{SERVER_NAME}/transitime?_path=web/$1" [PT,QSA]
+
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteRule "^/api/v1/(.+)" "https://%{SERVER_NAME}/transitime?_path=api/v1/$1" [R,QSA]
+
     RewriteEngine on
+    # if we got here we are https already
     RewriteRule "^/web/reports/(.+)" "/transitime?_path=web/reports/$1" [PT,QSA]
     RewriteRule "^/web/(.+)" "/transitime?_path=web/$1" [PT,QSA]
-    RewriteRule "^/api/v1/(.+)" "/transitime?_path=api/v1/$1" [R,QSA]
+    # redirect must specify https
+    RewriteRule "^/api/v1/(.+)" "https://%{SERVER_NAME}/transitime?_path=api/v1/$1" [R,QSA]
 
 
 </VirtualHost>
