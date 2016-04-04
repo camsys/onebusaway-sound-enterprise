@@ -11,6 +11,7 @@ link "/var/log/tomcat6" do
 end
 
 mvn_version = node[:oba][:mvn][:version_app]
+mvn_branded_version = node[:oba][:mvn][:version_branded]
 
 log "Downloading wars"
 mvn_tdf_dest_file = "/tmp/war/onebusaway-transit-data-federation-webapp-#{mvn_version}.war"
@@ -58,7 +59,7 @@ maven "onebusaway-nextbus-api-webapp" do
 end
 
 front_end_webapp = node[:oba][:webapp][:artifact]
-mvn_webapp_dest_file = "/tmp/war/#{front_end_webapp}-#{mvn_version}.war"
+mvn_webapp_dest_file = "/tmp/war/#{front_end_webapp}-#{mvn_branded_version}.war"
 log "maven dependency installed at #{mvn_webapp_dest_file}"
 maven "#{front_end_webapp}" do
   group_id node[:oba][:mvn][:group_id]
