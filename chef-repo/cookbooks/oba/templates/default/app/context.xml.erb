@@ -1,7 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <Context>
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
+
     <!-- database configuration moved to server.xml -->
+    <ResourceLink
+       name="jdbc/appDB"
+       global="shared/jdbc/appDB"
+       type="javax.sql.DataSource"
+       factory="org.apache.naming.factory.DataSourceLinkFactory"
+       username="<%= node[:oba][:db_user] %>"
+       password="<%= node[:oba][:db_password] %>" />
     <Environment name="xwikiUrl" value="http://xwiki.prod.wmata.obaweb.org:8080/xwiki" type="java.lang.String" override="true" />
     <Environment name="wikiDocumentEditUrl" value="http://xwiki.prod.wmata.obaweb.org:8080/xwiki/bin/edit/%{namespace}/%{documentName}" type="java.lang.String" override="true" />
     <Environment name="wikiAttachmentUrl" value="http://xwiki.prod.wmata.obaweb.org:8080/xwiki/bin/download/%{namespace}/%{documentName}/%{attachmentName}" type="java.lang.String" override="true" />
