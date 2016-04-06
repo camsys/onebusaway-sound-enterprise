@@ -48,7 +48,6 @@
               factory="org.apache.catalina.users.MemoryUserDatabaseFactory"
               pathname="conf/tomcat-users.xml" />
 
-  </GlobalNamingResources>
 
      <Resource name="shared/jdbc/appDB"
         auth="Container"
@@ -69,6 +68,7 @@
         url="jdbc:mysql://db.<%= node[:oba][:env] %>.<%= node[:oba][:base_domain] %>:3306/<%= node[:oba][:db_instance_name] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true" >
      </Resource>
 
+  </GlobalNamingResources>
   <!-- A "Service" is a collection of one or more "Connectors" that share
        a single "Container" Note:  A "Service" is not itself a "Container",
        so you may not define subcomponents such as "Valves" at this level.
