@@ -5,7 +5,7 @@ java \
   -classpath logback-core-1.1.2.jar:logback-classic-1.1.2.jar:slf4j-api-1.7.2.jar \
   -Xmx10g \
   -Xms6g \
-  -Dtransitime.core.allowableLateSecondsForInitialMatching=60 \
+  -Dtransitime.core.allowableLateSecondsForInitialMatching=3600 \
   -Dtransitime.core.agencyId=<%= node[:transitime][:agency] %> \
   -Dtransitime.db.dbName=<%= node[:transitime][:dbname] %> \
   -Dtransitime.db.encryptionPassword='<%= node[:transitime][:encryptionPassword] %>' \
