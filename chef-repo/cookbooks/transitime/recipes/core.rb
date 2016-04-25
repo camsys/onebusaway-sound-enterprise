@@ -1,4 +1,4 @@
-mvn_version = node[:oba][:mvn][:version_transitime_web]
+mvn_version = node[:oba][:mvn][:version_transitime_core]
 mvn_core_dest_file = "/tmp/chef/transitimeCore-#{mvn_version}-onejar.jar"
 log "maven dependency installed at #{mvn_core_dest_file}"
 maven "transitimeCore" do
