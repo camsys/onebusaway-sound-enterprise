@@ -48,6 +48,11 @@ directory "/var/lib/oba/transitime/web" do
   recursive true
 end
 
+# keep the old logging directory around
+link "/var/log/tomcat6" do
+ to "/var/log/tomcat7"
+end
+
 
 # template transitime ocnfiguration
 # template "/var/lib/oba/transitime/web/transitimeConfig.xml" do
