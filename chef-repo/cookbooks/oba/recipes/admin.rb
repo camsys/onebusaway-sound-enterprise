@@ -250,16 +250,14 @@ script "sync-bundles-now" do
   EOH
 end
 
-
-# ubuntu memory default for tomcat is not enough
-#script "fixup watchdog" do
-#  interpreter "bash"
-#  user "root"
-#  cwd node[:oba][:home]
-#  puts "fixing memory args"
-#  code <<-EOH
-#  sed -i /etc/init.d/tomcat7-watchdog -e 's!Xmx128M!Xmx2g!g'
-#  sleep 180 && sudo service tomcat7-watchdog restart
-#  EOH
-#end
+# now that the bundle is present restart watchdog
+script "restart watchdog" do
+  interpreter "bash"
+  user "root"
+  cwd node[:oba][:home]
+  puts "restart watchdog"
+  code <<-EOH
+  sudo service tomcat7-watchdog restart
+  EOH
+end
 
