@@ -232,15 +232,15 @@ cron "bundle-sync" do
 end
 
 ## synch bundles
-#script "sync-bundles-now" do
-#  interpreter "bash"
-#  user "tomcat7"
-#  cwd node[:oba][:home]
-#  puts "syncing bundles"
-#  code <<-EOH
-#  /usr/bin/s3cmd --config /home/ubuntu/.s3cfg --no-progress --recursive --rexclude "/$" --skip-existing get s3://obawmata-bundle/#{node[:oba][:env]}/ /var/lib/oba/ >/tmp/bundle_sync.log 2>&1
-#  EOH
-#end
+script "sync-bundles-now" do
+  interpreter "bash"
+  user "tomcat7"
+  cwd node[:oba][:home]
+  puts "syncing bundles"
+  code <<-EOH
+  /usr/bin/s3cmd --config /home/ubuntu/.s3cfg --no-progress --recursive --rexclude "/$" --skip-existing get s3://obawmata-bundle/#{node[:oba][:env]}/ /var/lib/oba/ >/tmp/bundle_sync.log 2>&1
+  EOH
+end
 
 
 # ubuntu memory default for tomcat is not enough
