@@ -4,7 +4,7 @@
   <parent>
     <artifactId>onebusaway-wmata-enterprise</artifactId>
     <groupId>org.onebusaway</groupId>
-    <version>1.1.15.22-cs</version>
+    <version>1.1.15.23-cs-SNAPSHOT</version>
   </parent>
   <artifactId>onebusaway-enterprise-wmata-webapp</artifactId>
   <packaging>war</packaging>
@@ -30,7 +30,7 @@
     <dependency>
 		<groupId>org.onebusaway</groupId>
 		<artifactId>onebusaway-enterprise-webapp</artifactId>
-		<version>1.1.15.22-cs</version>
+		<version>1.1.15.23-cs-SNAPSHOT</version>
 		<type>war</type>
 	</dependency>
   </dependencies>
@@ -178,7 +178,7 @@
 			     <dependency>
 		<groupId>org.onebusaway</groupId>
 		<artifactId>onebusaway-enterprise-webapp</artifactId>
-		<version>1.1.15.22-cs</version>
+		<version>1.1.15.23-cs-SNAPSHOT</version>
 		<type>war</type>
 	</dependency>
 			</dependencies>
