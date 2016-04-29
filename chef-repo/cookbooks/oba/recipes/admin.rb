@@ -124,6 +124,15 @@ template "/etc/init.d/tomcat7-watchdog" do
   group 'root'
   mode '0755'
 end
+template "/etc/default/tomcat7-watchdog" do
+  source "watchdog/tomcat7-watchdog.default.erb"
+  owner 'root'
+  group 'root'
+  mode '0644'
+end
+
+
+
 # template context.xml adding datasource
 template "/var/lib/tomcat7-watchdog/conf/context.xml" do
   source "admin/context.xml.erb"
@@ -172,7 +181,6 @@ template "/var/lib/tomcat7-watchdog/webapps/onebusaway-watchdog-webapp/WEB-INF/c
   group 'tomcat7'
   mode '0644'
 end
-
 
 
 # TODO fix build dependency
