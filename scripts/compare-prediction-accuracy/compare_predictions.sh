@@ -1,6 +1,7 @@
-# Usage: ./compare_predictions.sh <begin> <end> <vehicleId>
+# Usage: ./compare_predictions.sh [-r [routeId]] [-t [tripId]] [-s [stopId]] [-v [vehicleId]] [begin] [end]
+# Route, trip, stop, and vehicle options can be used in combination or not all.
 # For example: 
-# ./compare_predicitions.sh '2016-05-05 10:45:00' '2016-05-05 12:00:00' 8062 
+# ./compare_predicitions.sh -v 8062 '2016-05-05 10:45:00' '2016-05-05 12:00:00'
 # This will:
 # - download the Predictions and ArrivalsDepartures databases from two servers (X and Y) 
 # - export to sqlite
@@ -9,6 +10,7 @@
 # - report on summary statistics over the PredictionAccuracy and CombinedAccuracy tables
 
 # Notes:
+# No validation is performed on inputs.
 # The times used to restrict ArrivalsDepartures (actual Arrival/Departure time) and Prediction
 # (creationTime) don't exactly line up -- i.e., if we restrict both to 9:00-10:00, we will get
 # arrival/departures that are earlier than all the predictions and predictions that never
@@ -26,9 +28,43 @@ Y_HOST=db-ro.prod.wmata.obaweb.org
 Y_USER=transitime
 Y_PASS=transitimeprod
 
-BEGIN=$1
-END=$2
-VEHICLE=$3
+# Get parameters from command line
+
+where=""
+
+while getopts "r:t:v:s:" opt; do
+  case $opt in
+    r)
+      where="$where and routeId='$OPTARG'"
+      ;;
+    t)
+	  where="$where and tripId='$OPTARG'";
+	  ;;
+	s)
+      where="$where and stopId='$OPTARG'"
+      ;;
+    v)
+	  where="$where and vehicleId='$OPTARG'"
+	  ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+shift $((OPTIND-1))
+
+# Construct where clause
+# Name of time field will be added later
+begin=$1
+end=$2
+if [ -z "$begin" ] || [ -z "$end" ]
+then
+	echo "Must supply positional parameters for start and end."
+	exit 1
+fi
+where="between '$begin' and '$end' $where"
 
 # from http://forums.mysql.com/read.php?145,68269,92627
 function mysql2sqlite() {
@@ -50,7 +86,7 @@ function mysql2sqlite() {
 function exportdb() {
 	mysqldump --compatible=ansi --skip-extended-insert --compact \
 	-h $1 -u $2 -p$3 transitime $4 \
-	--where "$5 between '$BEGIN' and '$END' and vehicleId='$VEHICLE'" \
+	--where "$5 $where" \
 	| mysql2sqlite $6
 }
 
