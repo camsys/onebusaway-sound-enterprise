@@ -4,11 +4,11 @@
   <parent>
 	<artifactId>onebusaway-application-modules</artifactId>
 	<groupId>org.onebusaway</groupId>
-	<version>1.1.15.24-cs-SNAPSHOT</version>
+	<version>1.1.15.26-cs-SNAPSHOT</version>
   </parent>
   <artifactId>onebusaway-sound-enterprise</artifactId>
   <packaging>pom</packaging>
-  <version>1.1.15.24-cs-SNAPSHOT</version>
+  <version>1.1.15.26-cs-SNAPSHOT</version>
   <name>onebusaway-sound-enterprise</name>
     <repositories>
     <repository>
