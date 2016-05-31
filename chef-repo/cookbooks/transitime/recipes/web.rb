@@ -137,3 +137,7 @@ directory '/var/lib/oba/monitoring' do
   action :create
 end
 
+cron "check-tomcat-size" do
+  command '[ "`ps -o rss -u tomcat7 --no-headers`" -gt 5068924 ] && sudo service tomcat7 restart'
+  user "ubuntu"
+end
