@@ -17,6 +17,7 @@
  {"component": "admin", "key": "showVehicleStatus", "value": "false"},
  {"component": "admin", "key": "showUpdateConfig", "value": "false"},
  {"component": "admin", "key": "showQrCode", "value": "true"},
+ {"component": "admin", "key": "showVehiclePredictions", "value": "false"},
  {"component": "admin", "key": "manageServiceAlerts", "value": "true"},
  {"component": "admin", "key": "validateTransitDataBundle", "value": "true"},
  {"component": "admin", "key": "no_default_agency", "value": "true"},
@@ -94,7 +95,7 @@
       {  
          "component":"monitoring",
          "key":"monitoring.smsWebappUrl",
-         "value":"http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/onebusaway-sms-webapp"
+         "value":"http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/onebusaway-sms-webapp/"
       },
 	  {  
          "component":"monitoring",
