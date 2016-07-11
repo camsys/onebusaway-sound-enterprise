@@ -155,7 +155,7 @@ script "deploy_watchdog" do
   interpreter "bash"
   user "root"
   cwd node[:oba][:home]
-  puts "watcdog version is #{mvn_version}"
+  puts "watchdog version is #{mvn_version}"
   code <<-EOH
   rm -rf /var/lib/tomcat7-watchdog/webapps/*
   rm -rf /var/cache/tomcat7-watchdog/temp/*
