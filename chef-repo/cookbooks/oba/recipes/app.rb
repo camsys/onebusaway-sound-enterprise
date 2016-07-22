@@ -166,6 +166,14 @@ template "#{node[:tomcat][:webapp_dir]}/ROOT/WEB-INF/classes/data-sources.xml" d
   mode '0644'
 end
 
+# template app urlrewrite
+template "#{node[:tomcat][:webapp_dir]}/ROOT/WEB-INF/urlrewrite.xml" do
+  source "app/urlrewrite.xml.erb"
+  owner 'tomcat7'
+  group 'tomcat7'
+  mode '0644'
+end
+
 # TODO fix build dependency
 %w{mysql-connector-java-5.1.35.jar}.each do |jar_file|
   cookbook_file ["/usr/share/tomcat7/lib", jar_file].compact.join("/") do
