@@ -18,7 +18,7 @@ default_attributes({
                        "db_instance" => "db",
                        "db_master" => "db.qa.wmata.obaweb.org",
                        "db_user" => "oba",
-                       "db_password" => "changemeqa",
+                       "db_password" => "changeme",
                        "env" => "qa",
                        "base_domain" => "wmata.obaweb.org",
                        "db_instance_name" => "org_onebusaway_users",
