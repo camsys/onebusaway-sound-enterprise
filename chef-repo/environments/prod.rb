@@ -7,12 +7,12 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "1.1.15.28.1-cs",
-                           "version_core" => "1.1.15.28.1-cs",
-                           "version_app" => "1.1.15.28.1-cs",
-                           "version_branded" => "1.1.15.28.1-cs",
-                           "version_transitime_core" => "0.0.27",
-                           "version_transitime_web" => "0.0.27",
+                           "version_admin" => "1.1.15.30-cs",
+                           "version_core" => "1.1.15.30-cs",
+                           "version_app" => "1.1.15.30-cs",
+                           "version_branded" => "1.1.15.30-cs",
+                           "version_transitime_core" => "0.0.30",
+                           "version_transitime_web" => "0.0.30",
                            "repositories" => ["http://repo.prod.wmata.obaweb.org:8080/archiva/repository/releases/"]
                        },
                        "db_instance" => "db",
