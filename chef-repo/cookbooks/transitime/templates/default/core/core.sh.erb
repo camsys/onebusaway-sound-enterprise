@@ -35,6 +35,7 @@ java \
   -Dtransitime.cloudwatch.awsEndpoint='<%= node["aws"]["cloudwatch_endpoint"] %>' \
   -Dtransitime.predAccuracy.externalPredictionApiUrl="http://webservices.nextbus.com/service/xmlFeed?" \
   -Dtransitime.predAccuracy.nextBusAgencyIdForApi=wmata \
+  -Dtransitime.predAccuracy.stopsPerTrip=1000 \
   -Dtransitime.hibernate.configFile=/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml \
   -Dlogback.timezone=America/New_York \
   -Dtransitime.logging.dir=/var/lib/oba/transitime/logs \
