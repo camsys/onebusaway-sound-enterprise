@@ -27,7 +27,7 @@ java \
   -Dtransitime.avl.snsKey='<%= node[:transitime][:snsKey] %>' \
   -Dtransitime.avl.snsSecret='<%= node[:transitime][:snsSecret] %>' \
   -Dtransitime.avl.snsArn='<%= node[:transitime][:snsArn] %>' \
-  -Dtransitime.avl.numThreads=5 \
+  -Dtransitime.avl.numThreads=1 \
   -Dtransitime.avl.maxSpeed=45 \
   -Dtransitime.environmentName=<%= node["oba"]["env"] %> \
   -Dtransitime.cloudwatch.awsAccessKey='<%= node["aws"]["cloudwatch_publish_key"] %>' \
