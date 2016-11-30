@@ -13,7 +13,7 @@ default_attributes({
                            "version_branded" => "1.1.15.35-cs-SNAPSHOT",
                            "version_transitime_core" => "0.0.30",
                            "version_transitime_web" => "0.0.30",
-                           "repositories" => ["http://repo.obaweb.org:8080/archiva/repository/snapshots/"]
+                           "repositories" => ["http://repo.obaweb.org:8080/archiva/repository/releases/"]
                        },
                        "db_instance" => "db",
                        "db_master" => "db.qa.wmata.obaweb.org",
