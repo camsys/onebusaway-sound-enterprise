@@ -52,7 +52,7 @@
   <link rel="stylesheet" type="text/css" href="${url}"/>
   
   <!-- New font for WMATA branding: -->
-  <s:url var="url" value="http://fonts.googleapis.com/css?family=Lato:400,300,700"></s:url>
+  <s:url var="url" value="https://fonts.googleapis.com/css?family=Lato:400,300,700"></s:url>
   <link rel="stylesheet" type="text/css" href="${url}" />
 
 <jsp:text>
