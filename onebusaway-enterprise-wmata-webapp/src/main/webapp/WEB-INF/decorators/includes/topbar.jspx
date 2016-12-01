@@ -26,9 +26,9 @@
 	      	<s:set var="link" value="getText('main.service.link')" />
 	        <li><a href="${link}">Service</a></li>
 	        <s:set var="link" value="getText('main.schedules.link')" />
-	        <li><a href="${link}">Schedules</a></li>
-	        <s:set var="link" value="getText('main.riderguides.link')" />
-	        <li><a href="${link}">Rider Guides</a></li>
+	        <li><a href="${link}">Schedules &amp; Maps</a></li>
+	        <s:set var="link" value="getText('main.riderguide.link')" />
+	        <li><a href="${link}">Rider Guide</a></li>
 	        <s:set var="link" value="getText('main.fares.link')" />
 	        <li><a href="${link}">Fares</a></li>
 	        <s:set var="link" value="getText('main.initiatives.link')" />
