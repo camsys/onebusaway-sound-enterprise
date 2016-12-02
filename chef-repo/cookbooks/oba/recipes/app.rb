@@ -64,7 +64,7 @@ log "maven dependency installed at #{mvn_webapp_dest_file}"
 maven "#{front_end_webapp}" do
   group_id node[:oba][:mvn][:group_id]
   dest "/tmp/war"
-  version mvn_version
+  version mvn_branded_version
   packaging "war"
   owner "tomcat7"
   repositories node[:oba][:mvn][:repositories]
