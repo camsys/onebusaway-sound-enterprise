@@ -105,7 +105,11 @@
 	  {  
          "component":"monitoring",
          "key":"monitoring.webappUrl",
+<% if node.chef_environment == "prod" -%>
+         "value":"http://buseta.wmata.com:8080/"
+<% else -%>
          "value":"http://app.<%= node[:oba][:env] %>.wmata.obaweb.org:8080/"
+<% end -%>
       },
 	  {  
          "component":"monitoring",
