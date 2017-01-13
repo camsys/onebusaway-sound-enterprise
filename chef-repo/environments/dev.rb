@@ -7,9 +7,9 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "1.1.15.36-cs-SNAPSHOT",
-                           "version_core" => "1.1.15.36-cs-SNAPSHOT",
-                           "version_app" => "1.1.15.36-cs-SNAPSHOT",
+                           "version_admin" => "1.1.15.37-cs-SNAPSHOT",
+                           "version_core" => "1.1.15.37-cs-SNAPSHOT",
+                           "version_app" => "1.1.15.37-cs-SNAPSHOT",
                            "version_branded" => "1.1.15.36-cs-SNAPSHOT",
                            "version_transitime_core" => "0.0.31-SNAPSHOT",
                            "version_transitime_web" => "0.0.31-SNAPSHOT",
