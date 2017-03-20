@@ -8,8 +8,8 @@ default_attributes({
                        "mvn" => {
                            "group_id" => "org.onebusaway",
                            "version_admin" => "1.1.15.37.1-cs",
-                           "version_core" => "1.1.15.37.1-cs",
-                           "version_app" => "1.1.15.37.1-cs",
+                           "version_core" => "1.1.15.37.3-cs",
+                           "version_app" => "1.1.15.37.3-cs",
                            "version_branded" => "1.1.15.37.1-cs",
                            "version_transitime_core" => "0.0.30",
                            "version_transitime_web" => "0.0.30.4",
