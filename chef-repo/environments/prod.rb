@@ -12,7 +12,7 @@ default_attributes({
                            "version_app" => "1.1.15.37.1-cs",
                            "version_branded" => "1.1.15.37.1-cs",
                            "version_transitime_core" => "0.0.30",
-                           "version_transitime_web" => "0.0.30.3",
+                           "version_transitime_web" => "0.0.30.4",
                            "repositories" => ["http://repo.prod.wmata.obaweb.org:8080/archiva/repository/releases/"]
                        },
                        "db_instance" => "db",
