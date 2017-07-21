@@ -50,6 +50,10 @@
 	<s:param name="v"><s:property value="frontEndVersion" /></s:param>
   </s:url>
   <link rel="stylesheet" type="text/css" href="${url}"/>
+  
+  <!-- New font for WMATA branding: -->
+  <s:url var="url" value="https://fonts.googleapis.com/css?family=Lato:400,300,700"></s:url>
+  <link rel="stylesheet" type="text/css" href="${url}" />
 
 <jsp:text>
 &lt;!--[if IE 6]&gt;
@@ -77,31 +81,8 @@
 
 <body>
 <div id="mainbox">
-	<div id="topbar">
-		<div id="branding">
-			<div id="branding_left">
-				<s:url var="url" value="/css/img/agency_logo_left.gif"></s:url>
-				<img src="${url}" usemap="#m_wmata_masthead" alt="Agency logo" />
-			</div>
-			<div id="branding_right">
-				<s:url var="url" value="/css/img/agency_logo_right.gif"></s:url>
-				<img src="${url}" usemap="#m_wmata_searchbox" alt="Agency logo" />
-			</div>
-		</div>
-		
-		<div id="search">
-			<ul id="topbar-links">
-			</ul>
-			<s:set var="link" value="getText('main.search.link')" />
-			<form name="wmataSearch" id="wmataSearch" action="${link}">
-				<input type="text" name="s" placeholder="search"></input>
-			</form>
-		</div>
-		
-		<!-- Include the tabs.jspx that provides branded links -->
-		<c:import url="/WEB-INF/decorators/includes/tabs.jspx" />
-		
-	</div> <!-- close topbar -->
+	
+	<c:import url="/WEB-INF/decorators/includes/topbar.jspx" />
 	
 	<div id="contentbox">
 	<!-- Enter Content here -->
