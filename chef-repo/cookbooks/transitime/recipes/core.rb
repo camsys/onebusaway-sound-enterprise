@@ -1,12 +1,12 @@
 mvn_version = node[:oba][:mvn][:version_transitime_core]
-mvn_core_dest_file = "/tmp/chef/transitimeCore-#{mvn_version}-onejar.jar"
+mvn_core_dest_file = "/tmp/chef/transitimeCore-#{mvn_version}-Core.jar"
 log "maven dependency installed at #{mvn_core_dest_file}"
 maven "transitimeCore" do
   group_id "transitime"
   dest "/tmp/chef/"
   version mvn_version
   packaging "jar"
-  classifier "onejar"
+  classifier "Core"
   owner "ubuntu"
   repositories node[:oba][:mvn][:repositories]
 end
