@@ -3,7 +3,40 @@
 	xmlns:decorator="http://www.opensymphony.com/sitemesh/decorator" 
 	xmlns:s="/struts-tags" 
 	id="horizontalcssmenu" style="clear: both;">
-	
-	<!-- No tab links for ACTA app -->
-	
+
+	<ul id="cssmenu1">
+		<s:set var="link" value="getText('main.agency.link')" />
+		<li style="width: 25%; border-left: none;"><a href="${link}">Home</a></li>
+		<s:set var="link" value="getText('main.schedules.link')" />
+		<li style="width: 25%;"><a href="${link}">About</a></li>
+		<s:set var="link" value="getText('main.fares.link')" />
+		<li style="width: 25%;"><a href="${link}">Tools</a>
+			<ul>
+				<s:set var="link" value="getText('main.subway.link')" />
+				<li><a href="${link}">Jump Links</a></li>
+				<s:set var="link" value="getText('main.lirr.link')" />
+				<li><a href="${link}">Apps</a>
+					<ul>
+						<!--<s:set var="link" value="getText('main.subway.link')" />-->
+						<!--<li><div><a href="${link}">iOS</a></div></li>-->
+						<!--<s:set var="link" value="getText('main.subway.link')" />-->
+						<!--<li><div><a href="${link}">Android</a></div></li>-->
+						<s:set var="link" value="getText('main.subway.link')" />
+						<li><a href="${link}">iOS</a></li>
+						<s:set var="link" value="getText('main.subway.link')" />
+						<li><a href="${link}">Android</a></li>
+					</ul>
+				</li>
+				<s:set var="link" value="getText('main.mnr.link')" />
+				<li><a href="${link}">SMS</a></li>
+				<s:set var="link" value="getText('main.bandt.link')" />
+				<li><a href="${link}">Mobile</a></li>
+				<s:set var="link" value="getText('main.capital.link')" />
+			</ul>
+		</li>
+		<s:set var="link" value="getText('main.accountability.link')" />
+		<li style="width: 25%; position: absolute; margin-left: -3px;"><a
+				href="${link}">Contact</a></li>
+	</ul>
+
 </div>
