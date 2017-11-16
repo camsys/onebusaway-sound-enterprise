@@ -28,7 +28,7 @@
 #bustime {
 	margin: 0 0 0 20px;
 	height: 100%;   /* For IE */
-	position: relative;
+	/*position: relative;*/
 }
 
 #bustime a:visited,
@@ -113,8 +113,7 @@
 /* header on map page */
 #bustime #map_header {
 	width: 302px;
-	height: 105px;
-	padding-top: 10px;
+	height: 30px;
 	display: block;
 }
 
@@ -480,4 +479,36 @@ width: 175px;
     font-weight: normal;
     /*position: relative;*/
     left: 40px;
+}
+
+#infoBox {
+    margin: 10px 0px 10px 0px;
+    width: 302px;
+}
+
+#bottombar {
+    height: 121px;
+    width: 100%;
+    display: inline-block;
+    float: left;
+    background-color: #78AA36;
+}
+
+#mobilebox {
+    float: left;
+    clear: left;
+    position: absolute;
+    bottom: 0;
+}
+
+#mobileAvailabilityBox {
+    margin: 10px 0px 10px 0px;
+    position: absolute;
+    bottom: 201px;
+    color: #78AA36;
+    width: 302px;
+}
+
+#mobileAvailabilityBox  h1 {
+    font-size: 1.8em;
 }
