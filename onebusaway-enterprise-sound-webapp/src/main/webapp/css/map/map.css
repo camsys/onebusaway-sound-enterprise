@@ -25,7 +25,10 @@
 }
 
 #content #searchbar .sidebar {
-	min-height: 92%;
+	/*min-height: 92%;*/
+	display: flex;
+	flex-direction: column;
+	height: 100%;
 }
 
 #content #searchbar form {
@@ -429,4 +432,12 @@
 
 #subwayControl a:hover { 
 	background-color: #EEEEEE;
+}
+
+#content #welcome ul li a {
+	color: #78AA36
+}
+
+#content #available-routes a {
+	color: #78AA36
 }

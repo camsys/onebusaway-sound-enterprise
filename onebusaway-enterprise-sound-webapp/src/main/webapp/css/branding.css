@@ -114,7 +114,8 @@
 #bustime #map_header {
 	width: 302px;
 	height: 30px;
-	display: block;
+	/*display: block;*/
+    margin-bottom:15px;
 }
 
 #bustime #map_header .title h1 a {
@@ -170,7 +171,7 @@
 	width: 37px;
 }
 #bustime #map_header ul li a:hover {
-    background-color: #94CB45;
+    background-color: #78AA36;
 }
 #bustime #content {
 	padding-top: 0;
@@ -428,32 +429,29 @@ Sub level menu
 }
 
 /* Sub level menu */
-#horizontalcssmenu ul#cssmenu1 > li > ul {
+#horizontalcssmenu ul#cssmenu1 li ul {
  	margin:0;
 	padding:0 0 10px 0;
-	/*position: absolute;*/
-    display: block;
+	position: absolute;
+	display: block;
 	visibility: hidden;
 	z-index: 0;
 	background-color: #ddd;
-    overflow: hidden;
-    width: 75%;
 }
-#horizontalcssmenu ul#cssmenu1 li ul li { 
-    border-left: medium none;
+#horizontalcssmenu ul#cssmenu1 li ul li {
+  border-left: medium none;
     display: inline;
     float: none;
 }
 #horizontalcssmenu ul#cssmenu1 li ul li a {
     background-color: #DDDDDD;
     background-image: none;
-    /*border-width: 0 1px 1px;*/
+    border-width: 0 1px 1px;
     color: #000000;
     font-size: 88%;
     padding: 8px 10px;
     text-align: left;
-width: 175px;
-
+    width: 175px;
 }
 #horizontalcssmenu ul#cssmenu1 li ul li a:hover {
     background-color: #DDDDDD;
@@ -461,9 +459,9 @@ width: 175px;
     color: #0071C1;
 }
 #horizontalcssmenu ul#cssmenu1 li:hover ul {
-    display: block;
-    opacity: 1;
-    visibility: visible;
+  display: block;
+  opacity: 1;
+  visibility: visible;
 }
 
 #horizontalcssmenu ul#cssmenu1 li > ul > li > ul > li {
@@ -497,18 +495,22 @@ width: 175px;
 #mobilebox {
     float: left;
     clear: left;
-    position: absolute;
+    /*position: absolute;*/
     bottom: 0;
 }
 
 #mobileAvailabilityBox {
     margin: 10px 0px 10px 0px;
-    position: absolute;
-    bottom: 201px;
+    /*position: absolute;*/
+    /*bottom: 201px;*/
     color: #78AA36;
     width: 302px;
 }
 
 #mobileAvailabilityBox  h1 {
     font-size: 1.8em;
+}
+
+#flexSpreader {
+    flex-grow: 2;
 }
