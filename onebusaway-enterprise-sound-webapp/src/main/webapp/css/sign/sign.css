@@ -598,7 +598,7 @@ div.stop-id {
 }
 
 .sign {
-	background-color: white;
+	/*background-color: white;*/
 	color: black;
 	font-weight: bold;
 	padding: 0 0.3em 0 0.3em;
@@ -616,7 +616,7 @@ div.stop-id {
 .arrival_sign {
 	border-left-width: 15px;
 	font-size: 2em;
-	border-right: 2px solid rgb(150,150,150);
+	/*border-right: 2px solid rgb(150,150,150);*/
 	margin: 0;
 	line-height: 1em;
 	text-align: center;
