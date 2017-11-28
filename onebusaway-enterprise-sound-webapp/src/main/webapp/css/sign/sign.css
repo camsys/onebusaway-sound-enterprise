@@ -415,7 +415,7 @@ span.bus-id {
     color: #333;
 }
 span.stop-id {
-    font-size: 0.8em;
+    /*font-size: 0.8em;*/
     font-weight: normal;
     color: #666;
 }
@@ -426,7 +426,7 @@ span.scheduled_arrival_indicator {
 }
 td.distance {
     text-align: right;
-    font-size: 1.2em;
+    /*font-size: 1.2em;*/
     white-space: nowrap;
     padding: 0.2em 1em 0.2em 0;
 	width: 13%
@@ -684,24 +684,21 @@ body.portrait.size1900 textarea { font-size: 1.7em; }
 	max-height:30px;
 	margin: 10px;
 	vertical-align: bottom;
+	display: inline;
 }
 
 .realtime-icon h2{
 	color: white;
 	display: inline-block;
-	font-weight: normal;
 	margin-bottom: 10px;
 	line-height: 13px;
 }
 
-.realtime-icon div{
-	margin-left: 20px;
-}
-
 .realtimeIconImg {
-	max-height: 30px;
-	max-width: 30px;
-	float: left;
+	max-height: 25px;
+	max-width: 25px;
+	margin-right: 10px;
+	vertical-align: text-bottom;
 }
 
 .eta {
@@ -710,5 +707,26 @@ body.portrait.size1900 textarea { font-size: 1.7em; }
 
 .etatext {
 	padding:0;
-	margin-left: 50px;
+	margin-left: 0px;
+	width: fit-content;
+	float: none;
+	display: inline;
+}
+
+p.etaText {
+	font-size: 1em;
+}
+
+.stop-id h2 {
+	font-size: .6em;
+}
+
+.additional_stops .prediction {
+	float: right;
+	padding-right: 0;
+}
+
+.additional_stops {
+	float: right;
+	margin-left: 40px;
 }
