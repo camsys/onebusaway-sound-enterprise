@@ -731,6 +731,7 @@ p.etaText {
 .additional_stops {
 	float: right;
 	margin-left: 40px;
+	font-weight: normal;
 }
 
 .stop-id {
@@ -738,3 +739,12 @@ p.etaText {
 	margin-left: 20px;
 }
 
+#pagewrapper {
+	width: fit-content;
+	border: 1px dotted red;
+	overflow: auto;
+}
+
+#pagewrapper span {
+	padding: 0px 2px;
+}
