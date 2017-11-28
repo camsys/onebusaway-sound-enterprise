@@ -680,14 +680,14 @@ body.portrait.size1900,
 body.portrait.size1900 input, 
 body.portrait.size1900 textarea { font-size: 1.7em; }
 
-.realtime-icon img{
+.preHeader img{
 	max-height:30px;
-	margin: 10px;
+	margin: 10px 10px 10px 32px;
 	vertical-align: bottom;
 	display: inline;
 }
 
-.realtime-icon h2{
+.preHeader h2{
 	color: white;
 	display: inline-block;
 	margin-bottom: 10px;
@@ -697,12 +697,14 @@ body.portrait.size1900 textarea { font-size: 1.7em; }
 .realtimeIconImg {
 	max-height: 25px;
 	max-width: 25px;
-	margin-right: 10px;
+	float: left;
 	vertical-align: text-bottom;
 }
 
 .eta {
 	min-height: 30px;
+	width: 125px;
+	float: right;
 }
 
 .etatext {
