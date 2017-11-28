@@ -490,7 +490,7 @@ div.name {
 }
 
 div.stop-id {
-	float: right;
+	float: left;
 	padding-right: 30px;
 	color: white;
 }
@@ -732,3 +732,9 @@ p.etaText {
 	float: right;
 	margin-left: 40px;
 }
+
+.stop-id {
+	padding-top: 10px;
+	margin-left: 20px;
+}
+
