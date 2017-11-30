@@ -487,9 +487,12 @@ Sub level menu
 #bottombar {
     height: 121px;
     width: 100%;
-    display: inline-block;
     float: left;
     background-color: #78AA36;
+    position: relative;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: flex-end;
 }
 
 #mobileBox {
@@ -502,8 +505,6 @@ Sub level menu
 
 #mobileAvailabilityBox {
     margin: 10px 0px 10px 0px;
-    /*position: absolute;*/
-    /*bottom: 201px;*/
     color: #78AA36;
     width: 100%;
     text-align: center;
@@ -519,4 +520,28 @@ Sub level menu
 
 #flexSpreader {
     flex-grow: 2;
+}
+
+#bottombar div span {
+    font-size: 14px;
+    color: #333333;
+    font-weight: bold;
+}
+
+.bottombox {
+    margin: 0px 20px 10px 0px;
+}
+
+.bottombox a{
+    color: #333333;
+    text-decoration: none;
+}
+
+.bottombox a:visited {
+    color: #333333;
+    text-decoration: none;
+}
+
+#translate-logo {
+    margin-left: 5px;
 }
