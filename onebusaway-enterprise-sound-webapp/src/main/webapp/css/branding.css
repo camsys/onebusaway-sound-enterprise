@@ -19,6 +19,7 @@
 #contentbox {
 	padding:0;
 	height: 100%;   /* For IE */
+    width: 100%;
 }
 
 #map {
@@ -184,11 +185,11 @@
 }
 
 #google_translate_element {
-	text-decoration: none;
-	font-weight: bold;
-	color: #0189c7;
+	/*text-decoration: none;*/
+	/*font-weight: bold;*/
+	/*color: #0189c7;*/
 	cursor: pointer;
-	height: 25px;
+	/*height: 25px;*/
 }
 
 #google_translate_element #icon {
@@ -404,7 +405,7 @@ Sub level menu
 
 /* Top level menu */
 #horizontalcssmenu ul#cssmenu1 li {
-  border-left: 1px solid #AEAEB0;
+    border-left: 1px solid #AEAEB0;
     display: inline;
     float: left;
     height: 31px;
@@ -431,15 +432,16 @@ Sub level menu
 /* Sub level menu */
 #horizontalcssmenu ul#cssmenu1 li ul {
  	margin:0;
-	padding:0 0 10px 0;
-	position: absolute;
-	display: block;
+	/*padding:0 0 10px 0;*/
+	/*position: absolute;*/
+	/*display: block;*/
 	visibility: hidden;
 	z-index: 0;
 	background-color: #ddd;
+    overflow: hidden;
 }
 #horizontalcssmenu ul#cssmenu1 li ul li {
-  border-left: medium none;
+    border-left: medium none;
     display: inline;
     float: none;
 }
@@ -451,7 +453,7 @@ Sub level menu
     font-size: 88%;
     padding: 8px 10px;
     text-align: left;
-    width: 175px;
+    /*width: 175px;*/
 }
 #horizontalcssmenu ul#cssmenu1 li ul li a:hover {
     background-color: #DDDDDD;
@@ -459,9 +461,9 @@ Sub level menu
     color: #0071C1;
 }
 #horizontalcssmenu ul#cssmenu1 li:hover ul {
-  display: block;
-  opacity: 1;
-  visibility: visible;
+    display: block;
+    opacity: 1;
+    visibility: visible;
 }
 
 #horizontalcssmenu ul#cssmenu1 li > ul > li > ul > li {
@@ -530,6 +532,7 @@ Sub level menu
 
 .bottombox {
     margin: 0px 20px 10px 0px;
+    min-width: fit-content;
 }
 
 .bottombox a{
@@ -542,6 +545,6 @@ Sub level menu
     text-decoration: none;
 }
 
-#translate-logo {
+#icon {
     margin-left: 5px;
 }

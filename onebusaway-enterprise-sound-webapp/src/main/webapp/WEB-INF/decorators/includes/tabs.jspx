@@ -6,11 +6,11 @@
 
 	<ul id="cssmenu1">
 		<s:set var="link" value="getText('main.agency.link')" />
-		<li style="width: 25%; border-left: none;"><a href="${link}">Home</a></li>
+		<li style="width: 20%; border-left: none;"><a href="${link}">Home</a></li>
 		<s:set var="link" value="getText('main.schedules.link')" />
-		<li style="width: 25%;"><a href="${link}">About</a></li>
+		<li style="width: 20%;"><a href="${link}">About</a></li>
 		<s:set var="link" value="getText('main.fares.link')" />
-		<li style="width: 25%;"><a href="${link}">Tools</a>
+		<li style="width: 20%;"><a href="${link}">Tools</a>
 			<ul>
 				<s:set var="link" value="getText('main.subway.link')" />
 				<li><a href="${link}">Jump Links</a></li>
@@ -30,8 +30,10 @@
 				<s:set var="link" value="getText('main.capital.link')" />
 			</ul>
 		</li>
+		<s:set var="link" value="getText('main.schedules.link')" />
+		<li style="width: 20%;"><a href="${link}">Developers</a></li>
 		<s:set var="link" value="getText('main.accountability.link')" />
-		<li style="width: 25%; position: absolute; margin-left: -3px;"><a
+		<li style="width: 20%; position: absolute; margin-left: -3px;"><a
 				href="${link}">Contact</a></li>
 	</ul>
 	<!--<ul id="cssmenu1">-->
