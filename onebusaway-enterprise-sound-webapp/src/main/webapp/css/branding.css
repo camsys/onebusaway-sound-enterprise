@@ -516,7 +516,7 @@ Sub level menu
     font-size: 1.6em;
 }
 
-#mobileImage img {
+#mobileImage {
     display: block;
 }
 
