@@ -6,6 +6,8 @@
         "config":
  [
  {"component": "admin", "key": "apiHostname", "value": "<%= node[:oba][:api_server] %>"},
+ {"component": "admin", "key": "appHostname", "value": "<%= node[:oba][:api_server] %>"},
+ {"component": "admin", "key": "useHttps", "value": "true"},
  {"component": "admin", "key": "useTdm", "value": "false"},
  {"component": "admin", "key": "admin.auxSupport", "value": "true"},
  {"component": "admin", "key": "admin.stopConsolidation", "value": "true"},
