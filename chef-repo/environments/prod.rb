@@ -24,7 +24,7 @@ default_attributes({
                        "db_instance_name" => "org_onebusaway_users",
                        "db_agency" => "gtfsrt",
                        "db_archive" => "gtfsrt",
-                       "api_server" => "app.prod.wmata.obaweb.org:8080",
+                       "api_server" => "app.prod.wmata.obaweb.org",
                        "admin_server" => "admin.prod.wmata.obaweb.org",
                        "prediction_api_server" => "gtfsrt.prod.wmata.obaweb.org",
                        "prediction_api_port" => "8080",
