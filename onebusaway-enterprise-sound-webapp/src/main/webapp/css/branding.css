@@ -117,6 +117,7 @@
 	height: 30px;
 	/*display: block;*/
     margin-bottom:15px;
+    display: none;
 }
 
 #bustime #map_header .title h1 a {
@@ -184,12 +185,16 @@
 	padding-bottom: 20px;
 }
 
-#google_translate_element {
+#google_translate_element_bottom {
 	/*text-decoration: none;*/
 	/*font-weight: bold;*/
 	/*color: #0189c7;*/
 	cursor: pointer;
 	/*height: 25px;*/
+}
+
+#google_translate_element_side {
+	display: none;
 }
 
 #google_translate_element #icon {
