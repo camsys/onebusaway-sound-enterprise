@@ -2,9 +2,8 @@
 	<h2>Try these example searches:</h2>
 
 	<ul>
-		<li>Route: &amp;nbsp; <a href="#1">1</a> &amp;nbsp; <a href="#12">12</a> &amp;nbsp; <a href="#800">800</a></li>
-		<li>Intersection: &amp;nbsp; <a href="#W%20Platt%20St%20and%20S%20Plant%20Ave">W Platt St and S Plant Ave</a></li>
-		<li>Stop Code: &amp;nbsp; <a href="#6968">6968</a></li>
+		<li>Route: &amp;nbsp; <a href="#214">214</a> &amp;nbsp; <a href="#535">535</a> &amp;nbsp; <a href="#E%20Line">E Line</a></li>
+\		<li>Stop Code: &amp;nbsp; <a href="#1_431">1_431</a></li>
 		<!-- <li>Location: &amp;nbsp; <a href="#New York 10304">New York 10304</a></li>  -->
 	</ul>
 </div>
