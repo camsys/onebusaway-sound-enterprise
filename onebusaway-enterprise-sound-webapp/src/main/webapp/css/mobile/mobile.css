@@ -655,7 +655,6 @@ small {
 	overflow: hidden;
 	padding-left: 5px;
 	display: none;
-	visability: hidden;
 }
 
 #mapFrame {
@@ -682,4 +681,10 @@ small {
 
 #mapExpander{
 	cursor: pointer;
+}
+
+#loadingCover{
+	left: 180px;
+	top: 115px;
+	position: absolute;
 }
