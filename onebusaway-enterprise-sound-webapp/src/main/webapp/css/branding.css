@@ -492,14 +492,15 @@ Sub level menu
 }
 
 #bottombar {
-    height: 121px;
+    height: 100%;
     width: 100%;
     float: left;
     background-color: #78AA36;
     position: relative;
     display: flex;
     flex-direction: row-reverse;
-    align-items: flex-end;
+    align-items: stretch;
+    padding: 10px 0px 10px 0px
 }
 
 #mobileBox {
@@ -533,11 +534,16 @@ Sub level menu
     font-size: 14px;
     color: #333333;
     font-weight: bold;
+    vertical-align: baseline;
+    margin-top: auto;
 }
 
 .bottombox {
-    margin: 0px 20px 10px 0px;
+    margin: 0px 20px 0px 0px;
     min-width: fit-content;
+    display: flex;
+    margin-top: auto;
+    padding-top: 4px;
 }
 
 .bottombox a{
@@ -552,4 +558,5 @@ Sub level menu
 
 #icon {
     margin-left: 5px;
+    padding-bottom: 4px;
 }
