@@ -84,12 +84,12 @@ body {
 }
 
 a:visited,a:active,a {
-	color: #0189c7;
+	color: #78AA36;
 	text-decoration: none;
 }
 
 a:hover {
-	color: #33CCFF;
+	color: #78AA36;
 }
 
 h1 {
@@ -655,7 +655,6 @@ small {
 	overflow: hidden;
 	padding-left: 5px;
 	display: none;
-	visability: hidden;
 }
 
 #mapFrame {
@@ -682,4 +681,10 @@ small {
 
 #mapExpander{
 	cursor: pointer;
+}
+
+#loadingCover{
+	left: 180px;
+	top: 115px;
+	position: absolute;
 }
