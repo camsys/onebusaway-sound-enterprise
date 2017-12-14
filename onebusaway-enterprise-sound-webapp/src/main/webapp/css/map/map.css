@@ -162,7 +162,7 @@
 	margin-top: 5px;
 	margin-left: 20px;
 	padding: 5px;
-	color: #1C75BC;
+	color: #78AA36;
 	background-color: #DCF0F7;
 }
 
@@ -218,7 +218,7 @@
 }
 
 #content #matches ul li.legendItem .destination p {
-	color: #1c75bc;
+	color: #78AA36;
 	padding: 4px;
 	font-weight: bold;
 	position: relative;
@@ -287,7 +287,7 @@
 }
 
 #content #matches ul li.legendItem p.destination ul.stops li a.stopHover:hover {
-	color: #3398C7;
+	color: #78AA36;
 	text-decoration: underline;
 }
 
