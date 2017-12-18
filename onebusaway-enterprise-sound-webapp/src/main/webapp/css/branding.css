@@ -491,6 +491,10 @@ Sub level menu
     width: 302px;
 }
 
+#infoBox h2:nth-of-type(1) {
+    padding-bottom: 4px;
+}
+
 #bottombar {
     height: 100%;
     width: 100%;
