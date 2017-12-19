@@ -1,7 +1,8 @@
 <div id="welcome">
-	<!--<h2>Try these example searches:</h2>-->
+	<h2>Try these example searches:</h2>
 
 	<ul>
-		<li>Try searching by address (<a href="#3rd and Pike">“3rd and Pike”</a>) route number (<a href="#372">“372”</a> or <a href="#550">“550”</a>)</li>
+		<li>Route: &amp;nbsp; <a href="#214">214</a> &amp;nbsp; <a href="#535">535</a> &amp;nbsp; <a href="#E%20Line">E Line</a></li>
+		<li>Stop Code: &amp;nbsp; <a href="#1_431">431</a></li>
 	</ul>
 </div>
