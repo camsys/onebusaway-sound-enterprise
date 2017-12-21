@@ -186,11 +186,11 @@
 }
 
 #google_translate_element_bottom {
-	/*text-decoration: none;*/
-	/*font-weight: bold;*/
-	/*color: #0189c7;*/
+	text-decoration: none;
+	font-weight: bold;
+	color: #0189c7;
 	cursor: pointer;
-	/*height: 25px;*/
+	height: 25px;
 }
 
 #google_translate_element_side {
