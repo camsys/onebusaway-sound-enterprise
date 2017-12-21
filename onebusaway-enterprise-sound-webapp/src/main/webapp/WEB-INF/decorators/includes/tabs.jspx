@@ -33,7 +33,7 @@
 		</li>
 		<s:set var="link" value="getText('main.developers.link')" />
 		<li style="width: 20%;"><a href="${link}">Developers</a></li>
-		<s:set var="link" value="getText('main.accountability.link')" />
+		<s:set var="link" value="getText('main.contact.link')" />
 		<li style="width: 20%; position: absolute; margin-left: -3px;"><a
 				href="${link}">Contact</a></li>
 	</ul>
