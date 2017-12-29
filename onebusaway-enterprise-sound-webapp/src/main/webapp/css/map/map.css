@@ -445,7 +445,7 @@
 #legend {
         font-family: Arial, sans-serif;
         background: #fff;
-        padding: 15px;
+        padding: 10px;
         margin: 20px;
         border: 2px solid #696969;
 }
@@ -459,5 +459,5 @@
 }
 
 #legend div {
-  margin-top: 6px;
+  padding-top: 6px;
 }
