@@ -15,13 +15,13 @@
  */
 
 /* search/sidebar */
-
 #content #searchbar {
 	float: left;
 	width: 330px;
 	overflow-y: auto;
 	font-size: 14px;
 	position: relative;
+	margin-left: 20px;
 }
 
 #content #searchbar .sidebar {
@@ -44,7 +44,7 @@
 	height: 25px;
 	font-weight: bold;
 	font-family: inherit;
-	font-size: 120%;	
+	font-size: 120%;
 	border: 0;
 	background-color: transparent;
 	margin-top: 6px;
@@ -59,7 +59,7 @@
 
 #content #searchbar #ad {
 	padding-top: 20px;
-	padding-bottom: 10px;	
+	padding-bottom: 10px;
 }
 
 #content #searchbar form input.submit {
@@ -77,29 +77,22 @@
 	line-height: 0;
 }
 
-#content #no-results,
-#content #suggestions,
-#content #matches,
-#content #filtered-matches,
-#content #cant-find {
+#content #no-results, #content #suggestions, #content #matches, #content #filtered-matches,
+	#content #cant-find {
 	width: 280px;
 	display: none;
 	font-size: 16px;
 	clear: both;
 }
 
-#content #welcome,
-#content #available-routes {
+#content #welcome, #content #available-routes {
 	font-size: 16px;
 }
 
-#content #no-results h2,
-#content #welcome h2,
-#content #suggestions h2,
-#content #matches h2,
-#content #filtered-matches h2 {
+#content #no-results h2, #content #welcome h2, #content #suggestions h2,
+	#content #matches h2, #content #filtered-matches h2 {
 	font-weight: bold;
-	color: #818181;	
+	color: #818181;
 	font-size: 1em;
 	padding-bottom: 2px;
 	padding-top: 12px;
@@ -117,7 +110,7 @@
 }
 
 #content #welcome ul li {
-	line-height: 150%;	
+	line-height: 150%;
 	font-size: 1em;
 }
 
@@ -126,7 +119,6 @@
 }
 
 /* result types */
-
 #content #suggestions ul li.routeItem {
 	width: 33%;
 	height: 25px;
@@ -179,7 +171,8 @@
 	display: none;
 }
 
-#content #matches ul li.legendItem .serviceAlertContainer p.serviceAlert {
+#content #matches ul li.legendItem .serviceAlertContainer p.serviceAlert
+	{
 	color: #D12020;
 	font-weight: bold;
 	font-size: 13px;
@@ -189,11 +182,13 @@
 	background-color: #FDEEF4;
 }
 
-#content #matches ul li.legendItem .serviceAlertContainer p.serviceAlert:focus { 
-	outline: none; 
-} 
+#content #matches ul li.legendItem .serviceAlertContainer p.serviceAlert:focus
+	{
+	outline: none;
+}
 
-#content #matches ul li.legendItem .serviceAlertContainer p.serviceAlert span.click_info {
+#content #matches ul li.legendItem .serviceAlertContainer p.serviceAlert span.click_info
+	{
 	color: #D12020;
 	font-weight: normal;
 	font-size: 12px;
@@ -231,7 +226,8 @@
 	padding-left: 20px;
 }
 
-#content #matches ul li.legendItem p.destination p span.ui-icon-triangle-1-s {
+#content #matches ul li.legendItem p.destination p span.ui-icon-triangle-1-s
+	{
 	background-image: url("img/arrows.png");
 	background-position: 0px -20px;
 	width: 20px;
@@ -243,7 +239,8 @@
 	left: 0px;
 }
 
-#content #matches ul li.legendItem p.destination p span.ui-icon-triangle-1-e {
+#content #matches ul li.legendItem p.destination p span.ui-icon-triangle-1-e
+	{
 	background-image: url("img/arrows.png");
 	background-position: 0px 0px;
 	width: 20px;
@@ -286,7 +283,8 @@
 	color: #000000;
 }
 
-#content #matches ul li.legendItem p.destination ul.stops li a.stopHover:hover {
+#content #matches ul li.legendItem p.destination ul.stops li a.stopHover:hover
+	{
 	color: #78AA36;
 	text-decoration: underline;
 }
@@ -295,13 +293,12 @@
 	display: inline-block;
 	padding: 0.2em;
 	zoom: 1;
-	*display:inline;
+	*display: inline;
 }
 
 /* loading indicators */
-
 #content #searchbar #loading {
-	padding-left: 40px;	
+	padding-left: 40px;
 	padding-top: 25px;
 	padding-bottom: 25px;
 	display: none;
@@ -330,15 +327,14 @@
 }
 
 /* global alerts */
-
 .global-alerts {
-	background-color: rgb(242,247,203);
+	background-color: rgb(242, 247, 203);
 	border: 1px solid black;
 	padding: 10px;
 }
 
 #global-alerts {
-	width:280px;
+	width: 280px;
 	margin-top: 15px;
 	margin-bottom: 15px;
 }
@@ -356,13 +352,11 @@
 }
 
 /* google translate */
-
 #google_translate_element {
 	margin-bottom: 10px;
 }
 
 /* suggestions */
-
 .ui-autocomplete.ui-widget {
 	background-color: #FFFFFF;
 	padding: 0px;
@@ -373,7 +367,7 @@
 
 .ui-autocomplete.ui-widget .ui-menu-item {
 	padding: 0px;
-	margin: 0px;	
+	margin: 0px;
 }
 
 .ui-autocomplete.ui-widget .ui-menu-item a {
@@ -391,24 +385,25 @@
 }
 
 /* subway map control */
-
 #subwayControlContainer { /* For IE box shadow */
 	margin: 10px;
-    z-index: 5px; /* IE bug */
+	z-index: 5px; /* IE bug */
 }
- 
+
 #subwayControl {
 	padding: 0;
 	-moz-border-radius: 2px;
 	border-radius: 2px;
 	margin: 3px;
-    background-color: rgb(100,100,100); /* Needed for IEs */
-    -moz-box-shadow: 1px 2px 2px rgba(100,100,100,0.6);
-    -webkit-box-shadow: 1px 2px 2px rgba(100,100,100,0.6);
-    box-shadow: 1px 2px 2px rgba(100,100,100,0.6);
-    filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=4,MakeShadow=true,ShadowOpacity=0.30);
-    -ms-filter: "progid:DXImageTransform.Microsoft.Blur(PixelRadius=4,MakeShadow=true,ShadowOpacity=0.30)";
-    z-index: 4px;  /* IE bug */
+	background-color: rgb(100, 100, 100); /* Needed for IEs */
+	-moz-box-shadow: 1px 2px 2px rgba(100, 100, 100, 0.6);
+	-webkit-box-shadow: 1px 2px 2px rgba(100, 100, 100, 0.6);
+	box-shadow: 1px 2px 2px rgba(100, 100, 100, 0.6);
+	filter: progid:DXImageTransform.Microsoft.Blur(PixelRadius=4, MakeShadow=true,
+		ShadowOpacity=0.30);
+	-ms-filter:
+		"progid:DXImageTransform.Microsoft.Blur(PixelRadius=4,MakeShadow=true,ShadowOpacity=0.30)";
+	z-index: 4px; /* IE bug */
 }
 
 #subwayControl a {
@@ -426,11 +421,11 @@
 	z-index: 3; /* IE bug */
 }
 
-#subwayControl a:focus { 
-	outline: none; 
+#subwayControl a:focus {
+	outline: none;
 }
 
-#subwayControl a:hover { 
+#subwayControl a:hover {
 	background-color: #EEEEEE;
 }
 
@@ -443,21 +438,23 @@
 }
 
 #legend {
-        font-family: Arial, sans-serif;
-        background: #fff;
-        padding: 10px;
-        margin: 20px;
-        border: 2px solid #696969;
+	font-family: Arial, sans-serif;
+	background: #fff;
+	padding: 10px;
+	margin: 20px;
+	border: 2px solid #696969;
 }
+
 #legend h3 {
-  margin-top: 0;
-  font-weight: bold;
-  font-size: 1.05em;
+	margin-top: 0;
+	font-weight: bold;
+	font-size: 1.05em;
 }
+
 #legend img {
-  vertical-align: middle;
+	vertical-align: middle;
 }
 
 #legend div {
-  padding-top: 6px;
+	padding-top: 6px;
 }

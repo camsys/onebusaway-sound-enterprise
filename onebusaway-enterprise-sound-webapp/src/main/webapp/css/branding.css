@@ -27,7 +27,7 @@
 }
 
 #bustime {
-	margin: 0 0 0 20px;
+	margin: 0px;
 	height: 100%;   /* For IE */
 	/*position: relative;*/
 }
