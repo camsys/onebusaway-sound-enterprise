@@ -1,7 +1,7 @@
 log "Downloading wars"
 
 # we need to embedd the db password in the tomcat config
-node.override["tomcat"]["java_options"] = "-Xmx6G -Xms1G -XX:MaxPermSize=256m -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Dtransitime.rmi.timeoutSec=300 -Dtransitime.db.encryptionPassword='#{node["transitime"]["encryptionPassword"]}' -Dtransitime.reports.showPredictionSource=false -Dlogback.timezone=America/New_York -Dtransitime.logging.dir=/var/log/tomcat6  -Dtransitime.api.gtfsRtCacheSeconds=10 transitime.apikey='#{node["transitime"]["api_key"]}'"
+node.override["tomcat"]["java_options"] = "-Xmx6G -Xms1G -XX:MaxPermSize=256m -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Dtransitime.rmi.timeoutSec=300 -Dtransitime.db.encryptionPassword='#{node["transitime"]["encryptionPassword"]}' -Dtransitime.reports.showPredictionSource=false -Dlogback.timezone=America/New_York -Dtransitime.logging.dir=/var/log/tomcat6  -Dtransitime.api.gtfsRtCacheSeconds=10 -Dtransitime.apikey='#{node["transitime"]["api_key"]}'"
 
 mvn_version = node[:oba][:mvn][:version_transitime_web]
 mvn_web_dest_file = "/tmp/chef/transitimeWebapp-#{mvn_version}.war"
