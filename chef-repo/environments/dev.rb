@@ -79,7 +79,7 @@ default_attributes({
                        "base_version" => "7"
                      },
                      "java" => {
-                       "jdk_version" => "7"
+                       "jdk_version" => "8"
                      },
                      "apache" => {
                         "proxy" => {
