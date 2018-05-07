@@ -74,9 +74,9 @@ default_attributes({
                        "alarmNonCriticalSns" => "arn:aws:sns:us-east-1:744689548994:OBAWMATA-Monitoring-dev"
                      },
                      "tomcat" => {
-                       "user" => "tomcat7",
-                       "group" => "tomcat7",
-                       "base_version" => "7"
+                       "user" => "tomcat_user",
+                       "group" => "tomcat_group",
+                       "base_version" => "8"
                      },
                      "java" => {
                        "jdk_version" => "8"
