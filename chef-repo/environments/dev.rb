@@ -43,7 +43,10 @@ default_attributes({
                        "ses_user" => "AKIAISKUXW2UHBZRHHNA",
                        "ses_password" => "AhxzNCmnlqzK8qjPwsQ41yHUbk3meOlHZvVRuoVoM7/t",
                        "ses_from" => "btss@wmata.com",
-                       "mobile_require_ssl" => "true"
+                       "mobile_require_ssl" => "true",
+                       "tomcat" => {
+                           "instance_name" => "tomcat8"
+                       }
                      },
                      "transitime" => {
                         "dbhost" => "db.dev.wmata.obaweb.org:3306",
