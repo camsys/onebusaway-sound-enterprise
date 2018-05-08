@@ -1,3 +1,6 @@
+tomcat_instance_name = node[:oba][:tomcat][:instance_name]
+tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
+
 log "Downloading wars"
 
 # we need to embedd the db password in the tomcat config
@@ -22,58 +25,36 @@ maven "transitimeApi" do
   dest "/tmp/chef"
   version mvn_version
   packaging "war"
-  owner "tomcat7"
+  owner node[:tomcat][:user]
   repositories node[:oba][:mvn][:repositories]
 end
 
-tomcat_lib = '/var/lib/tomcat7/lib'
+tomcat_lib = '#{tomcat_home_dir}/lib'
 directory tomcat_lib do
-  owner "tomcat7"
-  group "tomcat7"
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   action :create
 end
 
 # template context.xml adding datasource
-template "/var/lib/tomcat7/conf/context.xml" do
+template "#{tomcat_home_dir}/conf/context.xml" do
   source "web/context.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 
 directory "/var/lib/oba/transitime/web" do
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   action :create
   recursive true
 end
 
-# keep the old logging directory around
-link "/var/log/tomcat6" do
- to "/var/log/tomcat7"
-end
-
-
-# template transitime ocnfiguration
-# template "/var/lib/oba/transitime/web/transitimeConfig.xml" do
-#   source "web/transitimeConfig.xml.erb"
-#   owner 'tomcat7'
-#   group 'tomcat7'
-#   mode '0644'
-# end
-# # template transitime ocnfiguration
-# template "/var/lib/oba/transitime/web/mysql_hibernate.cfg.xml" do
-#   source "web/mysql_hibernate.cfg.xml.erb"
-#   owner 'tomcat7'
-#   group 'tomcat7'
-#   mode '0644'
-# end
-
-
 %w{logback-classic-1.1.2.jar logback-core-1.1.2.jar slf4j-api-1.7.2.jar}.each do |jar_file|
   cookbook_file ["/usr/share/tomcat7/lib", jar_file].compact.join("/") do
-    owner 'tomcat7'
-    group 'tomcat7'
+    owner node[:tomcat][:user]
+    group node[:tomcat][:group]
     source jar_file
     mode  '0444'
   end
@@ -83,40 +64,40 @@ script "deploy_web_pre" do
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
-  sudo service tomcat7 stop
-  sudo rm -rf /var/lib/tomcat7/webapps/*
-  sudo unzip #{mvn_web_dest_file} -d /var/lib/tomcat7/webapps/web || exit 1
-  sudo unzip #{mvn_api_dest_file} -d /var/lib/tomcat7/webapps/api || exit 1
-  sudo rm -f /var/lib/tomcat7/webapps/web/WEB-INF/classes/transiTimeConfig.xml
-  sudo rm -f /var/lib/tomcat7/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml
+  sudo service #{tomcat_instance_name} stop
+  sudo rm -rf #{tomcat_home_dir}/webapps/*
+  sudo unzip #{mvn_web_dest_file} -d #{tomcat_home_dir}/webapps/web || exit 1
+  sudo unzip #{mvn_api_dest_file} -d /#{tomcat_home_dir}/webapps/api || exit 1
+  sudo rm -f #{tomcat_home_dir}/webapps/web/WEB-INF/classes/transiTimeConfig.xml
+  sudo rm -f #{tomcat_home_dir}/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml
 EOH
 end
 
 # NOTE: this does not appear to be read!
-template "/var/lib/tomcat7/webapps/web/WEB-INF/classes/transiTimeConfig.xml" do
+template "#{tomcat_home_dir}/webapps/web/WEB-INF/classes/transiTimeConfig.xml" do
   source "web/transitimeConfig.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 # template transitime configuration
-template "/var/lib/tomcat7/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml" do
+template "#{tomcat_home_dir}/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml" do
   source "web/mysql_hibernate.cfg.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
-template "/var/lib/tomcat7/webapps/api/WEB-INF/classes/transiTimeConfig.xml" do
+template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/transiTimeConfig.xml" do
   source "web/transitimeConfig.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  oowner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 # template transitime configuration
-template "/var/lib/tomcat7/webapps/api/WEB-INF/classes/mysql_hibernate.cfg.xml" do
+template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/mysql_hibernate.cfg.xml" do
   source "web/mysql_hibernate.cfg.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 
