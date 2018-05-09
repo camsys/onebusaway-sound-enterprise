@@ -12,8 +12,8 @@ tomcat_lib_dir = "/var/lib/#{tomcat_instance_name}/lib"
 ## watchdog properties
 tomcat_w_instance_name = "tomcat8-watchdog"
 
-tomcat_w_stop_command = "systemctl #{tomcat_w_instance_name} stop"
-tomcat_w_start_command = "systemctl #{tomcat_w_instance_name} start"
+tomcat_w_stop_command = "systemctl stop #{tomcat_w_instance_name}"
+tomcat_w_start_command = "systemctl start #{tomcat_w_instance_name}"
 
 tomcat_w_webapp_dir = "/var/lib/#{tomcat_w_instance_name}/webapps"
 tomcat_w_temp_dir = "/var/cache/#{tomcat_w_instance_name}/temp"
@@ -68,7 +68,7 @@ end
 ### ADMIN SERVER
 
 # template context.xml adding datasource
-template "/etc/#{tomcat_instance_name}/context.xml" do
+template "/var/lib/#{tomcat_instance_name}/conf/context.xml" do
   source "admin/context.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
@@ -137,7 +137,17 @@ tomcat_install tomcat_w_instance_name do
   install_path "/var/lib/#{tomcat_w_instance_name}"
   exclude_manager true
   exclude_hostmanager true
-  action :install
+  tomcat_user node[:tomcat][:user]
+  tomcat_group node[:tomcat][:group]
+end
+
+tomcat_service "#{tomcat_w_instance_name}" do
+  action :start
+  install_path "/var/lib/#{tomcat_w_instance_name}"
+  env_vars [{'CATALINA_HOME' => "/var/lib/#{tomcat_w_instance_name}"},
+            {'CATALINA_OUT' => "/var/lib/#{tomcat_w_instance_name}/logs/catalina.out"}]
+  tomcat_user node[:tomcat][:user]
+  tomcat_group node[:tomcat][:group]
 end
 
 template "/etc/default/#{tomcat_w_instance_name}" do
@@ -185,7 +195,7 @@ template "#{tomcat_webapp_dir}/ROOT/WEB-INF/classes/data-sources.xml" do
   group node[:tomcat][:group]
   mode '0644'
 end
-template "#{tomcat_w_webapp_dir}onebusaway-watchdog-webapp/WEB-INF/classes/data-sources.xml" do
+template "#{tomcat_w_webapp_dir}/onebusaway-watchdog-webapp/WEB-INF/classes/data-sources.xml" do
   source "watchdog/data-sources.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
