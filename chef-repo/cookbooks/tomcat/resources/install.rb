@@ -79,14 +79,14 @@ action :install do
   end
 
   # make sure the instance's user owns the instance install dir
-  execute "chown install dir as tomcat_#{new_resource.instance_name}" do
+  execute "chown install dir as #{new_resource.instance_name}" do
     command "chown -R #{new_resource.tomcat_user}:#{new_resource.tomcat_group} #{new_resource.install_path}"
     action :run
     not_if { Etc.getpwuid(::File.stat("#{new_resource.install_path}/LICENSE").uid).name == new_resource.tomcat_user }
   end
 
   # create a link that points to the latest version of the instance
-  link "/opt/tomcat_#{new_resource.instance_name}" do
+  link "/opt/#{new_resource.instance_name}" do
     to new_resource.install_path
   end
 end

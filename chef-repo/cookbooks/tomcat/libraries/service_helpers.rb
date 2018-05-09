@@ -24,7 +24,7 @@ module TomcatCookbook
     # the install path of this instance of tomcat
     # make sure it doesn't end in / as well as that causes issues in init scripts
     def derived_install_path
-      new_resource.install_path ? new_resource.install_path.chomp('/') : "/opt/tomcat_#{new_resource.instance_name}"
+      new_resource.install_path ? new_resource.install_path.chomp('/') : "/opt/#{new_resource.instance_name}"
     end
 
     # make sure catalina base is in the env_var has no matter what
