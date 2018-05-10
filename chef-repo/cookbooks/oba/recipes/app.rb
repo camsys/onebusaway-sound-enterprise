@@ -1,13 +1,14 @@
+# app tomcat properties
+tomcat_instance_name = node[:oba][:tomcat][:instance_name]
+tomcat_stop_command = "systemctl #{tomcat_instance_name} stop"
+tomcat_start_command = "systemctl #{tomcat_instance_name} start"
+
 # create bundle directory
 directory node[:oba][:tds][:bundle_path] do
-  owner "tomcat7"
-  group "tomcat7"
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   action :create
   recursive true
-end
-
-link "/var/log/tomcat6" do
- to "/var/log/tomcat7"
 end
 
 mvn_version = node[:oba][:mvn][:version_app]
@@ -21,7 +22,7 @@ maven "onebusaway-transit-data-federation-webapp" do
   dest "/tmp/war"
   version mvn_version
   packaging "war"
-  owner "tomcat7"
+  owner node[:tomcat][:user]
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -32,7 +33,7 @@ maven "onebusaway-api-webapp" do
   dest "/tmp/war"
   version mvn_version
   packaging "war"
-  owner "tomcat7"
+  owner node[:tomcat][:user]
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -43,7 +44,7 @@ maven "onebusaway-sms-webapp" do
   dest "/tmp/war"
   version mvn_version
   packaging "war"
-  owner "tomcat7"
+  owner node[:tomcat][:user]
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -54,7 +55,7 @@ maven "onebusaway-nextbus-api-webapp" do
   dest "/tmp/war"
   version mvn_version
   packaging "war"
-  owner "tomcat7"
+  owner node[:tomcat][:user]
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -66,7 +67,7 @@ maven "#{front_end_webapp}" do
   dest "/tmp/war"
   version mvn_branded_version
   packaging "war"
-  owner "tomcat7"
+  owner node[:tomcat][:user]
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -79,18 +80,18 @@ template "/var/lib/oba/config.json" do
 end
 
 # template context.xml adding datasource
-template "/var/lib/tomcat7/conf/context.xml" do
+template "#{node[:tomcat][:base]}/conf/context.xml" do
   source "app/context.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 
 # template service.xml for logging conf
-template "/var/lib/tomcat7/conf/server.xml" do
+template "#{node[:tomcat][:base]}/conf/server.xml" do
   source "app/server.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 
@@ -106,7 +107,7 @@ script "deploy_front_end" do
   cwd node[:oba][:home]
   puts "Front end version is #{mvn_version}"
   code <<-EOH
-  sudo service tomcat7 stop
+  #{tomcat_stop_command}
   sudo rm -rf #{node[:tomcat][:webapp_dir]}/*
   sudo rm -rf #{node[:tomcat][:tmp_dir]}/*
   sudo rm -rf #{node[:tomcat][:base]}/work/Catalina/localhost/
@@ -133,52 +134,52 @@ end
 # template tds data-sources
 template "#{node[:tomcat][:webapp_dir]}/onebusaway-transit-data-federation-webapp/WEB-INF/classes/data-sources.xml" do
   source "tds/data-sources.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 # template api data-sources
 template "#{node[:tomcat][:webapp_dir]}/onebusaway-api-webapp/WEB-INF/classes/data-sources.xml" do
   source "api/data-sources.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 # template sms data-sources
 template "#{node[:tomcat][:webapp_dir]}/onebusaway-sms-webapp/WEB-INF/classes/data-sources.xml" do
   source "sms/data-sources.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 # template nextbus api data-sources
 template "#{node[:tomcat][:webapp_dir]}/onebusaway-nextbus-api-webapp/WEB-INF/classes/data-sources.xml" do
   source "nextbus-api/data-sources.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 # template app data-sources
 template "#{node[:tomcat][:webapp_dir]}/ROOT/WEB-INF/classes/data-sources.xml" do
   source "app/data-sources.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 
 # template app urlrewrite
 template "#{node[:tomcat][:webapp_dir]}/ROOT/WEB-INF/urlrewrite.xml" do
   source "app/urlrewrite.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 
 # TODO fix build dependency
 %w{mysql-connector-java-5.1.35.jar}.each do |jar_file|
-  cookbook_file ["/usr/share/tomcat7/lib", jar_file].compact.join("/") do
-    owner 'tomcat7'
-    group 'tomcat7'
+  cookbook_file ["/usr/share/#{tomcat_instance_name}/lib", jar_file].compact.join("/") do
+    owner node[:tomcat][:user]
+    group node[:tomcat][:group]
     source ["admin", jar_file].compact.join("/")
     mode  '0444'
   end
@@ -190,7 +191,7 @@ script "start_front_end" do
   user node[:oba][:user]
   cwd node[:oba][:home]
   code <<-EOH
-  sudo service tomcat7 start
+  #{tomcat_start_command}
   EOH
 end
 
