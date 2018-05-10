@@ -5,15 +5,20 @@ tomcat_instance_name = node[:oba][:tomcat][:instance_name]
 tomcat_stop_command = "systemctl #{tomcat_instance_name} stop"
 tomcat_start_command = "systemctl #{tomcat_instance_name} start"
 
-tomcat_webapp_dir = "/var/lib/#{tomcat_instance_name}/webapps"
-tomcat_lib_dir = "/var/lib/#{tomcat_instance_name}/lib"
+tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
+tomcat_cache_dir = "/var/cache/#{tomcat_instance_name}"
 
+tomcat_webapp_dir = "#{tomcat_home_dir}/webapps"
+tomcat_lib_dir = "#{tomcat_home_dir}/lib"
 
 ## watchdog properties
 tomcat_w_instance_name = "tomcat8-watchdog"
 
 tomcat_w_stop_command = "systemctl stop #{tomcat_w_instance_name}"
 tomcat_w_start_command = "systemctl start #{tomcat_w_instance_name}"
+
+tomcat_w_home_dir = "/var/lib/#{tomcat_w_instance_name}"
+tomcat_w_cache_dir = "/var/cache/#{tomcat_w_instance_name}"
 
 tomcat_w_webapp_dir = "/var/lib/#{tomcat_w_instance_name}/webapps"
 tomcat_w_temp_dir = "/var/cache/#{tomcat_w_instance_name}/temp"
@@ -68,7 +73,7 @@ end
 ### ADMIN SERVER
 
 # template context.xml adding datasource
-template "/var/lib/#{tomcat_instance_name}/conf/context.xml" do
+template "#{tomcat_home_dir}/conf/context.xml" do
   source "admin/context.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
@@ -100,8 +105,8 @@ script "deploy_admin" do
   code <<-EOH
   #{tomcat_stop_command}
   rm -rf #{tomcat_webapp_dir}/*
-  rm -rf /var/cache/#{tomcat_instance_name}/temp/*
-  rm -rf /var/cache/#{tomcat_instance_name}/work/Catalina/localhost/
+  rm -rf #{tomcat_cache_dir}/temp/*
+  rm -rf #{tomcat_cache_dir}/work/Catalina/localhost/
   if [ ! -e /usr/bin/python2.5 ]
   then
     ln -s /usr/bin/python /usr/bin/python2.5
@@ -121,20 +126,20 @@ script "install_tomcat_user" do
   cd /var/lib
   /usr/bin/tomcat8-instance-create -p 7070 -c 7005 #{tomcat_w_instance_name} || exit 1
   # the policy scripts are not created above sadly
-  cp -r /var/lib/#{tomcat_instance_name}/conf/policy.d /var/lib/#{tomcat_w_instance_name}/conf/
+  cp -r #{tomcat_home_dir}/conf/policy.d #{tomcat_w_home_dir}/conf/
   # bin dir is missing a well
   cp -r /usr/share/#{tomcat_instance_name} /usr/share/#{tomcat_w_instance_name}
-  mkdir -p /var/lib/#{tomcat_w_instance_name}/work/Catalina/localhost
+  mkdir -p #{tomcat_w_home_dir}/work/Catalina/localhost
   chown -R #{node[:tomcat][:user]}:#{node[:tomcat][:group]} #{tomcat_w_instance_name}
   EOH
-end unless ::File.exists?("/var/lib/#{tomcat_w_instance_name}")
+end unless ::File.exists?("#{tomcat_w_home_dir}")
 
 
 ### WATCH DOG
 
 # install tomcat for watchdog
 tomcat_install tomcat_w_instance_name do
-  install_path "/var/lib/#{tomcat_w_instance_name}"
+  install_path "#{tomcat_w_home_dir}"
   exclude_manager true
   exclude_hostmanager true
   tomcat_user node[:tomcat][:user]
@@ -144,8 +149,8 @@ end
 tomcat_service "#{tomcat_w_instance_name}" do
   action :start
   install_path "/var/lib/#{tomcat_w_instance_name}"
-  env_vars [{'CATALINA_HOME' => "/var/lib/#{tomcat_w_instance_name}"},
-            {'CATALINA_OUT' => "/var/lib/#{tomcat_w_instance_name}/logs/catalina.out"}]
+  env_vars [{'CATALINA_HOME' => "#{tomcat_w_home_dir}"},
+            {'CATALINA_OUT' => "#{tomcat_w_home_dir}/logs/catalina.out"}]
   tomcat_user node[:tomcat][:user]
   tomcat_group node[:tomcat][:group]
 end
@@ -158,7 +163,7 @@ template "/etc/default/#{tomcat_w_instance_name}" do
 end
 
 # template context.xml adding datasource
-template "/var/lib/#{tomcat_w_instance_name}/conf/context.xml" do
+template "#{tomcat_w_home_dir}/conf/context.xml" do
   source "admin/context.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
@@ -172,7 +177,7 @@ script "stop_watchdog" do
   code <<-EOH
 #{tomcat_w_stop_command}
   EOH
-end unless ::File.exists?("/var/lib/#{tomcat_w_instance_name}")
+end unless ::File.exists?("#{tomcat_w_home_dir}")
 
 script "deploy_watchdog" do
   interpreter "bash"
@@ -183,7 +188,7 @@ script "deploy_watchdog" do
   rm -rf #{tomcat_w_webapp_dir}/*
   rm -rf #{tomcat_w_temp_dir}/*
   rm -rf #{tomcat_w_work_dir}/Catalina/localhost/
-  unzip #{mvn_watchdog_dest_file} -d /var/lib/#{tomcat_w_instance_name}/webapps/onebusaway-watchdog-webapp || exit 1
+  unzip #{mvn_watchdog_dest_file} -d #{tomcat_w_home_dir}/webapps/onebusaway-watchdog-webapp || exit 1
   sed -i /etc/passwd -e 's!/usr/share/{tomcat_instance_name}:/bin/false!/usr/share/#{tomcat_instance_name}:/bin/bash!'
   EOH
 end
