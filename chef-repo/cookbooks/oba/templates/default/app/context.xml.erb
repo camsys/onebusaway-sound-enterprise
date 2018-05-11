@@ -7,41 +7,33 @@
     <Resource name="jdbc/appDB"
       auth="Container"
       type="javax.sql.DataSource"
-      maxActive="50"
+      maxTotal="50"
       maxIdle="1"
-      maxWait="30000"
+      maxWaitMillis="30000"
       validationQuery="select 1"
       testWhileIdle="true"
       timeBetweenEvictionRunsMillis="10000"
       minEvictableIdleTimeMillis="60000"
       username="<%= node[:oba][:db_user] %>"
       password="<%= node[:oba][:db_password] %>"
-      queriesBeforeRetryMaster="300"
-      secondsBeforeRetryMaster="60"
-      failOverReadOnly="false"
       driverClassName="com.mysql.jdbc.Driver"
       url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_instance_name] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true" >
-      <connection-property name="readOnly">false</connection-property>
      </Resource>
 
     <Resource name="jdbc/agencyMetadataDB"
       auth="Container"
       type="javax.sql.DataSource"
-      maxActive="2"
+      maxTotal="2"
       maxIdle="1"
-      maxWait="30000"
+      maxWaitMillis="30000"
       validationQuery="select 1"
       testWhileIdle="true"
       timeBetweenEvictionRunsMillis="10000"
       minEvictableIdleTimeMillis="60000"
       username="<%= node[:oba][:db_user] %>"
       password="<%= node[:oba][:db_password] %>"
-      queriesBeforeRetryMaster="300"
-      secondsBeforeRetryMaster="60"
-      failOverReadOnly="false"
       driverClassName="com.mysql.jdbc.Driver"
       url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>" >
-      <connection-property name="readOnly">false</connection-property>
     </Resource>
 
     <Environment name="xwikiUrl" value="http://xwiki.prod.wmata.obaweb.org:8080/xwiki" type="java.lang.String" override="true" />
