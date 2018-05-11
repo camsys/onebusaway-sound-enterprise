@@ -2,8 +2,8 @@ log "Downloading wars"
 
 ## admin properties
 tomcat_instance_name = node[:oba][:tomcat][:instance_name]
-tomcat_stop_command = "systemctl #{tomcat_instance_name} stop"
-tomcat_start_command = "systemctl #{tomcat_instance_name} start"
+tomcat_stop_command = "systemctl stop #{tomcat_instance_name}"
+tomcat_start_command = "systemctl start #{tomcat_instance_name}"
 
 tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
 tomcat_cache_dir = "/var/cache/#{tomcat_instance_name}"
