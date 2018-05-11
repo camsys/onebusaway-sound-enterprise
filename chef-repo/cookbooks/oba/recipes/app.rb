@@ -181,7 +181,7 @@ end
 
 # TODO fix build dependency
 %w{mysql-connector-java-5.1.35.jar}.each do |jar_file|
-  cookbook_file ["/usr/share/#{tomcat_instance_name}/lib", jar_file].compact.join("/") do
+  cookbook_file ["#{tomcat_home_dir}/lib", jar_file].compact.join("/") do
     owner node[:tomcat][:user]
     group node[:tomcat][:group]
     source ["admin", jar_file].compact.join("/")
