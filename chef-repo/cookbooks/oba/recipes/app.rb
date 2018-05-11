@@ -192,7 +192,7 @@ end
 # start up tomcat
 script "start_front_end" do
   interpreter "bash"
-  user node[:oba][:user]
+  user "root"
   cwd node[:oba][:home]
   code <<-EOH
   #{tomcat_start_command}
