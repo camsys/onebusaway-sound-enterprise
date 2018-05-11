@@ -93,7 +93,7 @@ action_class do
 
           file dest_file do
             owner new_resource.owner
-            group new_resource.owner
+            group new_resource.group
             mode new_resource.mode
           end.run_action(:create)
         end
