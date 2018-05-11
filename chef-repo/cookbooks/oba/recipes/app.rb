@@ -1,5 +1,6 @@
 # app tomcat properties
 tomcat_instance_name = node[:oba][:tomcat][:instance_name]
+tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
 tomcat_stop_command = "systemctl #{tomcat_instance_name} stop"
 tomcat_start_command = "systemctl #{tomcat_instance_name} start"
 
@@ -23,6 +24,7 @@ maven "onebusaway-transit-data-federation-webapp" do
   version mvn_version
   packaging "war"
   owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -34,6 +36,7 @@ maven "onebusaway-api-webapp" do
   version mvn_version
   packaging "war"
   owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -45,6 +48,7 @@ maven "onebusaway-sms-webapp" do
   version mvn_version
   packaging "war"
   owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -56,6 +60,7 @@ maven "onebusaway-nextbus-api-webapp" do
   version mvn_version
   packaging "war"
   owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -80,7 +85,7 @@ template "/var/lib/oba/config.json" do
 end
 
 # template context.xml adding datasource
-template "#{node[:tomcat][:base]}/conf/context.xml" do
+template "#{tomcat_home_dir}/conf/context.xml" do
   source "app/context.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
@@ -88,7 +93,7 @@ template "#{node[:tomcat][:base]}/conf/context.xml" do
 end
 
 # template service.xml for logging conf
-template "#{node[:tomcat][:base]}/conf/server.xml" do
+template "#{tomcat_home_dir}/conf/server.xml" do
   source "app/server.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
@@ -108,59 +113,58 @@ script "deploy_front_end" do
   puts "Front end version is #{mvn_version}"
   code <<-EOH
   #{tomcat_stop_command}
-  sudo rm -rf #{node[:tomcat][:webapp_dir]}/*
-  sudo rm -rf #{node[:tomcat][:tmp_dir]}/*
-  sudo rm -rf #{node[:tomcat][:base]}/work/Catalina/localhost/
+  sudo rm -rf #{tomcat_home_dir}/webapps/*
+  sudo rm -rf #{tomcat_home_dir}/work/Catalina/localhost/
   sudo rm -rf #{node[:oba][:tds][:bundle_path]}/*
   # deploy tds
-  sudo mkdir #{node[:tomcat][:webapp_dir]}/onebusaway-transit-data-federation-webapp 
-  sudo unzip #{mvn_tdf_dest_file} -d #{node[:tomcat][:webapp_dir]}/onebusaway-transit-data-federation-webapp || exit 1
+  sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-transit-data-federation-webapp 
+  sudo unzip #{mvn_tdf_dest_file} -d #{tomcat_home_dir}/webapps/onebusaway-transit-data-federation-webapp || exit 1
   # deploy api
-  sudo mkdir #{node[:tomcat][:webapp_dir]}/onebusaway-api-webapp
-  sudo unzip #{mvn_api_dest_file} -d #{node[:tomcat][:webapp_dir]}/onebusaway-api-webapp || exit 1
+  sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-api-webapp
+  sudo unzip #{mvn_api_dest_file} -d #{tomcat_home_dir}/webapps/onebusaway-api-webapp || exit 1
   # deploy sms
-  sudo mkdir #{node[:tomcat][:webapp_dir]}/onebusaway-sms-webapp
-  sudo unzip #{mvn_sms_dest_file} -d #{node[:tomcat][:webapp_dir]}/onebusaway-sms-webapp || exit 1
+  sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-sms-webapp
+  sudo unzip #{mvn_sms_dest_file} -d #{tomcat_home_dir}/webapps/onebusaway-sms-webapp || exit 1
   # deploy nextbus-api
-  sudo mkdir #{node[:tomcat][:webapp_dir]}/onebusaway-nextbus-api-webapp
-  sudo unzip #{mvn_nextbus_api_dest_file} -d #{node[:tomcat][:webapp_dir]}/onebusaway-nextbus-api-webapp || exit 1
+  sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-nextbus-api-webapp
+  sudo unzip #{mvn_nextbus_api_dest_file} -d #{tomcat_home_dir}/webapps/onebusaway-nextbus-api-webapp || exit 1
   # deploy enterprise
-  sudo mkdir #{node[:tomcat][:webapp_dir]}/ROOT
-  sudo unzip #{mvn_webapp_dest_file} -d #{node[:tomcat][:webapp_dir]}/ROOT || exit 1
+  sudo mkdir #{tomcat_home_dir}/webapps/ROOT
+  sudo unzip #{mvn_webapp_dest_file} -d #{tomcat_home_dir}/webapps/ROOT || exit 1
 
   EOH
 end
 
 # template tds data-sources
-template "#{node[:tomcat][:webapp_dir]}/onebusaway-transit-data-federation-webapp/WEB-INF/classes/data-sources.xml" do
+template "#{tomcat_home_dir}/webapps/onebusaway-transit-data-federation-webapp/WEB-INF/classes/data-sources.xml" do
   source "tds/data-sources.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
 end
 # template api data-sources
-template "#{node[:tomcat][:webapp_dir]}/onebusaway-api-webapp/WEB-INF/classes/data-sources.xml" do
+template "#{tomcat_home_dir}/webapps/onebusaway-api-webapp/WEB-INF/classes/data-sources.xml" do
   source "api/data-sources.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
 end
 # template sms data-sources
-template "#{node[:tomcat][:webapp_dir]}/onebusaway-sms-webapp/WEB-INF/classes/data-sources.xml" do
+template "#{tomcat_home_dir}/webapps/onebusaway-sms-webapp/WEB-INF/classes/data-sources.xml" do
   source "sms/data-sources.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
 end
 # template nextbus api data-sources
-template "#{node[:tomcat][:webapp_dir]}/onebusaway-nextbus-api-webapp/WEB-INF/classes/data-sources.xml" do
+template "#{tomcat_home_dir}/webapps/onebusaway-nextbus-api-webapp/WEB-INF/classes/data-sources.xml" do
   source "nextbus-api/data-sources.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
 end
 # template app data-sources
-template "#{node[:tomcat][:webapp_dir]}/ROOT/WEB-INF/classes/data-sources.xml" do
+template "#{tomcat_home_dir}/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   source "app/data-sources.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
@@ -168,7 +172,7 @@ template "#{node[:tomcat][:webapp_dir]}/ROOT/WEB-INF/classes/data-sources.xml" d
 end
 
 # template app urlrewrite
-template "#{node[:tomcat][:webapp_dir]}/ROOT/WEB-INF/urlrewrite.xml" do
+template "#{tomcat_home_dir}/webapps/ROOT/WEB-INF/urlrewrite.xml" do
   source "app/urlrewrite.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]

@@ -18,7 +18,6 @@ tomcat_w_stop_command = "systemctl stop #{tomcat_w_instance_name}"
 tomcat_w_start_command = "systemctl start #{tomcat_w_instance_name}"
 
 tomcat_w_home_dir = "/var/lib/#{tomcat_w_instance_name}"
-tomcat_w_cache_dir = "/var/cache/#{tomcat_w_instance_name}"
 
 tomcat_w_webapp_dir = "/var/lib/#{tomcat_w_instance_name}/webapps"
 tomcat_w_temp_dir = "/var/cache/#{tomcat_w_instance_name}/temp"
@@ -48,7 +47,7 @@ mvn_admin_version = node[:oba][:mvn][:version_admin]
 mvn_admin_dest_file = "/tmp/war/onebusaway-admin-webapp-#{mvn_admin_version}.war"
 log "maven dependency installed at #{mvn_admin_dest_file}"
 maven "onebusaway-admin-webapp" do
-  group_id "org.onebusaway"
+  group_id node[:oba][:mvn][:group_id]
   dest "/tmp/war"
   version mvn_admin_version
   packaging "war"
@@ -61,7 +60,7 @@ mvn_version = node[:oba][:mvn][:version_app]
 mvn_watchdog_dest_file = "/tmp/war/onebusaway-watchdog-webapp-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_watchdog_dest_file}"
 maven "onebusaway-watchdog-webapp" do
-  group_id "org.onebusaway"
+  group_id node[:oba][:mvn][:group_id]
   dest "/tmp/war"
   version mvn_version
   packaging "war"
