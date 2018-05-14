@@ -34,7 +34,7 @@ maven "transitimeApi" do
   repositories node[:oba][:mvn][:repositories]
 end
 
-tomcat_lib = '#{tomcat_home_dir}/lib'
+tomcat_lib = "#{tomcat_home_dir}/lib"
 directory tomcat_lib do
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
