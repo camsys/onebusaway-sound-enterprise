@@ -1,5 +1,8 @@
 tomcat_instance_name = node[:oba][:tomcat][:instance_name]
 tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
+tomcat_start_command = "systemctl start #{tomcat_instance_name}"
+tomcat_restart_command = "systemctl restart #{tomcat_instance_name}"
+
 
 log "Downloading wars"
 
@@ -14,7 +17,8 @@ maven "transitimeWebapp" do
   dest "/tmp/chef"
   version mvn_version
   packaging "war"
-  owner "tomcat7"
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -26,6 +30,7 @@ maven "transitimeApi" do
   version mvn_version
   packaging "war"
   owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -52,7 +57,7 @@ directory "/var/lib/oba/transitime/web" do
 end
 
 %w{logback-classic-1.1.2.jar logback-core-1.1.2.jar slf4j-api-1.7.2.jar}.each do |jar_file|
-  cookbook_file ["/usr/share/tomcat7/lib", jar_file].compact.join("/") do
+  cookbook_file ["#{tomcat_home_dir}/lib", jar_file].compact.join("/") do
     owner node[:tomcat][:user]
     group node[:tomcat][:group]
     source jar_file
@@ -106,7 +111,7 @@ script "deploy_web_post" do
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
-  sudo service tomcat7 start
+  #{tomcat_start_command}
 EOH
 end
 
@@ -119,6 +124,6 @@ directory '/var/lib/oba/monitoring' do
 end
 
 cron "check-tomcat-size" do
-  command '[ "`ps -o rss -u tomcat7 --no-headers`" -gt 5068924 ] && /usr/sbin/service tomcat7 restart'
+  command "[ '`ps -o rss -u #{tomcat_instance_name} --no-headers`' -gt 5068924 ] && #{tomcat_restart_command}"
   user "root"
 end
