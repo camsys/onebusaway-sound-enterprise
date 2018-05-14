@@ -89,7 +89,7 @@ template "#{tomcat_home_dir}/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml
 end
 template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/transiTimeConfig.xml" do
   source "web/transitimeConfig.xml.erb"
-  oowner node[:tomcat][:user]
+  owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
 end
