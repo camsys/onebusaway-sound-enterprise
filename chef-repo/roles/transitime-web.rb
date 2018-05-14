@@ -3,6 +3,7 @@ description "transitime web server"
 run_list(
         "role[base]",
         "recipe[tomcat]",
+        "recipe[transitime::web_tomcat]",
         "recipe[transitime::tomcat_install]",
         "recipe[transitime::web]"
 )
