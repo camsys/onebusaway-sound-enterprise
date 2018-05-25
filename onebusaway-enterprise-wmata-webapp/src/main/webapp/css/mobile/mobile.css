@@ -438,7 +438,7 @@ small {
 
 .scheduleAlert{
 	font-size: .9em; 
-	color: #ff0000;
+	color: #000099;
 }
 
 .routeList a {
@@ -450,8 +450,8 @@ small {
 }
 
 .alerts {
-	color: #cc0000;
-	background-color: #FDEEF4;
+	color: #000099;
+	background-color: #bdd5fd;
 	padding: .75em;
 	margin-top: 0.3em;
 	margin-bottom: 0.3em;
