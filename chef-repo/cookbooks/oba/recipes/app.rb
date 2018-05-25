@@ -2,7 +2,7 @@
 tomcat_instance_name = node[:oba][:tomcat][:instance_name]
 tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
 tomcat_stop_command = "systemctl stop #{tomcat_instance_name}"
-tomcat_start_command = "systemctl start #{tomcat_instance_name}"
+tomcat_start_command = "systemctl restart #{tomcat_instance_name}"
 
 # create bundle directory
 directory node[:oba][:tds][:bundle_path] do
