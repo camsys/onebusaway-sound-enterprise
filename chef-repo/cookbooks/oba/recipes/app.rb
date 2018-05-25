@@ -188,13 +188,13 @@ script "deploy_front_end" do
   code <<-EOH
   # deploy wmata
   sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-enterprise-wmata-webapp
-  sudo unzip #{#{node[:oba][:wmata_webapp][:artifact]}} -d #{tomcat_home_dir}/webapps/nebusaway-enterprise-wmata-webapp || exit 1
+  sudo unzip #{node[:oba][:wmata_webapp][:artifact]} -d #{tomcat_home_dir}/webapps/nebusaway-enterprise-wmata-webapp || exit 1
   # deploy sound
   sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-enterprise-sound-webapp
-  sudo unzip #{#{node[:oba][:sound_webapp][:artifact]}} -d #{tomcat_home_dir}/webapps/nebusaway-enterprise-sound-webapp || exit 1
+  sudo unzip #{node[:oba][:sound_webapp][:artifact]} -d #{tomcat_home_dir}/webapps/nebusaway-enterprise-sound-webapp || exit 1
   # deploy wmata
   sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-enterprise-hart-webapp
-  sudo unzip #{#{node[:oba][:hart_webapp][:artifact]}} -d #{tomcat_home_dir}/webapps/nebusaway-enterprise-hart-webapp || exit 1
+  sudo unzip #{node[:oba][:hart_webapp][:artifact]} -d #{tomcat_home_dir}/webapps/nebusaway-enterprise-hart-webapp || exit 1
   EOH
 end
 
