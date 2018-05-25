@@ -35,6 +35,15 @@ default_attributes({
                        "webapp" => {
                           "artifact" => "onebusaway-enterprise-acta-webapp"
                        },
+                       "wmata_webapp" => {
+                          "artifact" => "onebusaway-enterprise-wmata-webapp"
+                       },
+                       "hart_webapp" => {
+                          "artifact" => "onebusaway-enterprise-hart-webapp"
+                       },
+                       "sound_webapp" => {
+                          "artifact" => "onebusaway-enterprise-sound-webapp"
+                       },
                        "archiva" => {
                            "s3_user" =>  "AKIAJGPEIERX2KIPI52A",
                            "s3_password" => "qOhfseblnczHLlWpFvqwp8KFxAXUWzgK6P7xAlz9"

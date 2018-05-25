@@ -76,6 +76,44 @@ maven "#{front_end_webapp}" do
   repositories node[:oba][:mvn][:repositories]
 end
 
+###
+# start dev branded test
+###
+# wmata
+maven "#{node[:oba][:wmata_webapp][:artifact]}" do
+  group_id node[:oba][:mvn][:group_id]
+  dest "/tmp/war"
+  version mvn_branded_version
+  packaging "war"
+  owner node[:tomcat][:user]
+  repositories node[:oba][:mvn][:repositories]
+  only_if { node[:oba][:env] == "dev" }
+end
+# sound
+maven "#{node[:oba][:sound_webapp][:artifact]}" do
+  group_id node[:oba][:mvn][:group_id]
+  dest "/tmp/war"
+  version mvn_branded_version
+  packaging "war"
+  owner node[:tomcat][:user]
+  repositories node[:oba][:mvn][:repositories]
+  only_if { node[:oba][:env] == "dev" }
+
+end
+# hart
+maven "#{node[:oba][:hart_webapp][:artifact]}" do
+  group_id node[:oba][:mvn][:group_id]
+  dest "/tmp/war"
+  version mvn_branded_version
+  packaging "war"
+  owner node[:tomcat][:user]
+  repositories node[:oba][:mvn][:repositories]
+  only_if { node[:oba][:env] == "dev" }
+end
+###
+# end dev branded test
+###
+
 # template config.json for local configuration
 template "/var/lib/oba/config.json" do
   source "app/config.json.erb"
@@ -134,6 +172,35 @@ script "deploy_front_end" do
 
   EOH
 end
+
+###
+# start deploy branded webapps
+###
+# deploy onebusaway-enterprise-wmata-webapp
+# deploy onebusaway-enterprise-sound-webapp
+# deploy onebusaway-enterprise-hart-webapp
+script "deploy_front_end" do
+  interpreter "bash"
+  user node[:oba][:user]
+  cwd node[:oba][:home]
+  puts "Branded end version is #{mvn_branded_version}"
+  only_if { node[:oba][:env] == "dev" }
+  code <<-EOH
+  # deploy wmata
+  sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-enterprise-wmata-webapp
+  sudo unzip #{#{node[:oba][:wmata_webapp][:artifact]}} -d #{tomcat_home_dir}/webapps/nebusaway-enterprise-wmata-webapp || exit 1
+  # deploy sound
+  sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-enterprise-sound-webapp
+  sudo unzip #{#{node[:oba][:sound_webapp][:artifact]}} -d #{tomcat_home_dir}/webapps/nebusaway-enterprise-sound-webapp || exit 1
+  # deploy wmata
+  sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-enterprise-hart-webapp
+  sudo unzip #{#{node[:oba][:hart_webapp][:artifact]}} -d #{tomcat_home_dir}/webapps/nebusaway-enterprise-hart-webapp || exit 1
+  EOH
+end
+
+###
+# end deploy branded webapps
+###
 
 # template tds data-sources
 template "#{tomcat_home_dir}/webapps/onebusaway-transit-data-federation-webapp/WEB-INF/classes/data-sources.xml" do
