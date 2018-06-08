@@ -149,7 +149,8 @@ tomcat_service "#{tomcat_w_instance_name}" do
   action :start
   install_path "/var/lib/#{tomcat_w_instance_name}"
   env_vars [{'CATALINA_HOME' => "#{tomcat_w_home_dir}"},
-            {'CATALINA_OUT' => "#{tomcat_w_home_dir}/logs/catalina.out"}]
+            {'CATALINA_OUT' => "#{tomcat_w_home_dir}/logs/catalina.out"},
+	    {'JAVA_OPTS' => "-Xmx3G"}]
   tomcat_user node[:tomcat][:user]
   tomcat_group node[:tomcat][:group]
 end
