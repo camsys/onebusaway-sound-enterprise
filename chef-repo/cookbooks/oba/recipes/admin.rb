@@ -206,6 +206,13 @@ template "#{tomcat_w_webapp_dir}/onebusaway-watchdog-webapp/WEB-INF/classes/data
   mode '0644'
 end
 
+# watchdog server config
+template "#{tomcat_w_home_dir}/conf/server.xml" do
+  source "watchdog/server.xml.erb"
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  mode '0644'
+end
 
 # TODO fix build dependency
 %w{mysql-connector-java-5.1.35.jar mail-1.4.jar}.each do |jar_file|
