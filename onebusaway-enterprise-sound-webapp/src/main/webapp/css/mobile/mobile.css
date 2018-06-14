@@ -291,7 +291,7 @@ small {
 	color: #FFFFFF;
 }
 
-#refresh.loading {
+#refresh.loadingRefresh {
 	border: 1px solid rgba(220,220,220,0.75);
 	background: rgb(120, 170, 54); /* Old browsers */
 	background: -moz-linear-gradient(top, rgba(120, 170, 54, 0.73) 0%, rgba(161, 229, 72, 0.73) 100%); /* FF3.6+ */
@@ -664,7 +664,7 @@ small {
 	border: 0px;
 }
 
-#mapHider span {
+#showMapSpan {
 	font-size: 0.85em;
 	padding: 0.6em;
 	display: block;
