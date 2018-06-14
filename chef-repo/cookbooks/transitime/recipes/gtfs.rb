@@ -1,12 +1,12 @@
 mvn_version = node[:oba][:mvn][:version_transitime_web]
-mvn_dest_file = "/tmp/chef/transitimeCore-#{mvn_version}-GTFSFileProcessor.jar"
+mvn_dest_file = "/tmp/chef/transitimeCore-#{mvn_version}-GtfsFileProcessor.jar"
 log "maven dependency installed at #{mvn_dest_file}"
 maven "transitimeCore" do
   group_id "transitime"
   dest "/tmp/chef"
   version mvn_version
   packaging "jar"
-  classifier "GTFSFileProcessor"
+  classifier "GtfsFileProcessor"
   owner "ubuntu"
   repositories node[:oba][:mvn][:repositories]
 end
@@ -41,7 +41,7 @@ script "install_broker" do
   cwd "/var/lib/oba/transitime/processGTFS"
   puts "core version is #{mvn_version}"
   code <<-EOH
-  mv #{mvn_dest_file} /var/lib/oba/transitime/processGTFS/GTFSFileProcessor.jar || exit 1
+  mv #{mvn_dest_file} /var/lib/oba/transitime/processGTFS/GtfsFileProcessor.jar || exit 1
   EOH
 end
 
