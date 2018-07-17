@@ -8,7 +8,7 @@
 	<div id="topbar-top">
 		<div class="logo">
         	<a href="http://www.wmata.com">
-        		<s:url var="url" value="css/img/agency_logo.png">
+        		<s:url var="url" value="/css/img/agency_logo.png">
 					<s:param name="v"><s:property value="frontEndVersion" /></s:param>
 				</s:url>
         		<img src="${url}" alt="Metro logo"></img>
