@@ -100,7 +100,7 @@
 <body>
 <div id="mainbox">
 	
-	<c:import url="/WEB-INF/decorators/includes/topbar.jspx" />
+	<c:import url="/WEB-INF/decorators/includes/topbarWiki.jspx" />
 	
 	<div id="contentbox" style="margin-bottom: 10px; padding:0;">
 	<!-- Enter Content here -->
