@@ -6,6 +6,8 @@
         "config":
  [
  {"component": "admin", "key": "apiHostname", "value": "<%= node[:oba][:api_server] %>"},
+ {"component": "admin", "key": "appHostname", "value": "<%= node[:oba][:api_server] %>"},
+ {"component": "admin", "key": "display.useHttps", "value": "true"},
  {"component": "admin", "key": "useTdm", "value": "false"},
  {"component": "admin", "key": "admin.auxSupport", "value": "true"},
  {"component": "admin", "key": "admin.stopConsolidation", "value": "true"},
@@ -34,6 +36,11 @@
  {"component": "admin", "key": "validateTransitDataBundle", "value": "true"},
  {"component": "admin", "key": "no_default_agency", "value": "true"},
  {"component": "admin", "key": "1_modurl", "value": "https://raw.github.com/wiki/camsys/onebusaway-application-modules/EmptyModifications.md"},
+   {
+     "component": "display",
+     "key": "display.serviceAlertText",
+     "value": "Service Advisory"
+   },
       {
          "component":"admin",
          "key":"apiStaging",
@@ -69,10 +76,15 @@
         "key": "transitimeUrl",
         "value": "/web/reports/index.jsp?a=1"
       },
-  	  {
+      {
          "component":"agency",
          "key":"1",
          "value":"DC,2;MET,1"
+      },
+      {
+         "component":"agency",
+         "key":"45",
+         "value":"45,45"
       },
       {  
          "component":"aws",

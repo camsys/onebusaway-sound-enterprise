@@ -3,22 +3,42 @@
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
 
     <!-- database configuration moved to server.xml -->
-    <ResourceLink
-       name="jdbc/appDB"
-       global="shared/jdbc/appDB"
-       type="javax.sql.DataSource"
-       factory="org.apache.naming.factory.DataSourceLinkFactory"
-       username="<%= node[:oba][:db_user] %>"
-       password="<%= node[:oba][:db_password] %>" />
-    <ResourceLink
-       name="jdbc/agencyMetadataDB"
-       global="shared/jdbc/appDB"
-       type="javax.sql.DataSource"
-       factory="org.apache.naming.factory.DataSourceLinkFactory"
-       username="<%= node[:oba][:db_user] %>"
-       password="<%= node[:oba][:db_password] %>" />
+
+    <Resource name="jdbc/appDB"
+      auth="Container"
+      type="javax.sql.DataSource"
+      maxTotal="50"
+      maxIdle="1"
+      maxWaitMillis="30000"
+      validationQuery="select 1"
+      testWhileIdle="true"
+      timeBetweenEvictionRunsMillis="10000"
+      minEvictableIdleTimeMillis="60000"
+      username="<%= node[:oba][:db_user] %>"
+      password="<%= node[:oba][:db_password] %>"
+      driverClassName="com.mysql.jdbc.Driver"
+      url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_instance_name] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true" >
+     </Resource>
+
+    <Resource name="jdbc/agencyMetadataDB"
+      auth="Container"
+      type="javax.sql.DataSource"
+      maxTotal="2"
+      maxIdle="1"
+      maxWaitMillis="30000"
+      validationQuery="select 1"
+      testWhileIdle="true"
+      timeBetweenEvictionRunsMillis="10000"
+      minEvictableIdleTimeMillis="60000"
+      username="<%= node[:oba][:db_user] %>"
+      password="<%= node[:oba][:db_password] %>"
+      driverClassName="com.mysql.jdbc.Driver"
+      url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>" >
+    </Resource>
+
     <Environment name="xwikiUrl" value="http://xwiki.prod.wmata.obaweb.org:8080/xwiki" type="java.lang.String" override="true" />
     <Environment name="wikiDocumentEditUrl" value="http://xwiki.prod.wmata.obaweb.org:8080/xwiki/bin/edit/%{namespace}/%{documentName}" type="java.lang.String" override="true" />
     <Environment name="wikiAttachmentUrl" value="http://xwiki.prod.wmata.obaweb.org:8080/xwiki/bin/download/%{namespace}/%{documentName}/%{attachmentName}" type="java.lang.String" override="true" />
+    <Parameter name="obanyc.resource" value="onebusaway-wmata" override="false" />
 
 </Context>
