@@ -35,6 +35,9 @@ default_attributes({
                        "webapp" => {
                          "artifact" => "onebusaway-enterprise-wmata-webapp"
                        },
+		       "wmata_webapp" => {
+                          "artifact" => "onebusaway-enterprise-wmata-webapp"
+                       },
                        "ses_host" => "email-smtp.us-east-1.amazonaws.com",
                        "ses_user" => "AKIAISKUXW2UHBZRHHNA",
                        "ses_password" => "AhxzNCmnlqzK8qjPwsQ41yHUbk3meOlHZvVRuoVoM7/t",
