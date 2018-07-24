@@ -69,9 +69,9 @@ default_attributes({
                      "tomcat" => {
                        "user" => "tomcat7",
                        "group" => "tomcat7",
-                       "base_version" => "7"
+                       "base_version" => "8"
                      },
                      "java" => {
-                       "jdk_version" => "7"
+                       "jdk_version" => "8"
                      }
                    })
