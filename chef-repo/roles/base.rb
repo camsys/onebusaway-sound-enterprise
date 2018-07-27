@@ -3,6 +3,6 @@ description "The base role for all OBA servers"
 run_list(
         "recipe[java]",
         "recipe[maven]",
-        "recipe[timezone]",
+        "recipe[timezone-ii]",
         "recipe[ntp]"
 )
