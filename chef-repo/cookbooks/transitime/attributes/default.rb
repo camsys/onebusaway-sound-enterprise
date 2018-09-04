@@ -1,0 +1,1 @@
+default['transitime']['tomcat']['instance_name'] = 'tomcat8'

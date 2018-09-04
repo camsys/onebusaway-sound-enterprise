@@ -2,7 +2,8 @@ name "oba-app"
 description "oba app/front-end server"
 run_list(
         "role[base]",
-        "recipe[tomcat]",
+        "recipe[tomcat-apache-mod-jk::cleanup]",
+        "recipe[oba::tomcat_install]",
         "recipe[oba::app]",
         "recipe[cloudwatch_monitoring]"
 )

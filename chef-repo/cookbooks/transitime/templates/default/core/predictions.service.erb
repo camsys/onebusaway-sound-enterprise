@@ -1,0 +1,7 @@
+[Unit]
+Description=Predictions Service
+After=network.target
+
+[Service]
+ExecStart=/var/lib/oba/transitime/core/core.sh
+User=ubuntu

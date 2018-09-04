@@ -24,12 +24,23 @@ maven "transitimeCore" do
 end
 
 
-service "predictions" do
-  provider Chef::Provider::Service::Upstart
-  supports :restart => true, :stop => true, :start => true
-  action [:stop]
-  only_if "test -f /etc/init/predictions.conf"
+systemd_service 'predictions' do
+  description 'Predictions Service'
+  after 'network.target'
+  service do
+    user node[:oba][:user]
+    exec_start "/var/lib/oba/transitime/core/core.sh"
+  end
 end
+
+service 'predictions' do
+  action [:enable]
+end
+
+service "predictions" do
+  action [:stop]
+end
+
 
 directory "/var/lib/oba/transitime/core" do
   owner 'root'
@@ -60,8 +71,8 @@ script "install_core" do
   EOH
 end
 
-template "/etc/init/predictions.conf" do
-    source "core/predictions.conf.erb"
+template "/etc/systemd/system/predictions.service" do
+    source "core/predictions.service.erb"
     owner "root"
     group "root"
     mode '0755'
@@ -73,12 +84,14 @@ template "/var/lib/oba/transitime/core/core.sh" do
     group "root"
     mode '0755'
 end
+
 template "/var/lib/oba/transitime/core/swap.sh" do
     source "gtfs/swap.sh.erb"
     owner "root"
     group "root"
     mode '0755'
 end
+
 template "/var/lib/oba/transitime/core/update.sh" do
     source "core/update.sh.erb"
     owner "root"
@@ -91,12 +104,14 @@ template "/var/lib/oba/transitime/core/update_batch.sh" do
     group "root"
     mode '0755'
 end
+
 template "/var/lib/oba/transitime/core/daily_maintenance.sh" do
     source "core/daily_maintenance.sh.erb"
     owner "root"
     group "root"
     mode '0755'
 end
+
 ["predictions", "avlreports", "arrivalsdepartures"].each do |script|
   template "/var/lib/oba/transitime/core/vacuum_#{script}.sql" do
     source "core/vacuum_#{script}.sql.erb"
@@ -105,6 +120,7 @@ end
     mode '0644'
   end
 end
+
 # template transitime configuration
 template "/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml" do
   source "core/mysql_hibernate.cfg.xml.erb"
@@ -112,6 +128,7 @@ template "/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml" do
   group 'ubuntu'
   mode '0644'
 end
+
 # template logback configuration
 template "/var/lib/oba/transitime/core/logback.xml" do
   source "core/logback.xml.erb"
@@ -119,11 +136,9 @@ template "/var/lib/oba/transitime/core/logback.xml" do
   group 'ubuntu'
   mode '0644'
 end
+
 service "predictions" do
-  provider Chef::Provider::Service::Upstart
-  supports :restart => true, :stop => true, :start => true
   action [:start]
-  only_if "test -f /etc/init/predictions.conf"
 end
 
 # monitoring directory

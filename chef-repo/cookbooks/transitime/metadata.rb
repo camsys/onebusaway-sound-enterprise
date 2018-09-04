@@ -6,7 +6,7 @@ description      "Installs and Configures transitime prediction server"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          "0.0.1"
 
-%w{ java tomcat }.each do |cb|
+%w{ java tomcat systemd }.each do |cb|
   depends cb
 end
 

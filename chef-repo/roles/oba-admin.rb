@@ -2,9 +2,10 @@ name "oba-admin"
 description "oba admin server"
 run_list(
         "role[base]",
+        "recipe[tomcat-apache-mod-jk::cleanup]",
         "recipe[apache2]",
-	"recipe[apache2::mod_proxy_http]",
-        "recipe[tomcat]",
+        "recipe[apache2::mod_proxy_http]",
+        "recipe[oba::tomcat_install]",
         "recipe[tomcat-apache-mod-jk]",
         "recipe[oba::admin]",
         "recipe[transitime::gtfs]"

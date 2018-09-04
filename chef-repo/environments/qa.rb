@@ -7,13 +7,13 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "1.1.15.37-cs",
-                           "version_core" => "1.1.15.37-cs",
-                           "version_app" => "1.1.15.37-cs",
-                           "version_branded" => "1.1.15.37-cs",
-                           "version_transitime_core" => "0.0.27",
-                           "version_transitime_web" => "0.0.27",
-                           "repositories" => ["http://repo.obaweb.org:8080/archiva/repository/snapshots/"]
+                           "version_admin" => "2.0.0-cs",
+                           "version_core" => "2.0.0-cs",
+                           "version_app" => "2.0.0-cs",
+                           "version_branded" => "2.0.0-cs",
+                           "version_transitime_core" => "0.0.35",
+                           "version_transitime_web" => "0.0.35",
+                           "repositories" => ["http://repo.obaweb.org:8080/archiva/repository/releases/"]
                        },
                        "db_instance" => "db",
                        "db_master" => "db.qa.wmata.obaweb.org",
@@ -24,7 +24,7 @@ default_attributes({
                        "db_instance_name" => "org_onebusaway_users",
                        "db_agency" => "gtfsrt",
                        "db_archive" => "gtfsrt",
-                       "api_server" => "app.qa.wmata.obaweb.org:8080",
+                       "api_server" => "app.qa.wmata.obaweb.org",
                        "admin_server" => "admin.qa.wmata.obaweb.org",
                        "prediction_api_server" => "gtfsrt.qa.wmata.obaweb.org",
                        "prediction_api_port" => "8080",
@@ -35,11 +35,23 @@ default_attributes({
                        "webapp" => {
                          "artifact" => "onebusaway-enterprise-wmata-webapp"
                        },
+		       "wmata_webapp" => {
+                          "artifact" => "onebusaway-enterprise-wmata-webapp"
+                       },
+                       "hart_webapp" => {
+                          "artifact" => "onebusaway-enterprise-hart-webapp"
+                       },
+                       "sound_webapp" => {
+                          "artifact" => "onebusaway-enterprise-sound-webapp"
+                       },
                        "ses_host" => "email-smtp.us-east-1.amazonaws.com",
                        "ses_user" => "AKIAISKUXW2UHBZRHHNA",
                        "ses_password" => "AhxzNCmnlqzK8qjPwsQ41yHUbk3meOlHZvVRuoVoM7/t",
                        "ses_from" => "btss@wmata.com",
-                       "mobile_require_ssl" => "true"
+                       "mobile_require_ssl" => "true",
+		       "tomcat" => {
+                           "instance_name" => "tomcat8"
+                       }
                      },
                        "transitime" => {
                          "dbhost" => "db.qa.wmata.obaweb.org:3306",
@@ -67,11 +79,16 @@ default_attributes({
                         "alarmNonCriticalSns" => "arn:aws:sns:us-east-1:372394388595:OBAWMATA-Monitoring-qa"
                        },
                      "tomcat" => {
-                       "user" => "tomcat7",
-                       "group" => "tomcat7",
-                       "base_version" => "7"
+                       "user" => "tomcat_user",
+                       "group" => "tomcat_group",
+                       "base_version" => "8"
                      },
                      "java" => {
-                       "jdk_version" => "7"
+                       "jdk_version" => "8"
+                     },
+                     "apache" => {
+                        "proxy" => {
+                          "require" => "all granted"
+                        }
                      }
                    })

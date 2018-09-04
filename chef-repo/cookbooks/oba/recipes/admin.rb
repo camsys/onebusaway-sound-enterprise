@@ -1,44 +1,33 @@
 log "Downloading wars"
 
-mvn_admin_version = node[:oba][:mvn][:version_admin]
-mvn_admin_dest_file = "/tmp/war/onebusaway-admin-webapp-#{mvn_admin_version}.war"
-log "maven dependency installed at #{mvn_admin_dest_file}"
-maven "onebusaway-admin-webapp" do
-  group_id "org.onebusaway"
-  dest "/tmp/war"
-  version mvn_admin_version
-  packaging "war"
-  owner "tomcat7"
-  repositories node[:oba][:mvn][:repositories]
-end
+## admin properties
+tomcat_instance_name = node[:oba][:tomcat][:instance_name]
+tomcat_stop_command = "systemctl stop #{tomcat_instance_name}"
+tomcat_start_command = "systemctl start #{tomcat_instance_name}"
 
-mvn_version = node[:oba][:mvn][:version_app]
-mvn_watchdog_dest_file = "/tmp/war/onebusaway-watchdog-webapp-#{mvn_version}.war"
-log "maven dependency installed at #{mvn_watchdog_dest_file}"
-maven "onebusaway-watchdog-webapp" do
-  group_id "org.onebusaway"
-  dest "/tmp/war"
-  version mvn_version
-  packaging "war"
-  owner "tomcat7"
-  repositories node[:oba][:mvn][:repositories]
-end
+tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
+tomcat_cache_dir = "/var/cache/#{tomcat_instance_name}"
 
-#tomcat_lib = '/var/lib/tomcat7/lib'
-#directory tomcat_lib do
-#  owner "tomcat7"
-#  group "tomcat7"
-#  action :create
-#end
+tomcat_webapp_dir = "#{tomcat_home_dir}/webapps"
+tomcat_lib_dir = "#{tomcat_home_dir}/lib"
 
-link "/var/log/tomcat6" do
- to "/var/log/tomcat7"
-end
+## watchdog properties
+tomcat_w_instance_name = "tomcat8-watchdog"
 
+tomcat_w_stop_command = "systemctl stop #{tomcat_w_instance_name}"
+tomcat_w_start_command = "systemctl start #{tomcat_w_instance_name}"
+
+tomcat_w_home_dir = "/var/lib/#{tomcat_w_instance_name}"
+
+tomcat_w_webapp_dir = "/var/lib/#{tomcat_w_instance_name}/webapps"
+tomcat_w_temp_dir = "/var/cache/#{tomcat_w_instance_name}/temp"
+tomcat_w_work_dir = "/var/cache/#{tomcat_w_instance_name}/work"
+
+# setup directories
 ["/var/lib/oba", "/var/lib/oba/bundle","/var/lib/oba/bundles/staged", "/var/lib/oba/bundles/active", "/var/lib/oba/bundles/builder"].each do |path|
   directory path do
-    owner "tomcat7"
-    group "tomcat7"
+    owner node[:tomcat][:user]
+    group node[:tomcat][:group]
     action :create
     recursive true
   end
@@ -53,11 +42,40 @@ end
   end
 end
 
+# get admin from maven
+mvn_admin_version = node[:oba][:mvn][:version_admin]
+mvn_admin_dest_file = "/tmp/war/onebusaway-admin-webapp-#{mvn_admin_version}.war"
+log "maven dependency installed at #{mvn_admin_dest_file}"
+maven "onebusaway-admin-webapp" do
+  group_id node[:oba][:mvn][:group_id]
+  dest "/tmp/war"
+  version mvn_admin_version
+  packaging "war"
+  owner node[:tomcat][:user]
+  repositories node[:oba][:mvn][:repositories]
+end
+
+# get watchdog from maven
+mvn_version = node[:oba][:mvn][:version_app]
+mvn_watchdog_dest_file = "/tmp/war/onebusaway-watchdog-webapp-#{mvn_version}.war"
+log "maven dependency installed at #{mvn_watchdog_dest_file}"
+maven "onebusaway-watchdog-webapp" do
+  group_id node[:oba][:mvn][:group_id]
+  dest "/tmp/war"
+  version mvn_version
+  packaging "war"
+  owner node[:tomcat][:user]
+  repositories node[:oba][:mvn][:repositories]
+end
+
+
+### ADMIN SERVER
+
 # template context.xml adding datasource
-template "/etc/tomcat7/context.xml" do
+template "#{tomcat_home_dir}/conf/context.xml" do
   source "admin/context.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 
@@ -69,7 +87,6 @@ template "/var/lib/oba/config.json" do
 end
 
 # template apache sites-available
-# see https://help.ubuntu.com/10.04/serverguide/httpd.html
 template "/etc/apache2/sites-available/default.conf" do
   source "admin/default.erb"
   owner 'root'
@@ -85,19 +102,18 @@ script "deploy_admin" do
   cwd node[:oba][:home]
   puts "admin version is #{mvn_version}"
   code <<-EOH
-  service tomcat7 stop
-  rm -rf /var/lib/tomcat7/webapps/*
-  rm -rf /var/cache/tomcat7/temp/*
-  rm -rf /var/cache/tomcat7/work/Catalina/localhost/
+  #{tomcat_stop_command}
+  rm -rf #{tomcat_webapp_dir}/*
+  rm -rf #{tomcat_cache_dir}/temp/*
+  rm -rf #{tomcat_cache_dir}/work/Catalina/localhost/
   if [ ! -e /usr/bin/python2.5 ]
   then
     ln -s /usr/bin/python /usr/bin/python2.5
   fi
-  unzip #{mvn_admin_dest_file} -d /var/lib/tomcat7/webapps/ROOT || exit 1
-  rm -f /var/lib/tomcat7/webapps/ROOT/WEB-INF/lib/mysql-connector-java-5.1.17.jar
+  unzip #{mvn_admin_dest_file} -d #{tomcat_webapp_dir}/ROOT || exit 1
+  rm -f #{tomcat_webapp_dir}/ROOT/WEB-INF/lib/mysql-connector-java-5.1.17.jar
   EOH
 end
-
 
 # install tomcat-user support
 script "install_tomcat_user" do
@@ -105,51 +121,63 @@ script "install_tomcat_user" do
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
-  apt-get install -y tomcat7-user
+  apt-get install -y tomcat8-user
   cd /var/lib
-  /usr/bin/tomcat7-instance-create -p 7070 -c 7005 tomcat7-watchdog || exit 1
+  /usr/bin/tomcat8-instance-create -p 7070 -c 7005 #{tomcat_w_instance_name} || exit 1
   # the policy scripts are not created above sadly
-  cp -r /var/lib/tomcat7/conf/policy.d /var/lib/tomcat7-watchdog/conf/
+  cp -r #{tomcat_home_dir}/conf/policy.d #{tomcat_w_home_dir}/conf/
   # bin dir is missing a well
-  cp -r /usr/share/tomcat7 /usr/share/tomcat7-watchdog
-  mkdir -p /var/lib/tomcat7-watchdog/work/Catalina/localhost
-  chown -R tomcat7:tomcat7 tomcat7-watchdog
-
+  cp -r /usr/share/#{tomcat_instance_name} /usr/share/#{tomcat_w_instance_name}
+  mkdir -p #{tomcat_w_home_dir}/work/Catalina/localhost
+  chown -R #{node[:tomcat][:user]}:#{node[:tomcat][:group]} #{tomcat_w_instance_name}
   EOH
-  end unless ::File.exists?("/var/lib/tomcat7-watchdog")
+end unless ::File.exists?("#{tomcat_w_home_dir}")
 
-template "/etc/init.d/tomcat7-watchdog" do
-  source "watchdog/watchdog.init.erb"
-  owner 'root'
-  group 'root'
-  mode '0755'
+
+### WATCH DOG
+
+# install tomcat for watchdog
+tomcat_install tomcat_w_instance_name do
+  install_path "#{tomcat_w_home_dir}"
+  exclude_manager true
+  exclude_hostmanager true
+  tomcat_user node[:tomcat][:user]
+  tomcat_group node[:tomcat][:group]
 end
-template "/etc/default/tomcat7-watchdog" do
-  source "watchdog/tomcat7-watchdog.default.erb"
+
+tomcat_service "#{tomcat_w_instance_name}" do
+  action :start
+  install_path "/var/lib/#{tomcat_w_instance_name}"
+  env_vars [{'CATALINA_HOME' => "#{tomcat_w_home_dir}"},
+            {'CATALINA_OUT' => "#{tomcat_w_home_dir}/logs/catalina.out"},
+	    {'JAVA_OPTS' => "-Xmx3G"}]
+  tomcat_user node[:tomcat][:user]
+  tomcat_group node[:tomcat][:group]
+end
+
+template "/etc/default/#{tomcat_w_instance_name}" do
+  source "watchdog/#{tomcat_w_instance_name}.default.erb"
   owner 'root'
   group 'root'
   mode '0644'
 end
-
-
 
 # template context.xml adding datasource
-template "/var/lib/tomcat7-watchdog/conf/context.xml" do
+template "#{tomcat_w_home_dir}/conf/context.xml" do
   source "admin/context.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
-
 
 script "stop_watchdog" do
   interpreter "bash"
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
-  service tomcat7-watchdog stop
+#{tomcat_w_stop_command}
   EOH
-end unless ::File.exists?("/var/lib/tomcat7-watchdog")
+end unless ::File.exists?("#{tomcat_w_home_dir}")
 
 script "deploy_watchdog" do
   interpreter "bash"
@@ -157,37 +185,41 @@ script "deploy_watchdog" do
   cwd node[:oba][:home]
   puts "watchdog version is #{mvn_version}"
   code <<-EOH
-  rm -rf /var/lib/tomcat7-watchdog/webapps/*
-  rm -rf /var/cache/tomcat7-watchdog/temp/*
-  rm -rf /var/cache/tomcat7-watchdog/work/Catalina/localhost/
-  unzip #{mvn_watchdog_dest_file} -d /var/lib/tomcat7-watchdog/webapps/onebusaway-watchdog-webapp || exit 1
-  sed -i /etc/passwd -e 's!/usr/share/tomcat7:/bin/false!/usr/share/tomcat7:/bin/bash!'
+  rm -rf #{tomcat_w_webapp_dir}/*
+  rm -rf #{tomcat_w_temp_dir}/*
+  rm -rf #{tomcat_w_work_dir}/Catalina/localhost/
+  unzip #{mvn_watchdog_dest_file} -d #{tomcat_w_home_dir}/webapps/onebusaway-watchdog-webapp || exit 1
+  sed -i /etc/passwd -e 's!/usr/share/{tomcat_instance_name}:/bin/false!/usr/share/#{tomcat_instance_name}:/bin/bash!'
   EOH
 end
 
-
-
-
 # template data-sources
-template "/var/lib/tomcat7/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
+template "#{tomcat_webapp_dir}/ROOT/WEB-INF/classes/data-sources.xml" do
   source "admin/data-sources.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
-template "/var/lib/tomcat7-watchdog/webapps/onebusaway-watchdog-webapp/WEB-INF/classes/data-sources.xml" do
+template "#{tomcat_w_webapp_dir}/onebusaway-watchdog-webapp/WEB-INF/classes/data-sources.xml" do
   source "watchdog/data-sources.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 
+# watchdog server config
+template "#{tomcat_w_home_dir}/conf/server.xml" do
+  source "watchdog/server.xml.erb"
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  mode '0644'
+end
 
 # TODO fix build dependency
 %w{mysql-connector-java-5.1.35.jar mail-1.4.jar}.each do |jar_file|
-  cookbook_file ["/usr/share/tomcat7/lib", jar_file].compact.join("/") do
-    owner 'tomcat7'
-    group 'tomcat7'
+  cookbook_file ["#{tomcat_lib_dir}", jar_file].compact.join("/") do
+    owner node[:tomcat][:user]
+    group node[:tomcat][:group]
     source ["admin", jar_file].compact.join("/")
     mode  '0444'
   end
@@ -199,10 +231,10 @@ script "start_tomcats" do
   cwd node[:oba][:home]
   puts "admin version is #{mvn_version}"
   code <<-EOH
-  service tomcat7 start
-  service tomcat7-watchdog start
+  #{tomcat_start_command}
+  #{tomcat_w_start_command}
   # somewhere along the way ROOT owns this dir, fix it
-  sudo chown -R tomcat7:tomcat7 /var/lib/oba/bundles
+  sudo chown -R #{node[:tomcat][:user]}:#{node[:tomcat][:group]} /var/lib/oba/bundles
   EOH
 end
 
@@ -242,7 +274,7 @@ end
 ## synch bundles
 script "sync-bundles-now" do
   interpreter "bash"
-  user "tomcat7"
+  user node[:tomcat][:user]
   cwd node[:oba][:home]
   puts "syncing bundles"
   code <<-EOH
@@ -257,7 +289,7 @@ script "restart watchdog" do
   cwd node[:oba][:home]
   puts "restart watchdog"
   code <<-EOH
-  sudo service tomcat7-watchdog restart
+  #{tomcat_w_stop_command}
+  #{tomcat_w_start_command}
   EOH
 end
-

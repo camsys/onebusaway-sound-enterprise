@@ -6,6 +6,8 @@
         "config":
  [
  {"component": "admin", "key": "apiHostname", "value": "<%= node[:oba][:api_server] %>"},
+ {"component": "admin", "key": "appHostname", "value": "<%= node[:oba][:api_server] %>"},
+ {"component": "admin", "key": "display.useHttps", "value": "true"},
  {"component": "admin", "key": "useTdm", "value": "false"},
  {"component": "admin", "key": "admin.auxSupport", "value": "true"},
  {"component": "admin", "key": "admin.stopConsolidation", "value": "true"},
@@ -27,11 +29,19 @@
  {"component": "admin", "key": "showVehicleStatus", "value": "false"},
  {"component": "admin", "key": "showUpdateConfig", "value": "false"},
  {"component": "admin", "key": "showQrCode", "value": "true"},
+ {"component": "admin", "key": "showTweet", "value": "false"},
+ {"component": "admin", "key": "showEverbridge", "value": "false"},
  {"component": "admin", "key": "showVehiclePredictions", "value": "false"},
  {"component": "admin", "key": "manageServiceAlerts", "value": "true"},
  {"component": "admin", "key": "validateTransitDataBundle", "value": "true"},
  {"component": "admin", "key": "no_default_agency", "value": "true"},
  {"component": "admin", "key": "1_modurl", "value": "https://raw.github.com/wiki/camsys/onebusaway-application-modules/EmptyModifications.md"},
+   {
+     "component": "display",
+     "key": "display.serviceAlertText",
+     "value": "Service Advisory"
+   },
+ {"component": "display", "key": "display.showBlockIdInVehiclePopup", "value": "true"},
       {
          "component":"admin",
          "key":"apiStaging",
@@ -67,10 +77,15 @@
         "key": "transitimeUrl",
         "value": "/web/reports/index.jsp?a=1"
       },
-  	  {
+      {
          "component":"agency",
          "key":"1",
          "value":"DC,2;MET,1"
+      },
+      {
+         "component":"agency",
+         "key":"45",
+         "value":"45,45"
       },
       {  
          "component":"aws",
@@ -221,7 +236,7 @@
         "key": "ROLE_REPORTING",
         "value": "org.onebusaway.webapp.actions.admin.ReportsAction,org.onebusaway.webapp.actions.admin.usermanagement.UpdatePasswordAction"
       },
-      {"component": "admin", "key": "forgot.password.email.body", "value": "To access the OneBusAway admin pages:\n\n\t• Go to https://admin.prod.wmata.obaweb.org/\n\t• Enter your wmata.com email address in the Username field, then click the “Login” button\n\t• Enter this password: @PASSWORD@\n\t• Click the 'Login' button\n\t• Enter your new password in the 'New Password' and 'Confirm Password' fields\n\t• Click 'Submit'\n\t• Click the 'Go to index page'\n"},
+      {"component": "admin", "key": "forgot.password.email.body", "value": "To access the OneBusAway admin pages:\n\n\t• Go to https://admin.prod.wmata.obaweb.org/\n\t• Enter your wmata.com email address in the Username field\n\t• Enter this password: @PASSWORD@ in the Password field\n\t• Click the 'Login' button\n\t• Enter a new password in the 'New Password' and 'Confirm Password' fields\n\t• Click 'Submit'\n"},
       {
         "component": "vehiclepredictions",
         "key": "obaUrl",

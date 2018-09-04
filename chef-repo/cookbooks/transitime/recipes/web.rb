@@ -1,7 +1,12 @@
-log "Downloading wars"
+tomcat_instance_name = node[:oba][:tomcat][:instance_name]
+tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
+tomcat_start_command = "systemctl start #{tomcat_instance_name}"
+tomcat_restart_command = "systemctl restart #{tomcat_instance_name}"
+
 
 # we need to embedd the db password in the tomcat config
-node.override["tomcat"]["java_options"] = "-Xmx6G -Xms1G -XX:MaxPermSize=256m -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Dtransitime.rmi.timeoutSec=300 -Dtransitime.db.encryptionPassword='#{node["transitime"]["encryptionPassword"]}' -Dtransitime.reports.showPredictionSource=false -Dlogback.timezone=America/New_York -Dtransitime.logging.dir=/var/log/tomcat6  -Dtransitime.api.gtfsRtCacheSeconds=10 -Dlogback.configurationFile=/var/lib/tomcat7/webapps/api/WEB-INF/classes/logbackTomcat.xml"
+node.override["tomcat"]["java_options"] = "-Xmx6G -Xms1G -XX:MaxPermSize=256m -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Dtransitime.rmi.timeoutSec=300 -Dtransitime.db.encryptionPassword='#{node["transitime"]["encryptionPassword"]}' -Dtransitime.reports.showPredictionSource=false -Dlogback.timezone=America/New_York -Dtransitime.logging.dir=/var/log/tomcat6  -Dtransitime.api.gtfsRtCacheSeconds=10 -Dlogback.configurationFile=#{tomcat_home_dir}/webapps/api/WEB-INF/classes/logbackTomcat.xml"
+log "Downloading wars"
 
 mvn_version = node[:oba][:mvn][:version_transitime_web]
 mvn_web_dest_file = "/tmp/chef/transitimeWebapp-#{mvn_version}.war"
@@ -11,7 +16,8 @@ maven "transitimeWebapp" do
   dest "/tmp/chef"
   version mvn_version
   packaging "war"
-  owner "tomcat7"
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   repositories node[:oba][:mvn][:repositories]
 end
 
@@ -22,58 +28,37 @@ maven "transitimeApi" do
   dest "/tmp/chef"
   version mvn_version
   packaging "war"
-  owner "tomcat7"
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   repositories node[:oba][:mvn][:repositories]
 end
 
-tomcat_lib = '/var/lib/tomcat7/lib'
+tomcat_lib = "#{tomcat_home_dir}/lib"
 directory tomcat_lib do
-  owner "tomcat7"
-  group "tomcat7"
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   action :create
 end
 
 # template context.xml adding datasource
-template "/var/lib/tomcat7/conf/context.xml" do
+template "#{tomcat_home_dir}/conf/context.xml" do
   source "web/context.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 
 directory "/var/lib/oba/transitime/web" do
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   action :create
   recursive true
 end
 
-# keep the old logging directory around
-link "/var/log/tomcat6" do
- to "/var/log/tomcat7"
-end
-
-
-# template transitime ocnfiguration
-# template "/var/lib/oba/transitime/web/transitimeConfig.xml" do
-#   source "web/transitimeConfig.xml.erb"
-#   owner 'tomcat7'
-#   group 'tomcat7'
-#   mode '0644'
-# end
-# # template transitime ocnfiguration
-# template "/var/lib/oba/transitime/web/mysql_hibernate.cfg.xml" do
-#   source "web/mysql_hibernate.cfg.xml.erb"
-#   owner 'tomcat7'
-#   group 'tomcat7'
-#   mode '0644'
-# end
-
-
 %w{logback-classic-1.1.2.jar logback-core-1.1.2.jar slf4j-api-1.7.2.jar}.each do |jar_file|
-  cookbook_file ["/usr/share/tomcat7/lib", jar_file].compact.join("/") do
-    owner 'tomcat7'
-    group 'tomcat7'
+  cookbook_file ["#{tomcat_home_dir}/lib", jar_file].compact.join("/") do
+    owner node[:tomcat][:user]
+    group node[:tomcat][:group]
     source jar_file
     mode  '0444'
   end
@@ -83,40 +68,40 @@ script "deploy_web_pre" do
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
-  sudo service tomcat7 stop
-  sudo rm -rf /var/lib/tomcat7/webapps/*
-  sudo unzip #{mvn_web_dest_file} -d /var/lib/tomcat7/webapps/web || exit 1
-  sudo unzip #{mvn_api_dest_file} -d /var/lib/tomcat7/webapps/api || exit 1
-  sudo rm -f /var/lib/tomcat7/webapps/web/WEB-INF/classes/transiTimeConfig.xml
-  sudo rm -f /var/lib/tomcat7/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml
+  sudo service #{tomcat_instance_name} stop
+  sudo rm -rf #{tomcat_home_dir}/webapps/*
+  sudo unzip #{mvn_web_dest_file} -d #{tomcat_home_dir}/webapps/web || exit 1
+  sudo unzip #{mvn_api_dest_file} -d /#{tomcat_home_dir}/webapps/api || exit 1
+  sudo rm -f #{tomcat_home_dir}/webapps/web/WEB-INF/classes/transiTimeConfig.xml
+  sudo rm -f #{tomcat_home_dir}/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml
 EOH
 end
 
 # NOTE: this does not appear to be read!
-template "/var/lib/tomcat7/webapps/web/WEB-INF/classes/transiTimeConfig.xml" do
+template "#{tomcat_home_dir}/webapps/web/WEB-INF/classes/transiTimeConfig.xml" do
   source "web/transitimeConfig.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 # template transitime configuration
-template "/var/lib/tomcat7/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml" do
+template "#{tomcat_home_dir}/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml" do
   source "web/mysql_hibernate.cfg.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
-template "/var/lib/tomcat7/webapps/api/WEB-INF/classes/transiTimeConfig.xml" do
+template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/transiTimeConfig.xml" do
   source "web/transitimeConfig.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 # template transitime configuration
-template "/var/lib/tomcat7/webapps/api/WEB-INF/classes/mysql_hibernate.cfg.xml" do
+template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/mysql_hibernate.cfg.xml" do
   source "web/mysql_hibernate.cfg.xml.erb"
-  owner 'tomcat7'
-  group 'tomcat7'
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
   mode '0644'
 end
 
@@ -125,7 +110,7 @@ script "deploy_web_post" do
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
-  sudo service tomcat7 start
+  #{tomcat_start_command}
 EOH
 end
 
@@ -138,6 +123,6 @@ directory '/var/lib/oba/monitoring' do
 end
 
 cron "check-tomcat-size" do
-  command '[ "`ps -o rss -u tomcat7 --no-headers`" -gt 5068924 ] && /usr/sbin/service tomcat7 restart'
+  command "[ '`ps -o rss -u #{tomcat_instance_name} --no-headers`' -gt 5068924 ] && #{tomcat_restart_command}"
   user "root"
 end
