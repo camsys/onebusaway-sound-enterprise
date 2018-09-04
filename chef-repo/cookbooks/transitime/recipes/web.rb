@@ -5,7 +5,7 @@ tomcat_restart_command = "systemctl restart #{tomcat_instance_name}"
 
 
 # we need to embedd the db password in the tomcat config
-node.override["tomcat"]["java_options"] = "-Xmx6G -Xms1G -XX:MaxPermSize=256m -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Dtransitime.rmi.timeoutSec=300 -Dtransitime.db.encryptionPassword='#{node["transitime"]["encryptionPassword"]}' -Dtransitime.reports.showPredictionSource=false -Dlogback.timezone=America/New_York -Dtransitime.logging.dir=/var/log/tomcat6  -Dtransitime.api.gtfsRtCacheSeconds=10 -Dlogback.configurationFile=#{tomcat_home_dir}/webapps/api/WEB-INF/classes/logbackTomcat.xml"
+node.override["tomcat"]["java_options"] = "-Xmx6G -Xms1G -XX:MaxPermSize=256m -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Dtransitime.rmi.timeoutSec=300 -Dtransitime.db.encryptionPassword='#{node["transitime"]["encryptionPassword"]}' -Dtransitime.reports.showPredictionSource=false -Dlogback.timezone=America/New_York -Dtransitime.logging.dir=/var/log/tomcat6  -Dtransitime.api.gtfsRtCacheSeconds=10 -Dlogback.configurationFile=/var/lib/tomcat8/webapps/api/WEB-INF/classes/logbackTomcat.xml"
 log "Downloading wars"
 
 mvn_version = node[:oba][:mvn][:version_transitime_web]
