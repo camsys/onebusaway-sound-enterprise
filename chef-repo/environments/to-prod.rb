@@ -57,7 +57,7 @@ default_attributes({
                          "snsKey" => "",
                          "snsSecret" => "",
                          "snsArn" => "",
-                         "retentionDays" => "90"
+                         "retentionDays" => "90",
                          "xsqsUrl" => "https://sqs.us-east-1.amazonaws.com/443046490497/obawmata_prod",
                          "xsqsKey" => "AKIAIAFMZDHCK3F55EIA",
                          "xsqsSecret" => "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",
