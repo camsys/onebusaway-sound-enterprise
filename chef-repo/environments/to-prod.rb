@@ -81,10 +81,10 @@ default_attributes({
                      "java" => {
                        "jdk_version" => "8"
                      },
-                   },
                      "apache" => {
                         "proxy" => {
                           "require" => "all granted"
                         }
                      }
+		}
 )
