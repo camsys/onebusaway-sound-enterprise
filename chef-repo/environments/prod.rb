@@ -7,12 +7,12 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "1.1.15.38.1-cs",
-                           "version_core" => "1.1.15.38.6-cs",
-                           "version_app" => "1.1.15.38.6-cs",
-                           "version_branded" => "1.1.15.38.6-cs",
-                           "version_transitime_core" => "0.0.31",
-                           "version_transitime_web" => "0.0.31",
+                           "version_admin" => "2.0.1-cs",
+                           "version_core" => "2.0.1-cs",
+                           "version_app" => "2.0.1-cs",
+                           "version_branded" => "2.0.1-cs",
+                           "version_transitime_core" => "0.0.35",
+                           "version_transitime_web" => "0.0.35",
                            "repositories" => ["http://repo.prod.wmata.obaweb.org:8080/archiva/repository/releases/"]
                        },
                        "db_instance" => "db",
@@ -34,6 +34,15 @@ default_attributes({
                        },
                        "webapp" => {
                          "artifact" => "onebusaway-enterprise-wmata-webapp"
+                       },
+			"wmata_webapp" => {
+                          "artifact" => "onebusaway-enterprise-wmata-webapp"
+                       },
+                       "hart_webapp" => {
+                          "artifact" => "onebusaway-enterprise-hart-webapp"
+                       },
+                       "sound_webapp" => {
+                          "artifact" => "onebusaway-enterprise-sound-webapp"
                        },
                        "ses_host" => "email-smtp.us-east-1.amazonaws.com",
                        "ses_user" => "AKIAISKUXW2UHBZRHHNA",
@@ -66,12 +75,19 @@ default_attributes({
                         "alarmCriticalSns" => "arn:aws:sns:us-east-1:443046490497:OBAWMATA-Alarm-prod",
                         "alarmNonCriticalSns" => "arn:aws:sns:us-east-1:443046490497:OBAWMATA-Monitoring-prod"
                        },
-                     "tomcat" => {
-                       "user" => "tomcat7",
-                       "group" => "tomcat7",
-                       "base_version" => "7"
+		      "tomcat" => {
+                       "user" => "tomcat_user",
+                       "group" => "tomcat_group",
+                       "base_version" => "8"
                      },
                      "java" => {
-                       "jdk_version" => "7"
+                       "jdk_version" => "8"
+                     },
+                     "apache" => {
+                        "proxy" => {
+                          "require" => "all granted"
+                        }
                      }
-                   })
+                }
+)
+
