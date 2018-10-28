@@ -22,8 +22,8 @@ provides :tomcat_service, os: 'linux'
 
 property :instance_name, String, name_property: true
 property :install_path, String
-property :tomcat_user, String, default: lazy { |r| "#{r.instance_name}" }
-property :tomcat_group, String, default: lazy { |r| "#{r.instance_name}" }
+property :tomcat_user, String, default: lazy { |r| "tomcat_#{r.instance_name}" }
+property :tomcat_group, String, default: lazy { |r| "tomcat_#{r.instance_name}" }
 property :env_vars, Array, default: [
   { 'CATALINA_PID' => '$CATALINA_BASE/bin/tomcat.pid' },
 ]
@@ -31,7 +31,7 @@ property :env_vars, Array, default: [
 action :start do
   create_init
 
-  service "#{new_resource.instance_name}" do
+  service "tomcat_#{new_resource.instance_name}" do
     provider platform_sysv_init_class
     supports restart: true, status: true
     action :start
@@ -39,16 +39,16 @@ action :start do
 end
 
 action :stop do
-  service "#{new_resource.instance_name}" do
+  service "tomcat_#{new_resource.instance_name}" do
     provider platform_sysv_init_class
     supports status: true
     action :stop
-    only_if { ::File.exist?("/etc/init.d/#{new_resource.instance_name}") }
+    only_if { ::File.exist?("/etc/init.d/tomcat_#{new_resource.instance_name}") }
   end
 end
 
 action :restart do
-  service "#{new_resource.instance_name}" do
+  service "tomcat_#{new_resource.instance_name}" do
     provider platform_sysv_init_class
     supports status: true
     action :restart
@@ -58,20 +58,20 @@ end
 action :enable do
   create_init
 
-  service "#{new_resource.instance_name}" do
+  service "tomcat_#{new_resource.instance_name}" do
     provider platform_sysv_init_class
     supports status: true
     action :enable
-    only_if { ::File.exist?("/etc/init.d/#{new_resource.instance_name}") }
+    only_if { ::File.exist?("/etc/init.d/tomcat_#{new_resource.instance_name}") }
   end
 end
 
 action :disable do
-  service "#{new_resource.instance_name}" do
+  service "tomcat_#{new_resource.instance_name}" do
     provider platform_sysv_init_class
     supports status: true
     action :disable
-    only_if { ::File.exist?("/etc/init.d/#{new_resource.instance_name}") }
+    only_if { ::File.exist?("/etc/init.d/tomcat_#{new_resource.instance_name}") }
   end
 end
 
@@ -103,13 +103,13 @@ action_class do
       mode '0755'
       cookbook 'tomcat'
       sensitive new_resource.sensitive
-      notifies :restart, "service[#{new_resource.instance_name}]"
+      notifies :restart, "service[tomcat_#{new_resource.instance_name}]"
       variables(
         env_vars: envs_with_catalina_base
       )
     end
 
-    template "/etc/init.d/#{new_resource.instance_name}" do
+    template "/etc/init.d/tomcat_#{new_resource.instance_name}" do
       mode '0755'
       source 'init_sysv.erb'
       cookbook 'tomcat'
