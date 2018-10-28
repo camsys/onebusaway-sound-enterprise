@@ -88,7 +88,8 @@ default_attributes({
                      "tomcat" => {
                        "user" => "tomcat_user",
                        "group" => "tomcat_group",
-                       "base_version" => "8"
+                       "base_version" => "8",
+		       "version" => "8.0.53"
                      },
                      "java" => {
                        "jdk_version" => "8"
