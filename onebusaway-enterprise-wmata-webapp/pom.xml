@@ -271,7 +271,7 @@
 				</plugin>
 				<plugin>
 					<groupId>com.mycila</groupId>
-					<artifactId>license-plugin</artifactId>
+					<artifactId>license-maven-plugin</artifactId>
 					<configuration>
 						<excludes combine.children="append">
 							<exclude>**/onebusaway/enterprise/webapp/**</exclude>
