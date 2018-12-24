@@ -1,0 +1,21 @@
+#!/bin/bash -x
+
+report_error() {
+  aws ses send-raw-email --raw-message "{ \"Data\": \"From: no.reply.onebusaway@gmail.com\nTo: sbrown@camsys.com\nSuject: PROD FAIL: $1\"}"
+  exit 1
+}
+
+if ! [ -x "$(command -v aws)" ]
+then 
+  apt-get install python-pip -y
+  pip install awscli --upgrade --user
+  apt-get install awscli -y
+fi
+
+/bin/mount /dev/xvdf /var/lib/oba || report_error "mount failed"
+/sbin/swapon /var/lib/oba/swapfile2 || report_error "swapon failed"
+/usr/sbin/service tomcat7 stop
+/usr/sbin/service tomcat7-watchdog stop
+sudo -u ubuntu /var/lib/oba/transitime/processGTFS/update_from_staged.sh  || report_error "update failed"
+sleep 600
+/sbin/shutdown -h now
