@@ -1,7 +1,10 @@
 #!/bin/bash -x
 
 report_error() {
-  aws ses send-raw-email --raw-message "{ \"Data\": \"From: no.reply.onebusaway@gmail.com\nTo: sbrown@camsys.com\nSuject: PROD FAIL: $1\"}"
+ aws ses send-email \
+--from no.reply.onebusaway@gmail.com \
+--destination "{ \"ToAddresses\": [\"sbrown@camsys.com\"], \"CcAddresses\": [], \"BccAddresses\": []}" \
+--message "{ \"Subject\": { \"Data\": \"PROD FAIL: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Prod Error\"}}}"
   exit 1
 }
 
