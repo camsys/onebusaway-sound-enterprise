@@ -14,8 +14,8 @@ tomcat_lib_dir = "#{tomcat_home_dir}/lib"
 ## watchdog properties
 tomcat_w_instance_name = "tomcat8-watchdog"
 
-tomcat_w_stop_command = "systemctl stop #{tomcat_w_instance_name}"
-tomcat_w_start_command = "systemctl start #{tomcat_w_instance_name}"
+tomcat_w_stop_command = "systemctl stop tomcat_watchdog"
+tomcat_w_start_command = "systemctl start tomcat_watchdog"
 
 tomcat_w_home_dir = "/var/lib/#{tomcat_w_instance_name}"
 
