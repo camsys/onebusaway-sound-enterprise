@@ -137,7 +137,7 @@ end unless ::File.exists?("#{tomcat_w_home_dir}")
 ### WATCH DOG
 
 # install tomcat for watchdog
-tomcat_install tomcat_w_instance_name do
+tomcat_install "watchdog" do
   install_path "#{tomcat_w_home_dir}"
   exclude_manager true
   exclude_hostmanager true
@@ -145,7 +145,7 @@ tomcat_install tomcat_w_instance_name do
   tomcat_group node[:tomcat][:group]
 end
 
-tomcat_service "#{tomcat_w_instance_name}" do
+tomcat_service "watchdog" do
   action :start
   install_path "/var/lib/#{tomcat_w_instance_name}"
   env_vars [{'CATALINA_HOME' => "#{tomcat_w_home_dir}"},
@@ -155,7 +155,7 @@ tomcat_service "#{tomcat_w_instance_name}" do
   tomcat_group node[:tomcat][:group]
 end
 
-template "/etc/default/#{tomcat_w_instance_name}" do
+template "/etc/default/watchdog" do
   source "watchdog/#{tomcat_w_instance_name}.default.erb"
   owner 'root'
   group 'root'
