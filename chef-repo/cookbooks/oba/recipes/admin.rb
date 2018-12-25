@@ -121,15 +121,15 @@ script "install_tomcat_user" do
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
-  apt-get install -y tomcat8-user
-  cd /var/lib
-  /usr/bin/tomcat8-instance-create -p 7070 -c 7005 #{tomcat_w_instance_name} || exit 1
+  #apt-get install -y tomcat8-user
+  #cd /var/lib
+  #/usr/bin/tomcat8-instance-create -p 7070 -c 7005 #{tomcat_w_instance_name} || exit 1
   # the policy scripts are not created above sadly
-  cp -r #{tomcat_home_dir}/conf/policy.d #{tomcat_w_home_dir}/conf/
+  #cp -r #{tomcat_home_dir}/conf/policy.d #{tomcat_w_home_dir}/conf/
   # bin dir is missing a well
-  cp -r /usr/share/#{tomcat_instance_name} /usr/share/#{tomcat_w_instance_name}
-  mkdir -p #{tomcat_w_home_dir}/work/Catalina/localhost
-  chown -R #{node[:tomcat][:user]}:#{node[:tomcat][:group]} #{tomcat_w_instance_name}
+  #cp -r /usr/share/#{tomcat_instance_name} /usr/share/#{tomcat_w_instance_name}
+  #mkdir -p #{tomcat_w_home_dir}/work/Catalina/localhost
+  #chown -R #{node[:tomcat][:user]}:#{node[:tomcat][:group]} #{tomcat_w_instance_name}
   EOH
 end unless ::File.exists?("#{tomcat_w_home_dir}")
 
