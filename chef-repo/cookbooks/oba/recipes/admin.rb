@@ -174,6 +174,7 @@ script "stop_watchdog" do
   interpreter "bash"
   user "root"
   cwd node[:oba][:home]
+  ignore_failure true
   code <<-EOH
 #{tomcat_w_stop_command}
   EOH
