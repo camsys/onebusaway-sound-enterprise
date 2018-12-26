@@ -1,21 +1,22 @@
 #!/bin/bash -x
 
 report_error() {
- aws ses send-email \
+  aws ses send-email \
 --from no.reply.onebusaway@gmail.com \
 --destination "{ \"ToAddresses\": [\"sbrown@camsys.com\"], \"CcAddresses\": [], \"BccAddresses\": []}" \
---message "{ \"Subject\": { \"Data\": \"PROD FAIL: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Prod Error\"}}}"
+--message "{ \"Subject\": { \"Data\": \"PROD FAIL: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"prod Error: $1\"}}}"
+  echo "issue $1"
   exit 1
 }
 
 if ! [ -x "$(command -v aws)" ]
-then 
+then
   apt-get install python-pip -y
   pip install awscli --upgrade --user
   apt-get install awscli -y
 fi
 
-/bin/mount /dev/xvdf /var/lib/oba || report_error "mount failed"
+mount /dev/xvdf /var/lib/oba || report_error "mount failed"
 /sbin/swapon /var/lib/oba/swapfile2 || report_error "swapon failed"
 /usr/sbin/service tomcat7 stop
 /usr/sbin/service tomcat7-watchdog stop

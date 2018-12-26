@@ -4,10 +4,10 @@ PORT="80"
 BUNDLE_DIR=/var/lib/oba/transitime
 
 report_error() {
- aws ses send-email \
+  aws ses send-email \
 --from no.reply.onebusaway@gmail.com \
 --destination "{ \"ToAddresses\": [\"sbrown@camsys.com\"], \"CcAddresses\": [], \"BccAddresses\": []}" \
---message "{ \"Subject\": { \"Data\": \"PROD FAIL: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Prod Error\"}}}"
+--message "{ \"Subject\": { \"Data\": \"PROD FAIL: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Prod Error: $1\"}}}"
   exit 1
 }
 
@@ -19,6 +19,7 @@ fi
 if [ -d $BUNDLE_DIR/gtfs ]
 then
   echo "Directory exists!  exiting!"
+  report_error "$BUNDLE_DIR exists!"
   exit -1
 fi
 
@@ -32,8 +33,8 @@ echo "Latest graph: name=$name id=$id dataset=$dataset"
 
 # if this is a new dataset:
 if [ ! -d "$name" ]; then
-        
-	mkdir -p $name
+
+        mkdir -p $name
         cd "$name"
 
         # generate list of urls
@@ -42,34 +43,32 @@ if [ ! -d "$name" ]; then
         tr -d '[]"' | \
         tr ',' '\n' | \
         grep '/final/' | \
-	grep '\.zip' | \
-	grep '1_' | \
+        grep '\.zip' | \
+        grep '1_' | \
         sed -e "s,^,http://${SERVER}:${PORT}/api/bundle/archive/get-by-name/${dataset}/${name}/," | \
         wget -i - || report_error "download failed $dataset/$name"
         echo "Download complete"
         ln -s $BUNDLE_DIR/$name $BUNDLE_DIR/gtfs || report_error "soft link failed"
-	cd $BUNDLE_DIR/gtfs
-	unzip *.zip || report_error "unzip of gtfs failed"
-	cd $BUNDLE_DIR/processGTFS
-	./processGTFS.sh || report_error "processGTFS failed $?"
+        cd $BUNDLE_DIR/gtfs || report_error "cd failed to $BUNDLE_DIR/gtfs"
+        unzip *.zip || report_error "unzip of gtfs failed"
+        cd $BUNDLE_DIR/processGTFS || report_error "cd failed to $BUNDLE_DIR/processGTFS"
+        ./processGTFS.sh || report_error "processGTFS failed $?"
         echo "shutting down!"
         YEAR=`date +"%Y"`
         MONTH=`date +"%m"`
         DAY=`date +"%d"`
-        aws ses send-email \
-        --from no.reply.onebusaway@gmail.com \
+  aws ses send-email \
+--from no.reply.onebusaway@gmail.com \
 --destination "{ \"ToAddresses\": [\"sbrown@camsys.com\"], \"CcAddresses\": [], \"BccAddresses\": []}" \
---message "{ \"Subject\": { \"Data\": \"PROD Build Success\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Prod Build Complete: $(tail 1/core/$YEAR/$MONTH/$DAY/core.log | tr -d '\n')\"}}}"
-
-
+--message "{ \"Subject\": { \"Data\": \"PROD Build Complete\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Prod Build Complete: $(tail -n 80 1/core/$YEAR/$MONTH/$DAY/core.log | tr -d '\n')\"}}}" || report_error "complete but failure sending email"
 
 else
         echo "Graph dir $name already exists!"
-	report_error "Graph dir $name already exists!"
-	exit 1
+        report_error "Graph dir $name already exists!"
 fi
 
 
 
 echo
+exit 0
 
