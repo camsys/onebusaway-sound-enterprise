@@ -76,7 +76,7 @@ execute "tomcat_permissions" do
 end
 
 tomcat_service "#{tomcat_instance_name}" do
-  action :start
+  action [:enable]
   install_path "#{tomcat_home_dir}"
   env_vars [{'CATALINA_HOME' => "#{tomcat_home_dir}"},
             {'CATALINA_OUT' => "#{tomcat_log_dir}/catalina.out"},
