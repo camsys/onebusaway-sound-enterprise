@@ -146,7 +146,7 @@ tomcat_install "watchdog" do
 end
 
 tomcat_service "watchdog" do
-  action :start
+  action :enable
   install_path "/var/lib/#{tomcat_w_instance_name}"
   env_vars [{'CATALINA_HOME' => "#{tomcat_w_home_dir}"},
             {'CATALINA_OUT' => "#{tomcat_w_home_dir}/logs/catalina.out"},
