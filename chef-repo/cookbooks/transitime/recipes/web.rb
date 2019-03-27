@@ -46,12 +46,13 @@ template "#{tomcat_home_dir}/conf/context.xml" do
   mode '0644'
 end
 
-directory "/var/lib/oba/transitime/web" do
+directory "/var/lib/oba/transitime/web/config" do
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   action :create
   recursive true
 end
+
 
 %w{logback-classic-1.1.2.jar logback-core-1.1.2.jar slf4j-api-1.7.2.jar}.each do |jar_file|
   cookbook_file ["#{tomcat_home_dir}/lib", jar_file].compact.join("/") do
@@ -75,13 +76,14 @@ script "deploy_web_pre" do
 EOH
 end
 
-# NOTE: this does not appear to be read!
-template "#{tomcat_home_dir}/webapps/web/WEB-INF/classes/transiTimeConfig.xml" do
+
+template "/var/lib/oba/transitime/web/config/transiTimeConfig.xml" do
   source "web/transitimeConfig.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
 end
+
 # template transitime configuration
 template "#{tomcat_home_dir}/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml" do
   source "web/mysql_hibernate.cfg.xml.erb"
