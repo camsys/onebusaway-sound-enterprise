@@ -1,18 +1,14 @@
-name "transitime-shuttle-gtfs"
-description "gtfs update server for shuttles"
+name "transitime-web"
+description "transitime web server"
 run_list(
     "role[base]",
-    "recipe[transitime::shuttle_gtfs]"
+    "recipe[tomcat]",
+    "recipe[transitime::shuttle_web_tomcat]",
+    "recipe[transitime::tomcat_install]",
+    "recipe[transitime::shuttle_web]"
 )
-
 override_attributes(
     :tz => 'America/New_York',
-    :maven => {
-        :m2_home => '/var/lib/maven'
-    },
-    :tomcat => {
-        :java_options => '-Xmx2G -Xms512m -XX:MaxPermSize=256m -Djava.awt.headless=true -XX:+UseConcMarkSweepGC'
-    },
     :cw_mon => {
         :version => '1.2.1',
         :cron_min_freq => '3',

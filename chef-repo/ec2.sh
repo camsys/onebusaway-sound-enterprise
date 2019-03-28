@@ -1,5 +1,6 @@
 #!/bin/bash 
 ssh -i ~/.ec2/obawmata_dev.pem ubuntu@$1 -n "\
+sudo apt-get update && sudo apt-get upgrade -y && \
 curl -L https://omnitruck.chef.io/install.sh | sudo bash -s -- -v 12.9.41 && \
 echo 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDhQInDiVu/Q8EnbdShXTkU8qjUhPD18YHSKCRCohO2KJO89TQKKWiG2lL2SSoxL+Ago5sntdFKefSIzIYTGE2p6zfWB21F8m/6+mcPqZvyF2sshbxOYi3l1DrWCnNPSq+nEWWvZr0rJdwP1jLgm4AUMNEz+y0XxMLUq7iftTIYzuW5//jqAya3OSKxQA2xkDT++FGrq3gu4jneS2eIcDOojoB3dYzq2CxMJve0QwFUt2RYlWXRdDHvGevZMosNhu4X653xz5owMzXJtLq2y/wBekrIURDOotbUcEykStYBRXTpUjCavQuikVSha4ydeRZSFndHy5pdYhK5mEEwyP3zXlCsnXE1YdZonNWTrDKGVAepYV/BnCX/yniWJVn8pVM55pSggZS8j18Cq9LVm/qOy125TyNBUvmkhGdZmcN2DEyMzkMELe0DYE2nGRizOBiwIkdR3B6jCIcscP0cwY/guGzyxSLkKy9UXK5VL2cpddSU+nZp09shpFxT4JWZ/1/ZZxWn0O26BaB6uJhqdNgEphFslNbTvKaFQVLECoCyRYsu3ov9nZaPPWp2r6SYRTvbPOLg2b9U9wK2CCtWIWx+6cskcVvi8khLI1mRXLCW0GQTYUyDw1QkdeD8Xh0RiiaIP32TQ9CmoE2sdnGeJnk6nMfjkP/VYHOwNg2mSFegzw== sheldonb@gmail.com'>.ssh/id_rsa.pub && \
 echo '-----BEGIN RSA PRIVATE KEY-----
