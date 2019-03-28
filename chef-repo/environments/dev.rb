@@ -56,7 +56,7 @@ default_attributes({
                        "ses_from" => "btss@wmata.com",
                        "mobile_require_ssl" => "true",
                        "tomcat" => {
-                           "instance_name" => "tomcat8"
+                           "instance_name" => "tomcat_tomcat8"
                        }
                      },
                      "transitime" => {
