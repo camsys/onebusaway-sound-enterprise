@@ -86,7 +86,7 @@ default_attributes({
                          "dbtype" => "mysql",
                          "dbusername" => "shuttle",
                          "dbpassword" => "changeme",
-                         "dbname" => "shuttle",
+                         "dbname" => "dash_transitime",
                          "agency" => "71",
                          "api_key" => "4b248c1b",
                          "encryptionPassword" => "SET THIS!",
