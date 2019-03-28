@@ -67,10 +67,10 @@
       jdbc:mysql://<%= node[:shuttle][:dbrohost] %>/<%= node[:shuttle][:dbname] %>?autoReconnect=true
    </property>
    <property name="hibernate.connection.username">
-      <%= node[:transitime][:dbusername] %>
+      <%= node[:shuttle][:dbusername] %>
    </property>
    <property name="hibernate.connection.password">
-      <%= node[:transitime][:dbpassword] %>
+      <%= node[:shuttle][:dbpassword] %>
    </property>
 
 
