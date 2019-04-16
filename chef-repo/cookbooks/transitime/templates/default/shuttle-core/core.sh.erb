@@ -6,6 +6,8 @@ java \
   -Xmx4g \
   -Xms1g \
   -Dtransitime.avl.csv.url="http://tracker.prod.dash.obaweb.org:8080/events/data.csv?a=dash&u=dash&p=api_password&g=dash_shuttle&tmz=US/Eastern&l=1" \
+  -Dtransitime.externalAssignerEnabled=true \
+  -Dtransitime.externalAssignerUrl="http://admin.<%= node[:shuttle][:env] %>.wmata.obaweb.org/api/vehicle-assign/get/csv" \
   -Dtransitime.autoBlockAssigner.autoAssignerEnabled=true \
   -Dtransitime.core.allowableLateSecondsForInitialMatching=2700 \
   -Dtransitime.core.agencyId=<%= node[:shuttle][:agency] %> \
@@ -21,7 +23,7 @@ java \
   -Dtransitime.blockLoading.agressive=true \
   -Dtransitime.avl.numThreads=1 \
   -Dtransitime.avl.maxSpeed=45 \
-  -Dtransitime.environmentName=<%= node["shuttle"]["env"] %> \
+  -Dtransitime.environmentName=<%= node["oba"]["env"] %> \
   -Dtransitime.cloudwatch.awsAccessKey='<%= node["aws"]["cloudwatch_publish_key"] %>' \
   -Dtransitime.cloudwatch.awsSecretKey='<%= node["aws"]["cloudwatch_publish_secret"] %>' \
   -Dtransitime.cloudwatch.awsEndpoint='<%= node["aws"]["cloudwatch_endpoint"] %>' \
