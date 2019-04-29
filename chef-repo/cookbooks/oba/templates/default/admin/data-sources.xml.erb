@@ -271,8 +271,24 @@
                 <property name="jobDetail" ref="pingJob" />
                 <property name="cronExpression" value="0 * * * * ?" /><!--  every minute -->
         </bean>
+    
+       <bean name="resetJob" class="org.springframework.scheduling.quartz.JobDetailFactoryBean">
+        <property name="jobClass" value="org.onebusaway.admin.job.ResetVehicleAssignmentsJob" />
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="assignmentDao" value-ref="assignmentDaoImpl"/>
+            </map>
+        </property>
+        <property name="durability" value="true" />
+       </bean>
+
+    <!-- quartz scheduling for ResetVehicleAssignmentsJob -->
+    <bean id="resetTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="resetJob" />
+        <property name="cronExpression" value="0 3 * * * ?" /><!--  03:00 every day -->
+    </bean>
         
-        <bean id="gsonTool" class="org.onebusaway.json.LowerCaseWDashesGsonJsonTool">
+  <bean id="gsonTool" class="org.onebusaway.json.LowerCaseWDashesGsonJsonTool">
     <property name="prettyPrintOutput" value="false" />
   </bean>
         
@@ -280,6 +296,7 @@
                 <property name="triggers">
                         <list>
                                 <ref bean="pingTrigger" />
+                                <ref bean="resetTrigger" />
                         </list>
                 </property>
         </bean>
