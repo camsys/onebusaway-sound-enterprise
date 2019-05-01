@@ -8,7 +8,7 @@ java \
   -Dtransitime.avl.csv.url="http://tracker.prod.dash.obaweb.org:8080/events/data.csv?a=dash&u=dash&p=api_password&g=dash_shuttle&tmz=US/Eastern&l=1" \
   -Dtransitime.externalAssignerEnabled=true \
   -Dtransitime.externalAssignerUrl="http://admin.<%= node[:oba][:env] %>.wmata.obaweb.org/api/vehicle-assign/get/csv" \
-  -Dtransitime.autoBlockAssigner.autoAssignerEnabled=true \
+  -Dtransitime.autoBlockAssigner.autoAssignerEnabled=false \
   -Dtransitime.core.allowableLateSecondsForInitialMatching=2700 \
   -Dtransitime.core.agencyId=<%= node[:shuttle][:agency] %> \
   -Dtransitime.db.dbName=<%= node[:shuttle][:dbname] %> \
