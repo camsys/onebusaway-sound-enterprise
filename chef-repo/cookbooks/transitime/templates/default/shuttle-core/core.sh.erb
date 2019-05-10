@@ -14,7 +14,7 @@ java \
   -Dtransitime.db.dbName=<%= node[:shuttle][:dbname] %> \
   -Dtransitime.db.encryptionPassword='<%= node[:shuttle][:encryptionPassword] %>' \
   -Dtransitime.db.batchSize=4000 \
-  -Dtransitime.modules.optionalModulesList="org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.avl.CsvPollingAvlModule;org.transitime.custom.aws.AvlSqsClientModule"" \
+  -Dtransitime.modules.optionalModulesList="org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.avl.CsvPollingAvlModule;org.transitime.custom.aws.AvlSqsClientModule" \
   -Dtransitime.avl.feedTimeoutInMSecs=30000 \
   -Dtransitime.core.maxPredictionTimeForDbSecs=900 \
   -Dtransitime.core.exclusiveBlockAssignments=true \
