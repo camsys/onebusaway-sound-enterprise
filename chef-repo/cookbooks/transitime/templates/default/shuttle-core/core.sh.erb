@@ -23,6 +23,13 @@ java \
   -Dtransitime.blockLoading.agressive=true \
   -Dtransitime.avl.numThreads=1 \
   -Dtransitime.avl.maxSpeed=45 \
+  -Dtransitime.avl.sqsUrl='<%= node[:shuttle][:sqsUrl] %>' \
+  -Dtransitime.avl.messageLogFrequency=100 \
+  -Dtransitime.avl.sqsKey='<%= node[:shuttle][:sqsKey] %>' \
+  -Dtransitime.avl.sqsSecret='<%= node[:shuttle][:sqsSecret] %>' \
+  -Dtransitime.avl.xsnsKey='' \
+  -Dtransitime.avl.xsnsSecret='' \
+  -Dtransitime.avl.xsnsArn='' \
   -Dtransitime.environmentName=<%= node["oba"]["env"] %> \
   -Dtransitime.cloudwatch.awsAccessKey='<%= node["aws"]["cloudwatch_publish_key"] %>' \
   -Dtransitime.cloudwatch.awsSecretKey='<%= node["aws"]["cloudwatch_publish_secret"] %>' \
