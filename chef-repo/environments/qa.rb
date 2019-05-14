@@ -13,6 +13,8 @@ default_attributes({
                            "version_branded" => "2.0.8-cs",
                            "version_transitime_core" => "0.0.38",
                            "version_transitime_web" => "0.0.38",
+                           "version_shuttle_transitime_core" => "0.0.38",
+                           "version_shuttle_transitime_web" => "0.0.38",
                            "repositories" => ["http://repo.obaweb.org:8080/archiva/repository/releases/"]
                        },
                        "db_instance" => "db",
