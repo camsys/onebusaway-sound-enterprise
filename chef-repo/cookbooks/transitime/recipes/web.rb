@@ -1,7 +1,7 @@
 tomcat_instance_name = node[:oba][:tomcat][:instance_name]
 tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
-tomcat_start_command = "systemctl start #{tomcat_instance_name}"
-tomcat_restart_command = "systemctl restart #{tomcat_instance_name}"
+tomcat_start_command = "systemctl start tomcat_tomcat8"
+tomcat_restart_command = "systemctl restart tomcat_tomcat8"
 
 
 log "Downloading wars"
