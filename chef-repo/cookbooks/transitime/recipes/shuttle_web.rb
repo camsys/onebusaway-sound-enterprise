@@ -1,12 +1,12 @@
 tomcat_instance_name = node[:oba][:tomcat][:instance_name]
 tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
-tomcat_start_command = "systemctl start #{tomcat_instance_name}"
-tomcat_restart_command = "systemctl restart #{tomcat_instance_name}"
+tomcat_start_command = "systemctl start tomcat_#{tomcat_instance_name}"
+tomcat_restart_command = "systemctl restart tomcat_#{tomcat_instance_name}"
 
 
 log "Downloading wars"
 
-mvn_version = node[:oba][:mvn][:version_transitime_web]
+mvn_version = node[:oba][:mvn][:version_shuttle_transitime_web]
 mvn_web_dest_file = "/tmp/chef/transitimeWebapp-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_web_dest_file}"
 maven "transitimeWebapp" do
@@ -67,13 +67,13 @@ script "deploy_web_pre" do
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
-  sudo service #{tomcat_instance_name} stop
+  sudo service tomcat_#{tomcat_instance_name} stop
   sudo rm -rf #{tomcat_home_dir}/webapps/*
   sudo unzip #{mvn_web_dest_file} -d #{tomcat_home_dir}/webapps/web || exit 1
   sudo unzip #{mvn_api_dest_file} -d /#{tomcat_home_dir}/webapps/api || exit 1
   sudo rm -f #{tomcat_home_dir}/webapps/web/WEB-INF/classes/transiTimeConfig.xml
   sudo rm -f #{tomcat_home_dir}/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml
-EOH
+  EOH
 end
 
 
@@ -86,20 +86,20 @@ end
 
 # template transitime configuration
 template "#{tomcat_home_dir}/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml" do
-  source "web/mysql_hibernate.cfg.xml.erb"
+  source "shuttle-web/mysql_hibernate.cfg.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
 end
 template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/transiTimeConfig.xml" do
-  source "web/transitimeConfig.xml.erb"
+  source "shuttle-web/transitimeConfig.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
 end
 # template transitime configuration
 template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/mysql_hibernate.cfg.xml" do
-  source "web/mysql_hibernate.cfg.xml.erb"
+  source "shuttle-web/mysql_hibernate.cfg.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
@@ -111,7 +111,7 @@ script "deploy_web_post" do
   cwd node[:oba][:home]
   code <<-EOH
   #{tomcat_start_command}
-EOH
+  EOH
 end
 
 # monitoring directory

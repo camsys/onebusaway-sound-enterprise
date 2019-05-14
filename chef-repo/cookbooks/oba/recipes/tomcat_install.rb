@@ -27,6 +27,7 @@ tomcat_install "#{tomcat_instance_name}" do
   install_path "#{tomcat_home_dir}"
   tomcat_user node[:tomcat][:user]
   tomcat_group node[:tomcat][:group]
+  version node[:tomcat][:version]
 end
 
 #delete default tomcat log directory
@@ -75,7 +76,7 @@ execute "tomcat_permissions" do
 end
 
 tomcat_service "#{tomcat_instance_name}" do
-  action :start
+  action [:enable]
   install_path "#{tomcat_home_dir}"
   env_vars [{'CATALINA_HOME' => "#{tomcat_home_dir}"},
             {'CATALINA_OUT' => "#{tomcat_log_dir}/catalina.out"},

@@ -15,7 +15,7 @@ Provides resources for installing Tomcat and managing the Tomcat service for use
 
 ### Chef
 
-- Chef 12.7+
+- Chef 13+
 
 ### Cookbooks
 
@@ -25,7 +25,7 @@ Provides resources for installing Tomcat and managing the Tomcat service for use
 
 Due to the complexity of Tomcat cookbooks it's not possible to create an attribute driven cookbook that solves everyone's problems. Instead this cookbook provides resources for installing Tomcat and managing the Tomcat service, which are best used in your own wrapper cookbook. The best way to understand how this could be used is to look at the helloworld test recipe located at <https://github.com/chef-cookbooks/tomcat/blob/master/test/cookbooks/test/recipes/helloworld_example.rb>
 
-## Resources (providers)
+## Resources
 
 ### tomcat_install
 
@@ -36,10 +36,10 @@ tomcat_install installs an instance of the tomcat binary direct from Apache's mi
 - `version`: The version to install. Default: 8.0.47
 - `install_path`: Full path to the install directory. Default: /opt/tomcat_INSTANCENAME_VERSION
 - `tarball_base_uri`: The base uri to the apache mirror containing the tarballs. Default: '<http://archive.apache.org/dist/tomcat/>'
-- `checksum_base_uri`: The base uri to the apache mirror containing the md5 file. Default: '<http://archive.apache.org/dist/tomcat/>'
+- `checksum_base_uri`: The base uri to the apache mirror containing the md5 or sha512 file. Default: '<http://archive.apache.org/dist/tomcat/>'
 - `verify_checksum`: Whether the checksum should be verified against `checksum_base_uri`. Default: `true`.
 - `dir_mode`: Directory permissions of the `install_path`. Default: `'0750'`.
-- `tarball_uri`: The complete uri to the tarball. If specified would override (`tarball_base_uri` and `checksum_base_uri`). checksum will be loaded from "#{tarball_uri}.md5". This attribute is useful, if you are hosting tomcat tarballs from artifact repositories such as nexus.
+- `tarball_uri`: The complete uri to the tarball. If specified would override (`tarball_base_uri` and `checksum_base_uri`). checksum will be loaded from "#{tarball_uri}.{md5,sha512}". This attribute is useful, if you are hosting tomcat tarballs from artifact repositories such as nexus. `sha512` sums are used for version constraints: `~> 7.0.84`, `~> 8.0.48`, `~> 8.5.24`, `~> 9.0.10`.
 - `tarball_path`: Local path on disk to the tarball. If the file does not exist, or the checksum does not match, it will be downloaded from `tarball_uri`.
 - `tarball_validate_ssl`: Validate the SSL certificate, if `tarball_uri` is using HTTPS. Default `true`.
 - `exclude_docs`: Exclude ./webapps/docs from installation. Default `true`.
@@ -78,7 +78,10 @@ tomcat_service sets up the installed tomcat instance to run using the appropriat
 
 - `install_path`: Full path to the install directory. Default: /opt/tomcat_INSTANCENAME
 - `env_vars`: An array of hashes containing the environmental variables for Tomcat's setenv.sh script. Note: If CATALINA_BASE is not passed it will automatically be added as the first item in the array. Default: [ {'CATALINA_BASE' => '/opt/INSTANCE_NAME/'}, {'CATALINA_PID' => '$CATALINA_BASE/bin/tomcat.pid'} ]
+- `service_vars`: An array of hashes containing additional systemd directives when setting up a service under systemd.
 - `sensitive`: Excludes diffs that may expose ENV values from the chef-client logs. Default: `false`
+- `tomcat_user`: The user the service runs under
+- `tomcat_group`: The group the service runs under
 
 #### actions
 
@@ -102,7 +105,7 @@ end
 - Author: Tim Smith ([tsmith@chef.io](mailto:tsmith@chef.io))
 
 ```text
-Copyright:: 2010-2016, Chef Software, Inc
+Copyright:: 2010-2018, Chef Software, Inc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

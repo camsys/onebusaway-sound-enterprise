@@ -1,0 +1,2 @@
+# we need to embedd the db password in the tomcat config
+node.override["tomcat"]["java_options"] = "-Xmx2G -Xms512m -XX:MaxPermSize=256m -Djava.awt.headless=true -XX:+UseConcMarkSweepGC -Dtransitime.rmi.timeoutSec=300 -Dtransitime.db.encryptionPassword='#{node["shuttle"]["encryptionPassword"]}' -Dtransitime.reports.showPredictionSource=false -Dlogback.timezone=America/New_York -Dtransitime.logging.dir=/var/log/tomcat6  -Dtransitime.api.gtfsRtCacheSeconds=10 -Dtransitime.apikey='#{node["shuttle"]["api_key"]}' -Dtransitime.hibernate.configFile=mysql_hibernate.cfg.xml"

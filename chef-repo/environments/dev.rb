@@ -7,12 +7,14 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "2.0.0-cs-rc22-SNAPSHOT",
-                           "version_core" => "2.0.0-cs-rc22-SNAPSHOT",
-                           "version_app" => "2.0.0-cs-rc22-SNAPSHOT",
-                           "version_branded" => "2.0.0-cs-rc22-SNAPSHOT",
-                           "version_transitime_core" => "0.0.34-SNAPSHOT",
-                           "version_transitime_web" => "0.0.34-SNAPSHOT",
+                           "version_admin" => "2.0.8-cs-SNAPSHOT",
+                           "version_core" => "2.0.8-cs-SNAPSHOT",
+                           "version_app" => "2.0.8-cs-SNAPSHOT",
+                           "version_branded" => "2.0.8-cs-SNAPSHOT",
+                           "version_transitime_core" => "0.0.36-SNAPSHOT",
+                           "version_transitime_web" => "0.0.36-SNAPSHOT",
+                           "version_shuttle_transitime_core" => "0.0.36-SNAPSHOT",
+                           "version_shuttle_transitime_web" => "0.0.36-SNAPSHOT",
                            "repositories" => ["http://repo.obaweb.org:8080/archiva/repository/snapshots/"]
                        },
                        "db_instance" => "db",  
@@ -78,6 +80,26 @@ default_attributes({
                         "snsArn" => "",
                         "retentionDays" => "30"
                       },
+                     "shuttle" => {
+                         "dbhost" => "db.dev.wmata.obaweb.org:3306",
+                         "dbrohost" => "db-ro.dev.wmata.obaweb.org:3306",
+                         "dbtype" => "mysql",
+                         "dbusername" => "shuttle",
+                         "dbpassword" => "changeme",
+                         "dbname" => "dash_transitime",
+                         "agency" => "71",
+                         "api_key" => "612bek1",
+                         "encryptionPassword" => "dash_transitime",
+                         "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/443046490497/obadash_prod",
+                         "sqsKey" => "AKIAWOJ5A6GA3NR35E2S",
+                         "sqsSecret" => "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",
+                         "snsKey" => "",
+                         "snsSecret" => "",
+                         "snsArn" => "",
+                         "retentionDays" => "30",
+                         "env" => "dash_shuttle_dev"
+                     },
+
                      "aws" => {
                        "cloudwatch_publish_key" => "AKIAJ2USYJ54JLTDL6CA",
                        "cloudwatch_publish_secret" => "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",
@@ -88,7 +110,8 @@ default_attributes({
                      "tomcat" => {
                        "user" => "tomcat_user",
                        "group" => "tomcat_group",
-                       "base_version" => "8"
+                       "base_version" => "8",
+                       "version" => "8.0.53"
                      },
                      "java" => {
                        "jdk_version" => "8"
