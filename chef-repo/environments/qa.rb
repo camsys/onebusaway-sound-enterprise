@@ -71,7 +71,26 @@ default_attributes({
                          "snsArn" => "",
                          "retentionDays" => "90"
                        },
-                      "aws" => {
+                     "shuttle" => {
+                         "dbhost" => "db.qa.wmata.obaweb.org:3306",
+                         "dbrohost" => "db-ro.qa.wmata.obaweb.org:3306",
+                         "dbtype" => "mysql",
+                         "dbusername" => "shuttle",
+                         "dbpassword" => "changeme",
+                         "dbname" => "dash_transitime",
+                         "agency" => "71",
+                         "api_key" => "612bek1",
+                         "encryptionPassword" => "dash_transitime",
+                         "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/443046490497/obadash_prod",
+                         "sqsKey" => "AKIAWOJ5A6GA3NR35E2S",
+                         "sqsSecret" => "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",
+                         "snsKey" => "",
+                         "snsSecret" => "",
+                         "snsArn" => "",
+                         "retentionDays" => "30",
+                         "env" => "dash_shuttle_qa"
+                     },
+                     "aws" => {
                         "cloudwatch_publish_key" => "AKIAIHDQDZCGSQMYJAHQ",
                         "cloudwatch_publish_secret" => "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",
                         "cloudwatch_endpoint" => "monitoring.us-east-1.amazonaws.com",
