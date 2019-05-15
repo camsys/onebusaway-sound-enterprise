@@ -86,9 +86,9 @@ default_attributes({
                          "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/443046490497/obadash_prod",
                          "sqsKey" => "AKIAWOJ5A6GA3NR35E2S",
                          "sqsSecret" => "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",
-                         "snsKey" => "",
-                         "snsSecret" => "",
-                         "snsArn" => "",
+                         "snsKey" => "AKIAJ34CZNNFNL5G2CUA",
+                         "snsSecret" => "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",
+                         "snsArn" => "arn:aws:sns:us-east-1:443046490497:dash_avl",
                          "retentionDays" => "30",
                          "env" => "dash_shuttle_qa"
                      },

@@ -50,8 +50,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     </bean>
 
         <bean class="org.onebusaway.transit_data_federation.impl.realtime.gtfs_realtime.GtfsRealtimeSource">
-        <property name="tripUpdatesUrl" value="http://gtfsrt.dev.dash.obaweb.org:8080/api/v1/key/612bek1/agency/71/command/gtfs-rt/tripUpdates" />
-        <property name="vehiclePositionsUrl" value="http://gtfsrt.dev.dash.obaweb.org:8080/api/v1/key/612bek1/agency/71/command/gtfs-rt/vehiclePositions" />
+        <property name="tripUpdatesUrl" value="http://gtfsrt.<%= node[:oba][:env] %>.dash.obaweb.org:8080/api/v1/key/612bek1/agency/71/command/gtfs-rt/tripUpdates" />
+        <property name="vehiclePositionsUrl" value="http://gtfsrt.<%= node[:oba][:env] %>.dash.obaweb.org:8080/api/v1/key/612bek1/agency/71/command/gtfs-rt/vehiclePositions" />
         <property name="refreshInterval" value="5" />
         <property name="agencyIds">
             <list>
@@ -65,9 +65,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         <property name="tripUpdatesUrl" value="http://data.peaktransit.com/gtfsrt/45/TripUpdate.pb" />
         <property name="vehiclePositionsUrl" value="http://data.peaktransit.com/gtfsrt/45/VehiclePosition.pb" />
         <property name="refreshInterval" value="10" />
-<!--
-        <property name="maxDeltaLocationMeters" value="5000" />
--->
+        <property name="maxDeltaLocationMeters" value="1000" />
         <property name="useLabelAsId" value="true" />
         <property name="agencyIds">
             <list>
