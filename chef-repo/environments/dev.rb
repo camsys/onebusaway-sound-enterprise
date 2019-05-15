@@ -90,7 +90,7 @@ default_attributes({
                          "agency" => "71",
                          "api_key" => "612bek1",
                          "encryptionPassword" => "dash_transitime",
-                         "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/443046490497/obadash_prod",
+                         "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/744689548994/obadash_avl",
                          "sqsKey" => "AKIAWOJ5A6GA3NR35E2S",
                          "sqsSecret" => "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",
                          "snsKey" => "",
