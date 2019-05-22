@@ -66,5 +66,7 @@
     # redirect must specify https
     RewriteRule "^/api/v1/(.+)" "https://%{SERVER_NAME}/transitime?_path=api/v1/$1" [R,QSA]
 
+    # Allow iframe from same origin
+    Header set X-Frame-Options sameorigin
 
 </VirtualHost>
