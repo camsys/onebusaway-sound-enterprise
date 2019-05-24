@@ -2,8 +2,8 @@ log "Downloading wars"
 
 ## admin properties
 tomcat_instance_name = node[:oba][:tomcat][:instance_name]
-tomcat_stop_command = "systemctl stop #{tomcat_instance_name}"
-tomcat_start_command = "systemctl start #{tomcat_instance_name}"
+tomcat_stop_command = "systemctl stop tomcat_tomcat8"
+tomcat_start_command = "systemctl start tomcat_tomcat8"
 
 tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
 tomcat_cache_dir = "/var/cache/#{tomcat_instance_name}"
@@ -14,8 +14,8 @@ tomcat_lib_dir = "#{tomcat_home_dir}/lib"
 ## watchdog properties
 tomcat_w_instance_name = "tomcat8-watchdog"
 
-tomcat_w_stop_command = "systemctl stop #{tomcat_w_instance_name}"
-tomcat_w_start_command = "systemctl start #{tomcat_w_instance_name}"
+tomcat_w_stop_command = "systemctl stop tomcat_watchdog"
+tomcat_w_start_command = "systemctl start tomcat_watchdog"
 
 tomcat_w_home_dir = "/var/lib/#{tomcat_w_instance_name}"
 
@@ -121,15 +121,15 @@ script "install_tomcat_user" do
   user "root"
   cwd node[:oba][:home]
   code <<-EOH
-  apt-get install -y tomcat8-user
-  cd /var/lib
-  /usr/bin/tomcat8-instance-create -p 7070 -c 7005 #{tomcat_w_instance_name} || exit 1
+  #apt-get install -y tomcat8-user
+  #cd /var/lib
+  #/usr/bin/tomcat8-instance-create -p 7070 -c 7005 #{tomcat_w_instance_name} || exit 1
   # the policy scripts are not created above sadly
-  cp -r #{tomcat_home_dir}/conf/policy.d #{tomcat_w_home_dir}/conf/
+  #cp -r #{tomcat_home_dir}/conf/policy.d #{tomcat_w_home_dir}/conf/
   # bin dir is missing a well
-  cp -r /usr/share/#{tomcat_instance_name} /usr/share/#{tomcat_w_instance_name}
-  mkdir -p #{tomcat_w_home_dir}/work/Catalina/localhost
-  chown -R #{node[:tomcat][:user]}:#{node[:tomcat][:group]} #{tomcat_w_instance_name}
+  #cp -r /usr/share/#{tomcat_instance_name} /usr/share/#{tomcat_w_instance_name}
+  #mkdir -p #{tomcat_w_home_dir}/work/Catalina/localhost
+  #chown -R #{node[:tomcat][:user]}:#{node[:tomcat][:group]} #{tomcat_w_instance_name}
   EOH
 end unless ::File.exists?("#{tomcat_w_home_dir}")
 
@@ -137,7 +137,7 @@ end unless ::File.exists?("#{tomcat_w_home_dir}")
 ### WATCH DOG
 
 # install tomcat for watchdog
-tomcat_install tomcat_w_instance_name do
+tomcat_install "watchdog" do
   install_path "#{tomcat_w_home_dir}"
   exclude_manager true
   exclude_hostmanager true
@@ -145,8 +145,8 @@ tomcat_install tomcat_w_instance_name do
   tomcat_group node[:tomcat][:group]
 end
 
-tomcat_service "#{tomcat_w_instance_name}" do
-  action :start
+tomcat_service "watchdog" do
+  action :enable
   install_path "/var/lib/#{tomcat_w_instance_name}"
   env_vars [{'CATALINA_HOME' => "#{tomcat_w_home_dir}"},
             {'CATALINA_OUT' => "#{tomcat_w_home_dir}/logs/catalina.out"},
@@ -155,7 +155,7 @@ tomcat_service "#{tomcat_w_instance_name}" do
   tomcat_group node[:tomcat][:group]
 end
 
-template "/etc/default/#{tomcat_w_instance_name}" do
+template "/etc/default/watchdog" do
   source "watchdog/#{tomcat_w_instance_name}.default.erb"
   owner 'root'
   group 'root'
@@ -174,6 +174,7 @@ script "stop_watchdog" do
   interpreter "bash"
   user "root"
   cwd node[:oba][:home]
+  ignore_failure true
   code <<-EOH
 #{tomcat_w_stop_command}
   EOH

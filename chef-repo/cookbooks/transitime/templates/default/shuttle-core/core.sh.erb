@@ -1,0 +1,44 @@
+#!/bin/bash
+
+cd /var/lib/oba/transitime/core
+java \
+  -classpath logback-core-1.1.2.jar:logback-classic-1.1.2.jar:slf4j-api-1.7.2.jar \
+  -Xmx4g \
+  -Xms1g \
+  -Dtransitime.avl.csv.url="http://tracker.prod.dash.obaweb.org:8080/events/data.csv?a=dash&u=dash&p=api_password&g=dash_shuttle&tmz=US/Eastern&l=1" \
+  -Dtransitime.externalAssignerEnabled=true \
+  -Dtransitime.externalAssignerUrl="http://admin.<%= node[:oba][:env] %>.wmata.obaweb.org/api/vehicle-assign/get/csv" \
+  -Dtransitime.autoBlockAssigner.autoAssignerEnabled=false \
+  -Dtransitime.core.allowableLateSecondsForInitialMatching=2700 \
+  -Dtransitime.core.agencyId=<%= node[:shuttle][:agency] %> \
+  -Dtransitime.db.dbName=<%= node[:shuttle][:dbname] %> \
+  -Dtransitime.db.encryptionPassword='<%= node[:shuttle][:encryptionPassword] %>' \
+  -Dtransitime.db.batchSize=4000 \
+  -Dtransitime.avl.unmarshaller='org.transitime.custom.aws.DashAvlTypeUnmarshaller' \
+  -Dtransitime.modules.optionalModulesList="org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.avl.CsvPollingAvlModule;org.transitime.custom.aws.AvlSqsClientModule" \
+  -Dtransitime.avl.feedTimeoutInMSecs=30000 \
+  -Dtransitime.core.maxPredictionTimeForDbSecs=900 \
+  -Dtransitime.core.exclusiveBlockAssignments=true \
+  -Dtransitime.core.matchHistoryMaxSize=40 \
+  -Dtransitime.avl.queueSize=2400 \
+  -Dtransitime.blockLoading.agressive=true \
+  -Dtransitime.avl.numThreads=1 \
+  -Dtransitime.avl.maxSpeed=45 \
+  -Dtransitime.avl.sqsUrl='<%= node[:shuttle][:sqsUrl] %>' \
+  -Dtransitime.avl.messageLogFrequency=100 \
+  -Dtransitime.avl.sqsKey='<%= node[:shuttle][:sqsKey] %>' \
+  -Dtransitime.avl.sqsSecret='<%= node[:shuttle][:sqsSecret] %>' \
+  -Dtransitime.avl.snsKey='<%= node[:shuttle][:snsKey] %>' \
+  -Dtransitime.avl.snsSecret='<%= node[:shuttle][:snsSecret] %>' \
+  -Dtransitime.avl.snsArn='<%= node[:shuttle][:snsArn] %>' \
+  -Dtransitime.environmentName=<%= node["oba"]["env"] %> \
+  -Dtransitime.cloudwatch.awsAccessKey='<%= node["aws"]["cloudwatch_publish_key"] %>' \
+  -Dtransitime.cloudwatch.awsSecretKey='<%= node["aws"]["cloudwatch_publish_secret"] %>' \
+  -Dtransitime.cloudwatch.awsEndpoint='<%= node["aws"]["cloudwatch_endpoint"] %>' \
+  -Dtransitime.predAccuracy.stopsPerTrip=1000 \
+  -Dtransitime.hibernate.configFile=/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml \
+  -Dlogback.timezone=America/New_York \
+  -Dtransitime.logging.dir=/var/lib/oba/transitime/logs \
+  -Dlogback.configurationFile=/var/lib/oba/transitime/core/logback.xml \
+  -jar \
+  core.jar >/var/lib/oba/transitime/logs/upstart.log 2>&1

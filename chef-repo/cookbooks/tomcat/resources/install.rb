@@ -20,17 +20,17 @@
 property :instance_name, String, name_property: true
 property :version, String, default: '8.0.47'
 property :install_path, String, default: lazy { |r| "/opt/tomcat_#{r.instance_name}_#{r.version.tr('.', '_')}/" }
-property :tarball_base_uri, String, default: 'http://archive.apache.org/dist/tomcat/'
-property :checksum_base_uri, String, default: 'http://archive.apache.org/dist/tomcat/'
-property :verify_checksum, [true, false], default: true
+property :tarball_base_uri, String, default: 'http://archive.apache.org/dist/tomcat/', desired_state: false
+property :checksum_base_uri, String, default: 'http://archive.apache.org/dist/tomcat/', desired_state: false
+property :verify_checksum, [true, false], default: true, desired_state: false
 property :dir_mode, String, default: '0750'
-property :exclude_docs, [true, false], default: true
-property :exclude_examples, [true, false], default: true
-property :exclude_manager, [true, false], default: false
-property :exclude_hostmanager, [true, false], default: false
-property :tarball_uri, String, default: ''
-property :tarball_path, String, default: lazy { |r| "#{Chef::Config['file_cache_path']}/apache-tomcat-#{r.version}.tar.gz" }
-property :tarball_validate_ssl, [true, false], default: true
+property :exclude_docs, [true, false], default: true, desired_state: false
+property :exclude_examples, [true, false], default: true, desired_state: false
+property :exclude_manager, [true, false], default: false, desired_state: false
+property :exclude_hostmanager, [true, false], default: false, desired_state: false
+property :tarball_uri, String, default: '', desired_state: false
+property :tarball_path, String, default: lazy { |r| "#{Chef::Config['file_cache_path']}/apache-tomcat-#{r.version}.tar.gz" }, desired_state: false
+property :tarball_validate_ssl, [true, false], default: true, desired_state: false
 property :tomcat_user, String, default: lazy { |r| "tomcat_#{r.instance_name}" }
 property :tomcat_group, String, default: lazy { |r| "tomcat_#{r.instance_name}" }
 property :tomcat_user_shell, String, default: '/bin/false'
@@ -79,14 +79,14 @@ action :install do
   end
 
   # make sure the instance's user owns the instance install dir
-  execute "chown install dir as #{new_resource.instance_name}" do
+  execute "chown install dir as tomcat_#{new_resource.instance_name}" do
     command "chown -R #{new_resource.tomcat_user}:#{new_resource.tomcat_group} #{new_resource.install_path}"
     action :run
     not_if { Etc.getpwuid(::File.stat("#{new_resource.install_path}/LICENSE").uid).name == new_resource.tomcat_user }
   end
 
   # create a link that points to the latest version of the instance
-  link "/opt/#{new_resource.instance_name}" do
+  link "/opt/tomcat_#{new_resource.instance_name}" do
     to new_resource.install_path
   end
 end
@@ -117,18 +117,18 @@ action_class do
 
   # returns the URI of the apache.org generated checksum based on either
   # an absolute path to the tarball or the tarball based path.
-  def checksum_uri
+  def checksum_uri(sum_form)
     if new_resource.tarball_uri.empty?
-      URI.join(new_resource.checksum_base_uri, "tomcat-#{major_version}/v#{new_resource.version}/bin/apache-tomcat-#{new_resource.version}.tar.gz.md5")
+      URI.join(new_resource.checksum_base_uri, "tomcat-#{major_version}/v#{new_resource.version}/bin/apache-tomcat-#{new_resource.version}.tar.gz.#{sum_form}")
     else
-      URI("#{new_resource.tarball_uri}.md5")
+      URI("#{new_resource.tarball_uri}.#{sum_form}")
     end
   end
 
   # fetch the md5 checksum from the mirrors
   # we have to do this since the md5 chef expects isn't hosted
-  def fetch_checksum
-    uri = checksum_uri
+  def fetch_checksum(form)
+    uri = checksum_uri(form)
     request = Net::HTTP.new(uri.host, uri.port)
     if uri.to_s.start_with?('https')
       request.use_ssl = true
@@ -148,8 +148,24 @@ action_class do
   # validate the mirror checksum against the on disk checksum
   # return true if they match. Append .bad to the cached copy to prevent using it next time
   def validate_checksum(file_to_check)
-    desired = fetch_checksum
-    actual = Digest::MD5.hexdigest(::File.read(file_to_check))
+    # Apache started using sha512 (replacing md5) in these versions and now
+    # only publishes sha512 checksums
+    sum_form = case Gem::Version.new(new_resource.version)
+               when -> (v) { Gem::Requirement.new('~> 7.0.84').satisfied_by?(v) }
+                 'sha512'
+               when -> (v) { Gem::Requirement.new('~> 8.0.48').satisfied_by?(v) }
+                 'sha512'
+               when -> (v) { Gem::Requirement.new('~> 8.5.24').satisfied_by?(v) }
+                 'sha512'
+               when -> (v) { Gem::Requirement.new('~> 9.0.10').satisfied_by?(v) }
+                 'sha512'
+               else
+                 'md5'
+               end
+
+    desired = fetch_checksum(sum_form)
+    klass = Object.const_get("Digest::#{sum_form.upcase}")
+    actual = klass.hexdigest(::File.read(file_to_check))
 
     if desired == actual
       true
