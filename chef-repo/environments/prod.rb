@@ -7,14 +7,12 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "2.0.13-cs",
-                           "version_core" => "2.0.13-cs",
-                           "version_app" => "2.0.13-cs",
-                           "version_branded" => "2.0.13-cs",
+                           "version_admin" => "2.0.1.3",
+                           "version_core" => "2.0.1.3",
+                           "version_app" => "2.0.1.3",
+                           "version_branded" => "2.0.1.4",
                            "version_transitime_core" => "0.0.35.1",
                            "version_transitime_web" => "0.0.35.1",
-                           "version_shuttle_transitime_core" => "0.0.39",
-                           "version_shuttle_transitime_web" => "0.0.39",
                            "repositories" => ["http://repo.prod.wmata.obaweb.org:8080/archiva/repository/releases/"]
                        },
                        "db_instance" => "db",
@@ -50,10 +48,7 @@ default_attributes({
                        "ses_user" => "AKIAISKUXW2UHBZRHHNA",
                        "ses_password" => "AhxzNCmnlqzK8qjPwsQ41yHUbk3meOlHZvVRuoVoM7/t",
                        "ses_from" => "btss@wmata.com",
-                       "mobile_require_ssl" => "true",
-                       "tomcat" => {
-                           "instance_name" => "tomcat8"
-                       }
+                       "mobile_require_ssl" => "true"
                      },
                        "transitime" => {
                          "dbhost" => "db.prod.wmata.obaweb.org:3306",
@@ -73,25 +68,6 @@ default_attributes({
                          "snsArn" => "arn:aws:sns:us-east-1:443046490497:wmata_avl",
                          "retentionDays" => "90"
                        },
-                     "shuttle" => {
-                         "dbhost" => "db.prod.wmata.obaweb.org:3306",
-                         "dbrohost" => "db-ro.prod.wmata.obaweb.org:3306",
-                         "dbtype" => "mysql",
-                         "dbusername" => "shuttle",
-                         "dbpassword" => "changeme",
-                         "dbname" => "dash_transitime",
-                         "agency" => "71",
-                         "api_key" => "612bek1",
-                         "encryptionPassword" => "dash_transitime",
-                         "sqsUrl" => "https://sqs.us-east-1.amazonaws.com/443046490497/obadash_prod",
-                         "sqsKey" => "AKIAWOJ5A6GA3NR35E2S",
-                         "sqsSecret" => "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",
-                         "snsKey" => "AKIAJ34CZNNFNL5G2CUA",
-                         "snsSecret" => "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",
-                         "snsArn" => "arn:aws:sns:us-east-1:443046490497:dash_avl",
-                         "retentionDays" => "30",
-                         "env" => "dash_shuttle_prod"
-                     },
                       "aws" => {
                         "cloudwatch_publish_key" => "AKIAIC575DBB5Q2GQ64Q",
                         "cloudwatch_publish_secret" => "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",
@@ -99,7 +75,7 @@ default_attributes({
                         "alarmCriticalSns" => "arn:aws:sns:us-east-1:443046490497:OBAWMATA-Alarm-prod",
                         "alarmNonCriticalSns" => "arn:aws:sns:us-east-1:443046490497:OBAWMATA-Monitoring-prod"
                        },
-		                  "tomcat" => {
+		      "tomcat" => {
                        "user" => "tomcat_user",
                        "group" => "tomcat_group",
                        "base_version" => "8"
