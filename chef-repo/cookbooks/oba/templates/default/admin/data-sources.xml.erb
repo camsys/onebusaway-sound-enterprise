@@ -296,7 +296,7 @@
     <!-- quartz scheduling for ResetVehicleAssignmentsJob -->
     <bean id="resetTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
         <property name="jobDetail" ref="resetJob" />
-        <property name="cronExpression" value="0 3 * * * ?" /><!--  03:00 every day -->
+        <property name="cronExpression" value="0 0 3 * * ?" /><!--  03:00 every day -->
     </bean>
         
   <bean id="gsonTool" class="org.onebusaway.json.LowerCaseWDashesGsonJsonTool">
