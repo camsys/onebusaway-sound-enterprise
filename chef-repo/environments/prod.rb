@@ -7,7 +7,7 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "2.0.1.3",
+                           "version_admin" => "2.0.15-cs",
                            "version_core" => "2.0.1.3",
                            "version_app" => "2.0.1.3",
                            "version_branded" => "2.0.1.4",
