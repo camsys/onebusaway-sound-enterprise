@@ -38,7 +38,8 @@
           minEvictableIdleTimeMillis="300000"
           jmxEnabled="true"
           jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;
-            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"        username="<%= node[:oba][:db_user] %>"
+            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+        username="<%= node[:oba][:db_user] %>"
         password="<%= node[:oba][:db_password] %>"
         driverClassName="com.mysql.jdbc.Driver"
         url="jdbc:mysql://<%= node[:oba][:db_master] %>/org_onebusaway_users" >
@@ -63,7 +64,8 @@
           minEvictableIdleTimeMillis="300000"
           jmxEnabled="true"
           jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;
-            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"        username="oba"
+            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+          username="oba"
         password="<%= node[:oba][:db_password] %>"
         driverClassName="com.mysql.jdbc.Driver"
         url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>?characterEncoding=UTF-8" />
@@ -87,7 +89,8 @@
           minEvictableIdleTimeMillis="300000"
           jmxEnabled="true"
           jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;
-            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"        username="<%= node[:oba][:db_user] %>"
+            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
+          username="<%= node[:oba][:db_user] %>"
         password="<%= node[:oba][:db_password] %>"
         driverClassName="com.mysql.jdbc.Driver"
         url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>" >
