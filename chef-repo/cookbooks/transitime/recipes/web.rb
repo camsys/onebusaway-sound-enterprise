@@ -133,6 +133,6 @@ directory '/var/lib/oba/monitoring' do
 end
 
 cron "check-tomcat-size" do
-  command "[ '`ps -o rss -u #{tomcat_instance_name} --no-headers`' -gt 5068924 ] && #{tomcat_restart_command}"
+  command "[ `ps -o rss -u tomcat_user --no-headers` -gt 6539046 ] && #{tomcat_restart_command}"
   user "root"
 end
