@@ -54,6 +54,8 @@
         <!--
         Allows configuration of a default service area for searches when the user hasn't already specified a search area
     -->
+       <bean id="externalGeocoderImpl" class="org.onebusaway.geocoder.enterprise.impl.EnterpriseGoogleGeocoderImpl">
+       </bean>
     <bean id="serviceAreaServiceImpl" class="org.onebusaway.presentation.impl.ServiceAreaServiceImpl">
       <property name="calculateDefaultBoundsFromAgencyCoverage" value="true" />
     </bean>
