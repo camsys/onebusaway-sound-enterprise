@@ -54,7 +54,9 @@
         <!--
         Allows configuration of a default service area for searches when the user hasn't already specified a search area
     -->
-        <bean id="serviceArea" class="org.onebusaway.presentation.impl.DefaultServiceAreaServiceImpl" />
+    <bean id="serviceAreaServiceImpl" class="org.onebusaway.presentation.impl.ServiceAreaServiceImpl">
+      <property name="calculateDefaultBoundsFromAgencyCoverage" value="true" />
+    </bean>
 
 
         <bean id="routeNumberPronuncation" class="org.onebusaway.twilio.impl.RouteNumberPronunciation">
