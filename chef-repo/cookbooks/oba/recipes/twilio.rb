@@ -1,7 +1,7 @@
 ## twilio properties
 tomcat_t_instance_name = "tomcat8-twilio"
-tomcat_t_stop_command = "systemctl stop tomcat8_twilio"
-tomcat_t_start_command = "systemctl start tomcat8_twilio"
+tomcat_t_stop_command = "systemctl stop tomcat_twilio"
+tomcat_t_start_command = "systemctl start tomcat_twilio"
 
 tomcat_t_home_dir = "/var/lib/#{tomcat_t_instance_name}"
 tomcat_t_webapp_dir = "/var/lib/#{tomcat_t_instance_name}/webapps"
