@@ -1,6 +1,7 @@
 name "oba-twilio"
 description "oba twilio tomcat install"
 run_list(
+    "recipe[maven]",
     "recipe[oba::twilio]"
 )
 
