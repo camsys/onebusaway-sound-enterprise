@@ -44,6 +44,9 @@ default_attributes({
                        "hart_webapp" => {
                           "artifact" => "onebusaway-enterprise-hart-webapp"
                        },
+                       "dash_webapp" => {
+                           "artifact" => "onebusaway-enterprise-dash-webapp"
+                       },
                        "sound_webapp" => {
                           "artifact" => "onebusaway-enterprise-sound-webapp"
                        },
