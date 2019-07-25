@@ -57,7 +57,7 @@
     <bean id="serviceAreaServiceImpl" class="org.onebusaway.presentation.impl.ServiceAreaServiceImpl">
       <property name="calculateDefaultBoundsFromAgencyCoverage" value="true" />
     </bean>
-
+    <bean id="serviceArea" class="org.onebusaway.presentation.impl.DefaultServiceAreaServiceImpl" />
 
         <bean id="routeNumberPronuncation" class="org.onebusaway.twilio.impl.RouteNumberPronunciation">
         <qualifier value="routeNumberPronunciation" />
