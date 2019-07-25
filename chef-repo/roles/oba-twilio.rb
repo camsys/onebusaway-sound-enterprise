@@ -10,7 +10,4 @@ override_attributes(
     :maven => {
         :m2_home => '/var/lib/maven'
     },
-    :tomcat => {
-        :java_options => '-Xmx1G -Xms256m -XX:MaxPermSize=756m -Djava.awt.headless=true -XX:+UseConcMarkSweepGC'
-    }
 )

@@ -31,6 +31,16 @@ tomcat_install "twilio" do
   tomcat_group node[:tomcat][:group]
 end
 
+tomcat_service "twilio" do
+  action :enable
+  install_path "/var/lib/#{tomcat_t_instance_name}"
+  env_vars [{'CATALINA_HOME' => "#{tomcat_t_home_dir}"},
+            {'CATALINA_OUT' => "#{tomcat_t_home_dir}/logs/catalina.out"},
+            {'JAVA_OPTS' => "-Xmx512m -Xms128m"}]
+  tomcat_user node[:tomcat][:user]
+  tomcat_group node[:tomcat][:group]
+end
+
 template "/etc/default/twilio" do
   source "twilio/#{tomcat_t_instance_name}.default.erb"
   owner 'root'
