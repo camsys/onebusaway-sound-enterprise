@@ -8,6 +8,7 @@ default_attributes({
                        "mvn" => {
                            "group_id" => "org.onebusaway",
                            "version_admin" => "2.0.23-cs-SNAPSHOT",
+                           "version_twilio" => "2.0.23-cs-SNAPSHOT",
                            "version_core" => "2.0.23-cs-SNAPSHOT",
                            "version_app" => "2.0.23-cs-SNAPSHOT",
                            "version_branded" => "2.0.23-cs-SNAPSHOT",

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+    <!-- Specify our transit data source -->
+   <bean id="transitDataService" class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+        <property name="serviceUrl" value="http://app.<%=node[:oba][:env] %>/onebusaway-transit-data-federation-webapp/remoting/transit-data-service" />
+        <property name="serviceInterface" value="org.onebusaway.transit_data.services.TransitDataService" />
+    </bean>
+
+    <!-- Database Connection Configuration -->
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/appDB" />
+		<property name="lookupOnStartup" value="true" />
+		<property name="cache" value="true" />
+		<property name="proxyInterface" value="javax.sql.DataSource" />
+		<property name="resourceRef" value="true" />
+	</bean>
+    <alias name="dataSource" alias="mutableDataSource" />
+
+       <!--
+        The Geocoder is used in the SMS interface for determining your default search location. The DefaultGeocoderImpl
+        doesn't actually do much geocoding... it's just there for testing
+    -->
+<!--
+        <bean id="externalGeocoderImpl" class="org.onebusaway.geocoder.impl.FixedGeocoderImpl">
+           <property name="lat" value="28.005" />
+           <property name="lon" value="-82.450" />
+           <property name="city" value="Tampa" />
+           <property name="state" value="FL" />
+           <property name="postalCode" value="33603" />
+         </bean>
+-->
+
+   <bean id="externalGeocoderImpl" class="org.onebusaway.geocoder.enterprise.impl.EnterpriseGoogleGeocoderImpl">
+    </bean>
+   <bean id="configService" class="org.onebusaway.util.impl.configuration.ConfigurationServiceImpl">
+        <property name="refreshService" ref="refreshService"/>
+        <property name="taskScheduler" ref="taskScheduler"/>
+        <property name="configurationServiceClient" ref="configurationServiceClient" />
+    </bean>
+
+    <bean id="refreshService" class="org.onebusaway.container.refresh.RefreshServiceImpl" />
+
+    <bean id="taskScheduler" class="org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler" />
+
+   <bean id="configurationServiceClient" class="org.onebusaway.util.impl.configuration.ConfigurationServiceClientFileImpl" >
+         <!-- this will be the admin config.json but it really isn't used much -->
+        <constructor-arg type="java.lang.String" value="/var/lib/oba/config.json"/>
+    </bean>
+
+        <!--
+        Allows configuration of a default service area for searches when the user hasn't already specified a search area
+    -->
+    <!--
+    <bean id="serviceArea" class="org.onebusaway.presentation.impl.DefaultServiceAreaServiceImpl" />
+         -->
+
+        <bean id="routeNumberPronuncation" class="org.onebusaway.twilio.impl.RouteNumberPronunciation">
+        <qualifier value="routeNumberPronunciation" />
+    </bean>
+        <bean id="destinationPronunciation" factory-bean="pronunciationFactory" factory-method="create">
+        <qualifier value="destinationPronunciation" />
+    </bean>
+        <bean id="directionPronunciation" factory-bean="pronunciationFactory" factory-method="create">
+        <qualifier value="directionPronunciation" />
+    </bean>
+        <bean id="pronunciationFactory" class="org.onebusaway.presentation.impl.text.XmlTextModificationsFactory">
+        <property name="resource" value="classpath:pronunciations.xml" />
+   </bean>
+    <bean class="org.onebusaway.container.spring.PropertyOverrideConfigurer">
+    <property name="properties">
+      <props>
+        <prop key="cacheManager.cacheManagerName">org.onebusaway.webapp.twilio_cacheManager</prop>
+      </props>
+    </property>
+  </bean>
+    <bean class="org.onebusaway.container.spring.SystemPropertyOverrideConfigurer">
+      <property name="order" value="-2" />
+      <property name="properties">
+          <props>
+              <prop key="ivr.alert.txt">Service Alerts Present. Contact (703) 746-3274 for details</prop>
+              <prop key="sms.alert.txt">Service Alerts Present. Contact (703) 746-3274 for details</prop>
+         </props>
+      </property>
+    </bean>
+
+</beans>
