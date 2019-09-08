@@ -100,7 +100,7 @@ script "deploy_admin" do
   interpreter "bash"
   user "root"
   cwd node[:oba][:home]
-  puts "admin version is #{mvn_version}"
+  puts "admin version is #{mvn_admin_version}"
   code <<-EOH
   #{tomcat_stop_command}
   rm -rf #{tomcat_webapp_dir}/*
