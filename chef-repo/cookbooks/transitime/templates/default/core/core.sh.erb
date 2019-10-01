@@ -5,6 +5,7 @@ java \
   -classpath logback-core-1.1.2.jar:logback-classic-1.1.2.jar:slf4j-api-1.7.2.jar \
   -Xmx10g \
   -Xms6g \
+  -Dtransitime.autoBlockAssigner.autoAssignerEnabled=true \
   -Dtransitime.core.allowableLateSecondsForInitialMatching=2700 \
   -Dtransitime.core.agencyId=<%= node[:transitime][:agency] %> \
   -Dtransitime.db.dbName=<%= node[:transitime][:dbname] %> \
