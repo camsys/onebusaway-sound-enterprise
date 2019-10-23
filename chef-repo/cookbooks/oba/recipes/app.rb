@@ -206,8 +206,8 @@ script "deploy_front_end" do
   # deploy wmata
   sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-enterprise-hart-webapp
   sudo unzip /tmp/war/#{node[:oba][:hart_webapp][:artifact]}-#{mvn_branded_version}.war -d #{tomcat_home_dir}/webapps/onebusaway-enterprise-hart-webapp || exit 1
-  sudo mkdir #{tomcat_home_dir}/webapps/dash
-  sudo unzip /tmp/war/#{node[:oba][:dash_webapp][:artifact]}-#{mvn_branded_version}.war -d #{tomcat_home_dir}/webapps/dash || exit 1
+  sudo mkdir #{tomcat_home_dir}/webapps/tracker
+  sudo unzip /tmp/war/#{node[:oba][:dash_webapp][:artifact]}-#{mvn_branded_version}.war -d #{tomcat_home_dir}/webapps/tracker || exit 1
 
   EOH
 end
