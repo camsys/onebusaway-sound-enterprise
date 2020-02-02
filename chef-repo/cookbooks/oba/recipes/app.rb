@@ -110,6 +110,17 @@ maven "#{node[:oba][:hart_webapp][:artifact]}" do
   repositories node[:oba][:mvn][:repositories]
   only_if { node[:oba][:env] == "dev" }
 end
+# hart
+maven "#{node[:oba][:dash_webapp][:artifact]}" do
+  group_id node[:oba][:mvn][:group_id]
+  dest "/tmp/war"
+  version mvn_branded_version
+  packaging "war"
+  owner node[:tomcat][:user]
+  repositories node[:oba][:mvn][:repositories]
+  only_if { node[:oba][:env] == "dev" }
+end
+
 ###
 # end dev branded test
 ###
@@ -195,6 +206,9 @@ script "deploy_front_end" do
   # deploy wmata
   sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-enterprise-hart-webapp
   sudo unzip /tmp/war/#{node[:oba][:hart_webapp][:artifact]}-#{mvn_branded_version}.war -d #{tomcat_home_dir}/webapps/onebusaway-enterprise-hart-webapp || exit 1
+  sudo mkdir #{tomcat_home_dir}/webapps/tracker
+  sudo unzip /tmp/war/#{node[:oba][:dash_webapp][:artifact]}-#{mvn_branded_version}.war -d #{tomcat_home_dir}/webapps/tracker || exit 1
+
   EOH
 end
 
