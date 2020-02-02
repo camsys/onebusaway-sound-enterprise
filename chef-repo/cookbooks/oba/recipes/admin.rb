@@ -79,6 +79,18 @@ template "#{tomcat_home_dir}/conf/context.xml" do
   mode '0644'
 end
 
+# increase session timeout for admin users
+script "sed_session_timeout" do
+  interpreter "bash"
+  user "root"
+  cwd node[:oba][:home]
+  ignore_failure true
+  code <<-EOH
+  sed -i "#{tomcat_home_dir}/conf/web.xml" -e 's!<session-timeout>30</session-timeout>!<session-timeout>480</session-timeout>!g'
+  EOH
+end
+
+
 template "/var/lib/oba/config.json" do
   source "admin/config.json.erb"
   owner 'root'

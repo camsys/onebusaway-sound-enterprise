@@ -1,0 +1,74 @@
+#!/bin/bash -x
+SERVER="admin.qa.wmata.obaweb.org"
+PORT="80"
+BUNDLE_DIR=/var/lib/oba/transitime
+
+report_error() {
+  aws ses send-email \
+--from no.reply.onebusaway@gmail.com \
+--destination "{ \"ToAddresses\": [\"sbrown@camsys.com\"], \"CcAddresses\": [], \"BccAddresses\": []}" \
+--message "{ \"Subject\": { \"Data\": \"QA DASH FAIL: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Qa Error: $1\"}}}"
+  exit 1
+}
+
+cd "$BUNDLE_DIR"
+if [ -L $BUNDLE_DIR/gtfs-shuttle ]
+  then
+  rm -f $BUNDLE_DIR/gtfs-shuttle
+fi
+if [ -d $BUNDLE_DIR/gtfs-shuttle ]
+then
+  echo "Directory exists!  exiting!"
+  report_error "$BUNDLE_DIR exists!"
+  exit -1
+fi
+
+# set name, id, dataset from json
+name=$(curl http://${SERVER}:${PORT}/api/bundle/staged/list | \
+    python -c "import sys, json; print json.load(sys.stdin)['bundles'][0]['name']")
+dataset=$(curl http://${SERVER}:${PORT}/api/bundle/staged/list | \
+    python -c "import sys, json; print json.load(sys.stdin)['bundles'][0]['dataset']")
+
+echo "Latest graph: name=$name id=$id dataset=$dataset"
+dirname="${name}_shuttle"
+
+# if this is a new dataset:
+if [ ! -d "$dirname" ]; then
+
+	mkdir -p $dirname
+        cd "$dirname"
+
+        # generate list of urls
+        echo "Downloading files"
+        curl ${SERVER}:${PORT}/api/bundle/archive/list-by-name/${dataset}/${name}/ | \
+        tr -d '[]"' | \
+        tr ',' '\n' | \
+        grep '/modified/' | \
+	grep '\.zip' | \
+	grep '71_' | \
+        sed -e "s,^,http://${SERVER}:${PORT}/api/bundle/archive/get-by-name/${dataset}/${name}/," | \
+        wget -i - || report_error "download failed $dataset/$name"
+        echo "Download complete"
+        ln -s $BUNDLE_DIR/$dirname $BUNDLE_DIR/gtfs-shuttle || report_error "soft link failed"
+	cd $BUNDLE_DIR/gtfs-shuttle || report_error "cd failed to $BUNDLE_DIR/gtfs-shuttle"
+	unzip *.zip || report_error "unzip of gtfs failed"
+	cd $BUNDLE_DIR/processGTFSShuttle || report_error "cd failed to $BUNDLE_DIR/processGTFS"
+	./processGTFS.sh || report_error "processGTFSShuttle failed $?"
+        echo "shutting down!"
+        YEAR=`date +"%Y"`
+        MONTH=`date +"%m"`
+        DAY=`date +"%d"`
+  aws ses send-email \
+--from no.reply.onebusaway@gmail.com \
+--destination "{ \"ToAddresses\": [\"sbrown@camsys.com\"], \"CcAddresses\": [], \"BccAddresses\": []}" \
+--message "{ \"Subject\": { \"Data\": \"QA DASH Build Complete\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Qa DASH Build Complete: $(tail -n 80 71/core/$YEAR/$MONTH/$DAY/core.log | tr -d '\n')\"}}}" || report_error "complete but failure sending email"
+
+else
+        echo "Graph dir $dirname already exists!"
+	report_error "Graph dir $dirname already exists!"
+fi
+
+
+
+echo
+exit 0
