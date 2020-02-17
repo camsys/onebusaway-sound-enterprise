@@ -261,6 +261,16 @@ template "#{tomcat_home_dir}/webapps/ROOT/WEB-INF/urlrewrite.xml" do
   mode '0644'
 end
 
+## for dash as well
+# template app urlrewrite
+template "#{tomcat_home_dir}/webapps/tracker/WEB-INF/urlrewrite.xml" do
+  source "app/urlrewrite.xml.erb"
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  mode '0644'
+end
+
+
 # TODO fix build dependency
 %w{mysql-connector-java-5.1.35.jar}.each do |jar_file|
   cookbook_file ["#{tomcat_home_dir}/lib", jar_file].compact.join("/") do
