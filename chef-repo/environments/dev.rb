@@ -16,7 +16,7 @@ default_attributes({
                            "version_transitime_web" => "0.0.42-SNAPSHOT",
                            "version_shuttle_transitime_core" => "0.0.42-SNAPSHOT",
                            "version_shuttle_transitime_web" => "0.0.42-SNAPSHOT",
-                           "repositories" => ["http://repo.obaweb.org:8080/archiva/repository/snapshots/"]
+                           "repositories" => ["https://repo.camsys-apps.com/snapshots/"]
                        },
                        "db_instance" => "db",  
                        "db_master" => "db.dev.wmata.obaweb.org",
