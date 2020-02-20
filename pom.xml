@@ -10,37 +10,7 @@
   <packaging>pom</packaging>
   <version>2.0.47-cs-SNAPSHOT</version>
   <name>onebusaway-wmata-enterprise</name>
-    <repositories>
-    <repository>
-      <id>releases-obaweb-repo</id>
-      <url>http://repo.obaweb.org:8080/archiva/repository/releases/</url> 
-    </repository>
-    <repository>
-      <id>snapshots-obaweb-repo</id>
-      <url>http://repo.obaweb.org:8080/archiva/repository/snapshots/</url> 
-    </repository>
-    <repository>
-      <id>releases-camsys-repo</id>
-      <url>http://developer.onebusaway.org/archiva/repository/releases/</url> 
-    </repository>
-    <repository>
-      <id>snapshots-camsys-repo</id>
-      <url>http://developer.onebusaway.org/archiva/repository/snapshots/</url> 
-    </repository>
-    </repositories>
-  <distributionManagement>
-    <repository>
-      <id>releases-obaweb-repo</id>
-      <name>OneBusAway OBAWEB Release Repo</name>
-      <url>http://repo.obaweb.org:8080/archiva/repository/releases/</url> 
-    </repository>
-    <snapshotRepository>
-      <id>snapshots-obaweb-repo</id>
-      <name>OneBusAway OBAWEB Snapshot Repo</name>
-      <url>http://repo.obaweb.org:8080/archiva/repository/snapshots/</url> 
-    </snapshotRepository>
-  </distributionManagement>
-  
+
 	<modules>
 	  <module>onebusaway-enterprise-wmata-webapp</module>
 	</modules>
