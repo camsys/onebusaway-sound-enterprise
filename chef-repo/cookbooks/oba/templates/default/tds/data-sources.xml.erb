@@ -59,8 +59,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     </bean>
 
   <bean class="org.onebusaway.transit_data_federation.impl.realtime.gtfs_realtime.GtfsRealtimeSource">
-    <property name="alertsUrl" value="http://<%= node[:oba][:admin_server] %>/api/1.pb" />
-    <property name="refreshInterval" value="300" />
+    <property name="alertsUrl" value="http://<%= node[:oba][:admin_server] %>/api/alerts/1.pb" />
+    <property name="refreshInterval" value="60" />
     <property name="agencyIds">
       <list>
         <value>1</value>
@@ -68,8 +68,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     </property>
   </bean>
   <bean class="org.onebusaway.transit_data_federation.impl.realtime.gtfs_realtime.GtfsRealtimeSource">
-    <property name="alertsUrl" value="http://<%= node[:oba][:admin_server] %>/api/71.pb" />
-    <property name="refreshInterval" value="300" />
+    <property name="alertsUrl" value="http://<%= node[:oba][:admin_server] %>/api/alerts/71.pb" />
+    <property name="refreshInterval" value="60" />
     <property name="agencyIds">
       <list>
         <value>71</value>
@@ -77,7 +77,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     </property>
   </bean>
   <bean class="org.onebusaway.transit_data_federation.impl.realtime.gtfs_realtime.GtfsRealtimeSource">
-    <property name="alertsUrl" value="http://<%= node[:oba][:admin_server] %>/api/45.pb" />
+    <property name="alertsUrl" value="http://<%= node[:oba][:admin_server] %>/api/alerts/45.pb" />
     <property name="refreshInterval" value="300" />
     <property name="agencyIds">
       <list>
