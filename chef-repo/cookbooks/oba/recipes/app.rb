@@ -13,6 +13,13 @@ directory node[:oba][:tds][:bundle_path] do
 end
 
 # create hsqldb path
+directory "/var/lib/oba/db" do
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  action :create
+  recursive true
+end
+
 directory "/var/lib/oba/db/tds" do
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
