@@ -12,6 +12,14 @@ directory node[:oba][:tds][:bundle_path] do
   recursive true
 end
 
+# create hsqldb path
+directory "/var/lib/oba/db/tds" do
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  action :create
+  recursive true
+end
+
 mvn_version = node[:oba][:mvn][:version_app]
 mvn_branded_version = node[:oba][:mvn][:version_branded]
 
