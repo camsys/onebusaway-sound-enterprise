@@ -12,6 +12,21 @@ directory node[:oba][:tds][:bundle_path] do
   recursive true
 end
 
+# create hsqldb path
+directory "/var/lib/oba/db" do
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  action :create
+  recursive true
+end
+
+directory "/var/lib/oba/db/tds" do
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  action :create
+  recursive true
+end
+
 mvn_version = node[:oba][:mvn][:version_app]
 mvn_branded_version = node[:oba][:mvn][:version_branded]
 
@@ -118,7 +133,6 @@ maven "#{node[:oba][:dash_webapp][:artifact]}" do
   packaging "war"
   owner node[:tomcat][:user]
   repositories node[:oba][:mvn][:repositories]
-#  only_if { node[:oba][:env] == "dev" }
 end
 
 ###
@@ -180,7 +194,7 @@ script "deploy_front_end" do
   # deploy enterprise
   sudo mkdir #{tomcat_home_dir}/webapps/ROOT
   sudo unzip #{mvn_webapp_dest_file} -d #{tomcat_home_dir}/webapps/ROOT || exit 1
-  # deploy tracker
+  # deploy dash regardless of env
   sudo mkdir #{tomcat_home_dir}/webapps/tracker
   sudo unzip /tmp/war/#{node[:oba][:dash_webapp][:artifact]}-#{mvn_branded_version}.war -d #{tomcat_home_dir}/webapps/tracker || exit 1
 
@@ -188,7 +202,7 @@ script "deploy_front_end" do
 end
 
 ###
-# start deploy branded webapps
+# start deploy branded webapps but only on dev
 ###
 # deploy onebusaway-enterprise-wmata-webapp
 # deploy onebusaway-enterprise-sound-webapp

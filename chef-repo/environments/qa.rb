@@ -7,16 +7,16 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "2.0.26-cs",
-                           "version_twilio" => "2.0.26-cs",
-                           "version_core" => "2.0.26-cs",
-                           "version_app" => "2.0.26-cs",
-                           "version_branded" => "2.0.26-cs",
+                           "version_admin" => "2.0.55-cs",
+                           "version_twilio" => "2.0.55-cs",
+                           "version_core" => "2.0.55-cs",
+                           "version_app" => "2.0.55-cs",
+                           "version_branded" => "2.0.55-cs",
                            "version_transitime_core" => "0.0.35.1",
                            "version_transitime_web" => "0.0.35.1",
                            "version_shuttle_transitime_core" => "0.0.39",
                            "version_shuttle_transitime_web" => "0.0.39",
-                           "repositories" => ["http://repo.obaweb.org:8080/archiva/repository/releases/"]
+                           "repositories" => ["https://repo.camsys-apps.com/releases/"]
                        },
                        "db_instance" => "db",
                        "db_master" => "db.qa.wmata.obaweb.org",
@@ -43,6 +43,9 @@ default_attributes({
                        },
                        "hart_webapp" => {
                           "artifact" => "onebusaway-enterprise-hart-webapp"
+                       },
+                       "dash_webapp" => {
+                           "artifact" => "onebusaway-enterprise-dash-webapp"
                        },
                        "sound_webapp" => {
                           "artifact" => "onebusaway-enterprise-sound-webapp"
