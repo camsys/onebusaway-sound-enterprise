@@ -79,7 +79,6 @@
     </bean>
     -->
         <!--  look up these values from web.xml/context.xml as they change per environment -->
-        <!--
     <jee:jndi-lookup id="xwikiUrlBean" jndi-name="java:comp/env/xwikiUrl" resource-ref="true" ></jee:jndi-lookup>
     <jee:jndi-lookup id="xwikiDocumentEditUrlBean" jndi-name="java:comp/env/wikiDocumentEditUrl" resource-ref="true" ></jee:jndi-lookup>
     <jee:jndi-lookup id="xwikiAttachmentUrlBean" jndi-name="java:comp/env/wikiAttachmentUrl" resource-ref="true" ></jee:jndi-lookup>
@@ -93,6 +92,5 @@
         <property name="wikiDocumentEditUrl" ref="xwikiDocumentEditUrlBean" />
         <property name="wikiAttachmentUrl" ref="xwikiAttachmentUrlBean" />
     </bean>
-    -->
     <import resource="classpath:branded-sources.xml" />
 </beans>
