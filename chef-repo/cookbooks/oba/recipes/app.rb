@@ -266,6 +266,16 @@ template "#{tomcat_home_dir}/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   mode '0644'
 end
 
+# we need to do the same for tracker so that xwiki works
+# template app data-sources
+template "#{tomcat_home_dir}/webapps/tracker/WEB-INF/classes/data-sources.xml" do
+  source "tracker/data-sources.xml.erb"
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  mode '0644'
+end
+
+
 # template app urlrewrite
 template "#{tomcat_home_dir}/webapps/ROOT/WEB-INF/urlrewrite.xml" do
   source "app/urlrewrite.xml.erb"
