@@ -3,31 +3,22 @@
     <WatchedResource>WEB-INF/web.xml</WatchedResource>
 
     <!-- database configuration moved to server.xml -->
-<Resource name="jdbc/appDB"
-          auth="Container"
-          type="javax.sql.DataSource"
-          factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
-          testWhileIdle="true"
-          testOnBorrow="true"
-          testOnReturn="false"
-          validationQuery="SELECT 1"
-          validationInterval="30000"
-          timeBetweenEvictionRunsMillis="30000"
-          maxActive="100"
-          minIdle="2"
-          maxWait="10000"
-          initialSize="2"
-          removeAbandonedTimeout="60"
-          removeAbandoned="true"
-          logAbandoned="true"
-          minEvictableIdleTimeMillis="300000"
-          jmxEnabled="true"
-          jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;
-            org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
-          username="<%= node[:oba][:db_user] %>"
-          password="<%= node[:oba][:db_password] %>"
-          driverClassName="com.mysql.jdbc.Driver"
-          url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_instance_name] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true" />
+
+    <Resource name="jdbc/appDB"
+      auth="Container"
+      type="javax.sql.DataSource"
+      maxTotal="50"
+      maxIdle="1"
+      maxWaitMillis="30000"
+      validationQuery="select 1"
+      testWhileIdle="true"
+      timeBetweenEvictionRunsMillis="10000"
+      minEvictableIdleTimeMillis="60000"
+      username="<%= node[:oba][:db_user] %>"
+      password="<%= node[:oba][:db_password] %>"
+      driverClassName="com.mysql.jdbc.Driver"
+      url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_instance_name] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true" >
+     </Resource>
 
     <Resource name="jdbc/agencyMetadataDB"
       auth="Container"

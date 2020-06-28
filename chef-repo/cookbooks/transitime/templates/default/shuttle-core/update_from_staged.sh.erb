@@ -1,5 +1,5 @@
 #!/bin/bash -x
-SERVER="admin.dev.wmata.obaweb.org"
+SERVER="admin.qa.wmata.obaweb.org"
 PORT="80"
 BUNDLE_DIR=/var/lib/oba/transitime
 
@@ -7,7 +7,7 @@ report_error() {
   aws ses send-email \
 --from no.reply.onebusaway@gmail.com \
 --destination "{ \"ToAddresses\": [\"sbrown@camsys.com\"], \"CcAddresses\": [], \"BccAddresses\": []}" \
---message "{ \"Subject\": { \"Data\": \"DEV DASH FAIL: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Dev Error: $1\"}}}"
+--message "{ \"Subject\": { \"Data\": \"QA DASH FAIL: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Qa Error: $1\"}}}"
   exit 1
 }
 
@@ -61,7 +61,7 @@ if [ ! -d "$dirname" ]; then
   aws ses send-email \
 --from no.reply.onebusaway@gmail.com \
 --destination "{ \"ToAddresses\": [\"sbrown@camsys.com\"], \"CcAddresses\": [], \"BccAddresses\": []}" \
---message "{ \"Subject\": { \"Data\": \"DEV DASH Build Complete\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Dev DASH Build Complete: $(tail -n 80 71/core/$YEAR/$MONTH/$DAY/core.log | tr -d '\n')\"}}}" || report_error "complete but failure sending email"
+--message "{ \"Subject\": { \"Data\": \"QA DASH Build Complete\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Qa DASH Build Complete: $(tail -n 80 71/core/$YEAR/$MONTH/$DAY/core.log | tr -d '\n')\"}}}" || report_error "complete but failure sending email"
 
 else
         echo "Graph dir $dirname already exists!"

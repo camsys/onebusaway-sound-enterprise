@@ -1,7 +1,7 @@
 tomcat_instance_name = node[:oba][:tomcat][:instance_name]
 tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
-tomcat_start_command = "systemctl start #{tomcat_instance_name}"
-tomcat_restart_command = "systemctl restart #{tomcat_instance_name}"
+tomcat_start_command = "systemctl start tomcat_tomcat8"
+tomcat_restart_command = "systemctl restart tomcat_tomcat8"
 
 
 log "Downloading wars"
@@ -82,6 +82,16 @@ template "/var/lib/oba/transitime/web/config/transiTimeConfig.xml" do
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
+end
+directory "/usr/local/transitime/config" do
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  action :create
+  recursive true
+end
+
+link "/usr/local/transitime/config/transiTimeConfig.xml" do
+  to "/var/lib/oba/transitime/web/config/transiTimeConfig.xml"
 end
 
 # template transitime configuration

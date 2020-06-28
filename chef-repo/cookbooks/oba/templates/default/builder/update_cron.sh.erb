@@ -4,7 +4,7 @@ report_error() {
   aws ses send-email \
 --from no.reply.onebusaway@gmail.com \
 --destination "{ \"ToAddresses\": [\"sbrown@camsys.com\"], \"CcAddresses\": [], \"BccAddresses\": []}" \
---message "{ \"Subject\": { \"Data\": \"DEV FAIL: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Dev Error: $1\"}}}"
+--message "{ \"Subject\": { \"Data\": \"QA FAIL: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Qa Error: $1\"}}}"
   echo "issue $1"
   #exit 1
 }
@@ -12,7 +12,7 @@ report_finish() {
   aws ses send-email \
 --from no.reply.onebusaway@gmail.com \
 --destination "{ \"ToAddresses\": [\"sbrown@camsys.com\"], \"CcAddresses\": [], \"BccAddresses\": []}" \
---message "{ \"Subject\": { \"Data\": \"DEV COMPLETE: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Dev COMPLETE: $1 ${2} \"}}}"
+--message "{ \"Subject\": { \"Data\": \"QA COMPLETE: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Qa COMPLETE: $1 ${2} \"}}}"
   echo "issue $1"
   #exit 1
 }
