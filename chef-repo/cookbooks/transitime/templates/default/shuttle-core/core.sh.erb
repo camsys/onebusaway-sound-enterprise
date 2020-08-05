@@ -31,7 +31,7 @@ java \
   -Dtransitime.avl.snsKey='<%= node[:shuttle][:snsKey] %>' \
   -Dtransitime.avl.snsSecret='<%= node[:shuttle][:snsSecret] %>' \
   -Dtransitime.avl.snsArn='<%= node[:shuttle][:snsArn] %>' \
-  -Dtransitime.environmentName=<%= node["oba"]["env"] %> \
+  -Dtransitime.environmentName='<%= node["oba"]["env"] %>_dash' \
   -Dtransitime.cloudwatch.awsAccessKey='<%= node["aws"]["cloudwatch_publish_key"] %>' \
   -Dtransitime.cloudwatch.awsSecretKey='<%= node["aws"]["cloudwatch_publish_secret"] %>' \
   -Dtransitime.cloudwatch.awsEndpoint='<%= node["aws"]["cloudwatch_endpoint"] %>' \
