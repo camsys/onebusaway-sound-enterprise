@@ -10,27 +10,7 @@
 		<s:set var="link" value="getText('main.about.link')" />
 		<li style="width: 20%;"><a href="${link}">About</a></li>
 		<s:set var="link" value="getText('main.tools.link')" />
-		<li style="width: 20%;"><a href="${link}">Tools</a>
-			<ul>
-				<s:set var="link" value="getText('main.apps.link')" />
-				<li><a href="${link}">Apps</a>
-					<ul>
-						<s:set var="link" value="getText('main.ios.link')" />
-						<li><a href="${link}">iOS</a></li>
-						<s:set var="link" value="getText('main.android.link')" />
-						<li><a href="${link}">Android</a></li>
-						<s:set var="link" value="getText('main.windows.link')" />
-						<li><a href="${link}">Windows</a></li>
-					</ul>
-				</li>
-				<s:set var="link" value="getText('main.sms.link')" />
-				<li><a href="${link}">SMS</a></li>
-				<s:set var="link" value="getText('main.mobiletext.link')" />
-				<li><a href="${link}">Mobile - Text</a></li>
-				<s:set var="link" value="getText('main.iphoneoptimized.link')" />
-				<li><a href="${link}">Mobile - iPhone Optimized</a></li>
-			</ul>
-		</li>
+		<li style="width: 20%;"><a href="${link}">Tools</a></li>
 		<s:set var="link" value="getText('main.developers.link')" />
 		<li style="width: 20%;"><a href="${link}">Developers</a></li>
 		<s:set var="link" value="getText('main.contact.link')" />
