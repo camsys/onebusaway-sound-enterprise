@@ -199,3 +199,17 @@
 .clear {
 	clear: both;	
 }
+
+.floatinginfobox {
+    float: right;
+    margin: 6px 0 6px 12px;
+    min-height: 20px;
+    padding: 19px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+}
