@@ -24,8 +24,11 @@
 default['maven']['m2_home'] = '/usr/local/maven'
 default['maven']['mavenrc']['opts'] = '-Dmaven.repo.local=$HOME/.m2/repository -Xmx384m'
 default['maven']['version'] = '3.5.2'
-default['maven']['url'] = "http://archive.apache.org/dist/maven/maven-#{node['maven']['version'].split('.')[0]}/#{node['maven']['version']}/binaries/apache-maven-#{node['maven']['version']}-bin.tar.gz"
-default['maven']['checksum'] = '707b1f6e390a65bde4af4cdaf2a24d45fc19a6ded00fff02e91626e3e42ceaff'
-default['maven']['plugin_version'] = '2.10'
+# default['maven']['url'] = "http://archive.apache.org/dist/maven/maven-#{node['maven']['version'].split('.')[0]}/#{node['maven']['version']}/binaries/apache-maven-#{node['maven']['version']}-bin.tar.gz"
+# default['maven']['checksum'] = '707b1f6e390a65bde4af4cdaf2a24d45fc19a6ded00fff02e91626e3e42ceaff'
+# default['maven']['plugin_version'] = '2.10'
+default['maven']['url'] = "https://s3.amazonaws.com/repo.camsys-apps.com/third-party/org/apache/maven/maven/3.5.4/apache-maven-3.5.4-bin.tar.gz"
+default['maven']['checksum'] = 'ce50b1c91364cb77efe3776f756a6d92b76d9038b0a0782f7d53acf1e997a14d'
+default['maven']['version'] = '3.5.4'
 default['maven']['repositories'] = ['http://repo1.maven.apache.org/maven']
 default['maven']['setup_bin'] = true
