@@ -62,6 +62,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
   <bean id="wmata_alerts" class="org.onebusaway.transit_data_federation.impl.realtime.gtfs_realtime.GtfsRealtimeSource">
     <property name="alertCollectionUrl" value="http://<%= node[:oba][:admin_server] %>/api/alerts/service/1.pb" />
     <property name="refreshInterval" value="300" />
+    <property name="alertSourcePrefix" value="WMATA_" />
     <property name="agencyIds">
       <list>
         <value>1</value>
