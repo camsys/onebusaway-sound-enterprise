@@ -21,7 +21,7 @@ property :instance_name, String, name_property: true
 property :version, String, default: '8.0.47'
 property :install_path, String, default: lazy { |r| "/opt/tomcat_#{r.instance_name}_#{r.version.tr('.', '_')}/" }
 property :tarball_base_uri, String, default: 'https://repo.camsys-apps.com/third-party/apache/tomcat', desired_state: false
-property :checksum_base_uri, String, default: 'http://checksum_base_uri', desired_state: false
+property :checksum_base_uri, String, default: '', desired_state: false
 property :verify_checksum, [true, false], default: true, desired_state: false
 property :dir_mode, String, default: '0750'
 property :exclude_docs, [true, false], default: true, desired_state: false
