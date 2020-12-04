@@ -67,7 +67,7 @@ action :install do
   remote_file "apache #{new_resource.version} tarball" do
     source tarball_uri
     path new_resource.tarball_path
-    verify { |file| validate_checksum(file) } if new_resource.verify_checksum
+    #verify { |file| validate_checksum(file) } if new_resource.verify_checksum
     # If a file already exists at the path specified, and we skip checksum verification, then we can assume that the file was laid down by the user.
     not_if { ::File.exist?(new_resource.tarball_path) } unless new_resource.verify_checksum
   end
