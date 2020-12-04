@@ -105,7 +105,7 @@ default_attributes({
                        "user" => "tomcat_user",
                        "group" => "tomcat_group",
                        "base_version" => "8",
-                       "version" => "8.0.60",
+                       "version" => "8.5.60",
                        "verify_checksum" => "false"
                      },
                      "java" => {
