@@ -39,7 +39,7 @@ action :install do
   validate_version
 
   # Support file:// uri moniker but short-circuit into a better pattern.
-  new_resource.tarball_path = new_resource.tarball_uri.sub(%r{^file://}, '') if new_resource.tarball_uri.start_with?('file://')
+  #new_resource.tarball_path = new_resource.tarball_uri.sub(%r{^file://}, '') if new_resource.tarball_uri.start_with?('file://')
 
   # some RHEL systems lack tar in their minimal install
   package 'tar'
