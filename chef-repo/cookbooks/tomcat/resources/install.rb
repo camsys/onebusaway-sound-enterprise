@@ -20,7 +20,7 @@
 property :instance_name, String, name_property: true
 property :version, String, default: '8.0.47'
 property :install_path, String, default: lazy { |r| "/opt/tomcat_#{r.instance_name}_#{r.version.tr('.', '_')}/" }
-property :tarball_base_uri, String, default: 'http://tarball_base_uri', desired_state: false
+property :tarball_base_uri, String, default: 'https://s3.amazonaws.com/repo.camsys-apps.com/third-party/apache', desired_state: false
 property :checksum_base_uri, String, default: 'http://checksum_base_uri', desired_state: false
 property :verify_checksum, [true, false], default: true, desired_state: false
 property :dir_mode, String, default: '0750'
@@ -28,7 +28,7 @@ property :exclude_docs, [true, false], default: true, desired_state: false
 property :exclude_examples, [true, false], default: true, desired_state: false
 property :exclude_manager, [true, false], default: false, desired_state: false
 property :exclude_hostmanager, [true, false], default: false, desired_state: false
-property :tarball_uri, String, default: "https://s3.amazonaws.com/repo.camsys-apps.com/third-party/apache", desired_state: false
+property :tarball_uri, String, default: '', desired_state: false
 property :tarball_path, String, default: lazy { |r| "#{Chef::Config['file_cache_path']}/apache-tomcat-#{r.version}.tar.gz" }, desired_state: false
 property :tarball_validate_ssl, [true, false], default: true, desired_state: false
 property :tomcat_user, String, default: lazy { |r| "tomcat_#{r.instance_name}" }
