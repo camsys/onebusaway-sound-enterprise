@@ -28,7 +28,7 @@ property :exclude_docs, [true, false], default: true, desired_state: false
 property :exclude_examples, [true, false], default: true, desired_state: false
 property :exclude_manager, [true, false], default: false, desired_state: false
 property :exclude_hostmanager, [true, false], default: false, desired_state: false
-property :tarball_uri, String, default: false, desired_state: false
+property :tarball_uri, String, default: '', desired_state: false
 property :tarball_path, String, default: lazy { |r| "#{Chef::Config['file_cache_path']}/apache-tomcat-#{r.version}.tar.gz" }, desired_state: false
 property :tarball_validate_ssl, [true, false], default: true, desired_state: false
 property :tomcat_user, String, default: lazy { |r| "tomcat_#{r.instance_name}" }
