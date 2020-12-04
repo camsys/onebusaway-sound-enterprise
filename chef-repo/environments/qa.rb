@@ -106,6 +106,7 @@ default_attributes({
                        "group" => "tomcat_group",
                        "base_version" => "8",
                        "version" => "8.0.60",
+                       "verify_checksum" => "false",
                        "tarball_uri" => "https://s3.amazonaws.com/repo.camsys-apps.com/third-party/org/apache/tomcat/apache-tomcat-8.5.60.tar.gz"
                      },
                      "java" => {
