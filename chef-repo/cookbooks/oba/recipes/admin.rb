@@ -155,6 +155,7 @@ tomcat_install "watchdog" do
   exclude_hostmanager true
   tomcat_user node[:tomcat][:user]
   tomcat_group node[:tomcat][:group]
+  version node[:tomcat][:version]
 end
 
 tomcat_service "watchdog" do
