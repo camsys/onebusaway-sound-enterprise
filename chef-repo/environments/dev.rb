@@ -12,8 +12,8 @@ default_attributes({
                            "version_core" => "2.0.71-cs-SNAPSHOT",
                            "version_app" => "2.0.71-cs-SNAPSHOT",
                            "version_branded" => "2.0.71-cs-SNAPSHOT",
-                           "version_transitime_core" => "0.0.42-SNAPSHOT",
-                           "version_transitime_web" => "0.0.42-SNAPSHOT",
+                           "version_transitime_core" => "0.0.43-SNAPSHOT",
+                           "version_transitime_web" => "0.0.43-SNAPSHOT",
                            "version_shuttle_transitime_core" => "0.0.42-SNAPSHOT",
                            "version_shuttle_transitime_web" => "0.0.42-SNAPSHOT",
                            "repositories" => ["https://repo.camsys-apps.com/snapshots/"]
