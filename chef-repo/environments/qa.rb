@@ -106,7 +106,8 @@ default_attributes({
                        "group" => "tomcat_group",
                        "base_version" => "8",
                        "version" => "8.5.60",
-                       "verify_checksum" => "false"
+                       "verify_checksum" => "false",
+                       "instance_name" => "tomcat8"
                      },
                      "java" => {
                        "jdk_version" => "8"
