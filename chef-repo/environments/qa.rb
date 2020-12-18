@@ -7,13 +7,13 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "2.0.56-cs",
-                           "version_twilio" => "2.0.56-cs",
-                           "version_core" => "2.0.56-cs",
-                           "version_app" => "2.0.56-cs",
-                           "version_branded" => "2.0.56-cs",
-                           "version_transitime_core" => "0.0.35.1",
-                           "version_transitime_web" => "0.0.35.1",
+                           "version_admin" => "2.0.70-cs",
+                           "version_twilio" => "2.0.70-cs",
+                           "version_core" => "2.0.70-cs",
+                           "version_app" => "2.0.70-cs",
+                           "version_branded" => "2.0.70-cs",
+                           "version_transitime_core" => "0.0.42",
+                           "version_transitime_web" => "0.0.42",
                            "version_shuttle_transitime_core" => "0.0.39",
                            "version_shuttle_transitime_web" => "0.0.39",
                            "repositories" => ["https://repo.camsys-apps.com/releases/"]
@@ -55,8 +55,8 @@ default_attributes({
                        "ses_password" => "AhxzNCmnlqzK8qjPwsQ41yHUbk3meOlHZvVRuoVoM7/t",
                        "ses_from" => "btss@wmata.com",
                        "mobile_require_ssl" => "true",
-		       "tomcat" => {
-                           "instance_name" => "tomcat8"
+                       "tomcat" => {
+                         "instance_name" => "tomcat8"
                        }
                      },
                        "transitime" => {
@@ -104,9 +104,12 @@ default_attributes({
                         "alarmNonCriticalSns" => "arn:aws:sns:us-east-1:372394388595:OBAWMATA-Monitoring-qa"
                        },
                      "tomcat" => {
+                       "instance_name" => "tomcat8",
                        "user" => "tomcat_user",
                        "group" => "tomcat_group",
-                       "base_version" => "8"
+                       "base_version" => "8",
+                       "version" => "8.5.60",
+                       "verify_checksum" => "false"
                      },
                      "java" => {
                        "jdk_version" => "8"

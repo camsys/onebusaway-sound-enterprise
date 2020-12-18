@@ -18,10 +18,10 @@
 #
 
 property :instance_name, String, name_property: true
-property :version, String, default: '8.0.47'
+property :version, String, default: '8.5.60'
 property :install_path, String, default: lazy { |r| "/opt/tomcat_#{r.instance_name}_#{r.version.tr('.', '_')}/" }
-property :tarball_base_uri, String, default: 'http://archive.apache.org/dist/tomcat/', desired_state: false
-property :checksum_base_uri, String, default: 'http://archive.apache.org/dist/tomcat/', desired_state: false
+property :tarball_base_uri, String, default: 'https://repo.camsys-apps.com/third-party/apache/tomcat', desired_state: false
+property :checksum_base_uri, String, default: '', desired_state: false
 property :verify_checksum, [true, false], default: true, desired_state: false
 property :dir_mode, String, default: '0750'
 property :exclude_docs, [true, false], default: true, desired_state: false
@@ -39,7 +39,7 @@ action :install do
   validate_version
 
   # Support file:// uri moniker but short-circuit into a better pattern.
-  new_resource.tarball_path = new_resource.tarball_uri.sub(%r{^file://}, '') if new_resource.tarball_uri.start_with?('file://')
+  #new_resource.tarball_path = new_resource.tarball_uri.sub(%r{^file://}, '') if new_resource.tarball_uri.start_with?('file://')
 
   # some RHEL systems lack tar in their minimal install
   package 'tar'
@@ -67,7 +67,7 @@ action :install do
   remote_file "apache #{new_resource.version} tarball" do
     source tarball_uri
     path new_resource.tarball_path
-    verify { |file| validate_checksum(file) } if new_resource.verify_checksum
+    #verify { |file| validate_checksum(file) } if new_resource.verify_checksum
     # If a file already exists at the path specified, and we skip checksum verification, then we can assume that the file was laid down by the user.
     not_if { ::File.exist?(new_resource.tarball_path) } unless new_resource.verify_checksum
   end
