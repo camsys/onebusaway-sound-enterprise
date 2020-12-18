@@ -55,6 +55,9 @@ default_attributes({
                        "ses_password" => "AhxzNCmnlqzK8qjPwsQ41yHUbk3meOlHZvVRuoVoM7/t",
                        "ses_from" => "btss@wmata.com",
                        "mobile_require_ssl" => "true",
+                       "tomcat" => {
+                         "instance_name" => "tomcat8"
+                       }
                      },
                        "transitime" => {
                          "dbhost" => "db.qa.wmata.obaweb.org:3306",
@@ -106,8 +109,7 @@ default_attributes({
                        "group" => "tomcat_group",
                        "base_version" => "8",
                        "version" => "8.5.60",
-                       "verify_checksum" => "false",
-                       "instance_name" => "tomcat8"
+                       "verify_checksum" => "false"
                      },
                      "java" => {
                        "jdk_version" => "8"
