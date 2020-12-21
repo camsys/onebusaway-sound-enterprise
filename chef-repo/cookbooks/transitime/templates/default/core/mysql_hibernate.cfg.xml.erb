@@ -36,6 +36,7 @@
         having to create an additional connection. -->
    <property name="hibernate.c3p0.min_size">2</property>
    <!-- Default max_size is 100 but that seems excessive -->
+   <property name="hibernate.c3p0.maxPoolSize">120</property>
    <property name="hibernate.c3p0.max_size">120</property>
    <!-- Default timeout is 0s (forever) but want to reclaim connections 
         if not used for more than 5 minutes so don't get too many 
