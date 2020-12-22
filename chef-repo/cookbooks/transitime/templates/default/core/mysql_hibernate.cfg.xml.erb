@@ -34,7 +34,7 @@
    <!-- Default min_size is 1 but want to make sure that can have at
         least a couple of db access happening simultaneously without
         having to create an additional connection. -->
-   <property name="hibernate.c3p0.min_size">10</property>
+   <property name="hibernate.c3p0.min_size">20</property>
    <!-- Default max_size is 100 but that seems excessive -->
    <property name="hibernate.c3p0.max_size">120</property>
    <!-- Default timeout is 0s (forever) but want to reclaim connections 
