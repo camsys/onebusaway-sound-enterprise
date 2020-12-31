@@ -273,3 +273,17 @@ directory '/var/lib/oba/monitoring' do
   mode '0755'
   action :create
 end
+
+# a patch as logrotate isn't working right
+cron "cleanup-tomcat-logs" do
+  command "find /var/lib/tomcat8/logs -mtime +3 -delete >/dev/null 2>&1"
+  user "root"
+  hour '12'
+  minute '0'
+end
+cron "cleanup-tomcat-catalina" do
+  command "truncate -s '<100m' /var/lib/tomcat8/logs/catalina.out >/dev/null 2>&1"
+  user "root"
+  hour '12'
+  minute '0'
+end
