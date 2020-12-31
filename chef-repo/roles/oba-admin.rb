@@ -8,6 +8,7 @@ run_list(
         "recipe[oba::tomcat_install]",
         "recipe[tomcat-apache-mod-jk]",
         "recipe[oba::admin]",
+        "recipe[oba::twilio]",
         "recipe[transitime::gtfs]"
 )
 

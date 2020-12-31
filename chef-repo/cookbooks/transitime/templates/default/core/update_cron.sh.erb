@@ -12,7 +12,7 @@ report_finish() {
   aws ses send-email \
 --from no.reply.onebusaway@gmail.com \
 --destination "{ \"ToAddresses\": [\"sbrown@camsys.com\"], \"CcAddresses\": [], \"BccAddresses\": []}" \
---message "{ \"Subject\": { \"Data\": \"QA COMPLETE: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Qa COMPLETE: $1 ${2} \"}}}"
+--message "{ \"Subject\": { \"Data\": \"QA COMPLETE: $1\", \"Charset\": \"UTF-8\"}, \"Body\": {\"Text\": {\"Data\": \"Qa COMPLETE: $1\"}}}"
   echo "issue $1"
   #exit 1
 }
@@ -30,7 +30,6 @@ mount /dev/xvdf /var/lib/oba || report_error "mount failed"
 /sbin/swapon /var/lib/oba/swapfile2 || report_error "swapon failed"
 /usr/sbin/service tomcat7 stop
 /usr/sbin/service tomcat7-watchdog stop
-sudo -u ubuntu /var/lib/oba/transitime/processGTFS/update_from_staged.sh  ; report_finish "Elapsed time: ${SECONDS}s" "$(mysql -N -u transitime -pchangeme --host=db.dev.wmata.obaweb.org transitime -e 'select max(configRev) as configRev, processedTime from ConfigRevision;' | tr '[\t]' '[\ ]')"
-
+sudo -u ubuntu /var/lib/oba/transitime/processGTFS/update_from_staged.sh  ; report_finish "Elapsed time: ${SECONDS}s"
 sleep 600
 /sbin/shutdown -h now

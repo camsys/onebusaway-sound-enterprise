@@ -78,11 +78,23 @@ end
 
 
 template "/var/lib/oba/transitime/web/config/transiTimeConfig.xml" do
-  source "web/transitimeConfig.xml.erb"
+  source "shuttle-web/transitimeConfig.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
 end
+
+directory "/usr/local/transitime/config" do
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  action :create
+  recursive true
+end
+
+link "/usr/local/transitime/config/transiTimeConfig.xml" do
+  to "/var/lib/oba/transitime/web/config/transiTimeConfig.xml"
+end
+
 
 # template transitime configuration
 template "#{tomcat_home_dir}/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml" do
@@ -97,6 +109,7 @@ template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/transiTimeConfig.xml" d
   group node[:tomcat][:group]
   mode '0644'
 end
+
 # template transitime configuration
 template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/mysql_hibernate.cfg.xml" do
   source "shuttle-web/mysql_hibernate.cfg.xml.erb"
@@ -123,6 +136,6 @@ directory '/var/lib/oba/monitoring' do
 end
 
 cron "check-tomcat-size" do
-  command "[ '`ps -o rss -u #{tomcat_instance_name} --no-headers`' -gt 5068924 ] && #{tomcat_restart_command}"
+  command "[ `ps -o rss -u tomcat_user --no-headers` -gt 1637312 ] && #{tomcat_restart_command}"
   user "root"
 end

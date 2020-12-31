@@ -7,15 +7,16 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "2.0.17-cs-SNAPSHOT",
-                           "version_core" => "2.0.17-cs-SNAPSHOT",
-                           "version_app" => "2.0.17-cs-SNAPSHOT",
-                           "version_branded" => "2.0.17-cs-SNAPSHOT",
-                           "version_transitime_core" => "0.0.40-SNAPSHOT",
-                           "version_transitime_web" => "0.0.40-SNAPSHOT",
-                           "version_shuttle_transitime_core" => "0.0.40-SNAPSHOT",
-                           "version_shuttle_transitime_web" => "0.0.40-SNAPSHOT",
-                           "repositories" => ["http://repo.obaweb.org:8080/archiva/repository/snapshots/"]
+                           "version_admin" => "2.0.71-cs-SNAPSHOT",
+                           "version_twilio" => "2.0.71-cs-SNAPSHOT",
+                           "version_core" => "2.0.71-cs-SNAPSHOT",
+                           "version_app" => "2.0.71-cs-SNAPSHOT",
+                           "version_branded" => "2.0.71-cs-SNAPSHOT",
+                           "version_transitime_core" => "0.0.43-SNAPSHOT",
+                           "version_transitime_web" => "0.0.43-SNAPSHOT",
+                           "version_shuttle_transitime_core" => "0.0.42-SNAPSHOT",
+                           "version_shuttle_transitime_web" => "0.0.42-SNAPSHOT",
+                           "repositories" => ["https://repo.camsys-apps.com/snapshots/"]
                        },
                        "db_instance" => "db",  
                        "db_master" => "db.dev.wmata.obaweb.org",
@@ -42,6 +43,9 @@ default_attributes({
                        },
                        "hart_webapp" => {
                           "artifact" => "onebusaway-enterprise-hart-webapp"
+                       },
+                       "dash_webapp" => {
+                           "artifact" => "onebusaway-enterprise-dash-webapp"
                        },
                        "sound_webapp" => {
                           "artifact" => "onebusaway-enterprise-sound-webapp"
@@ -111,7 +115,7 @@ default_attributes({
                        "user" => "tomcat_user",
                        "group" => "tomcat_group",
                        "base_version" => "8",
-                       "version" => "8.0.53"
+                       "version" => "8.5.60"
                      },
                      "java" => {
                        "jdk_version" => "8"

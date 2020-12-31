@@ -2,8 +2,8 @@ log "Downloading wars"
 
 ## admin properties
 tomcat_instance_name = node[:oba][:tomcat][:instance_name]
-tomcat_stop_command = "systemctl stop #{tomcat_instance_name}"
-tomcat_start_command = "systemctl start #{tomcat_instance_name}"
+tomcat_stop_command = "systemctl stop tomcat_tomcat8"
+tomcat_start_command = "systemctl start tomcat_tomcat8"
 
 tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
 tomcat_cache_dir = "/var/cache/#{tomcat_instance_name}"
@@ -80,13 +80,14 @@ template "#{tomcat_home_dir}/conf/context.xml" do
 end
 
 # increase session timeout for admin users
+# and add secure flag to header
 script "sed_session_timeout" do
   interpreter "bash"
   user "root"
   cwd node[:oba][:home]
   ignore_failure true
   code <<-EOH
-  sed -i "#{tomcat_home_dir}/conf/web.xml" -e 's!<session-timeout>30</session-timeout>!<session-timeout>480</session-timeout>!g'
+  sed -i "#{tomcat_home_dir}/conf/web.xml" -e 's!<session-timeout>30</session-timeout>!<session-timeout>480</session-timeout><cookie-config><http-only>true</http-only><secure>true</secure></cookie-config>!g'
   EOH
 end
 
@@ -155,6 +156,7 @@ tomcat_install "watchdog" do
   exclude_hostmanager true
   tomcat_user node[:tomcat][:user]
   tomcat_group node[:tomcat][:group]
+  version node[:tomcat][:version]
 end
 
 tomcat_service "watchdog" do

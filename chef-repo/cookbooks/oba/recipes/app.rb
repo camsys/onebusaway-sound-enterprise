@@ -1,11 +1,26 @@
 # app tomcat properties
 tomcat_instance_name = node[:oba][:tomcat][:instance_name]
 tomcat_home_dir = "/var/lib/#{tomcat_instance_name}"
-tomcat_stop_command = "systemctl stop #{tomcat_instance_name}"
-tomcat_start_command = "systemctl restart #{tomcat_instance_name}"
+tomcat_stop_command = "systemctl stop tomcat_tomcat8"
+tomcat_start_command = "systemctl restart tomcat_tomcat8"
 
 # create bundle directory
 directory node[:oba][:tds][:bundle_path] do
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  action :create
+  recursive true
+end
+
+# create hsqldb path
+directory "/var/lib/oba/db" do
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  action :create
+  recursive true
+end
+
+directory "/var/lib/oba/db/tds" do
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   action :create
@@ -110,9 +125,32 @@ maven "#{node[:oba][:hart_webapp][:artifact]}" do
   repositories node[:oba][:mvn][:repositories]
   only_if { node[:oba][:env] == "dev" }
 end
+# dash
+maven "#{node[:oba][:dash_webapp][:artifact]}" do
+  group_id node[:oba][:mvn][:group_id]
+  dest "/tmp/war"
+  version mvn_branded_version
+  packaging "war"
+  owner node[:tomcat][:user]
+  repositories node[:oba][:mvn][:repositories]
+end
+
 ###
 # end dev branded test
 ###
+
+# descrease session timeout for web users
+# and add secure flag to header
+script "sed_session_timeout" do
+  interpreter "bash"
+  user "root"
+  cwd node[:oba][:home]
+  ignore_failure true
+  code <<-EOH
+  sed -i "#{tomcat_home_dir}/conf/web.xml" -e 's!<session-timeout>30</session-timeout>!<session-timeout>20</session-timeout><cookie-config><http-only>true</http-only><secure>true</secure></cookie-config>!g'
+  EOH
+end
+
 
 # template config.json for local configuration
 template "/var/lib/oba/config.json" do
@@ -169,12 +207,15 @@ script "deploy_front_end" do
   # deploy enterprise
   sudo mkdir #{tomcat_home_dir}/webapps/ROOT
   sudo unzip #{mvn_webapp_dest_file} -d #{tomcat_home_dir}/webapps/ROOT || exit 1
+  # deploy dash regarless of env
+  sudo mkdir #{tomcat_home_dir}/webapps/tracker
+  sudo unzip /tmp/war/#{node[:oba][:dash_webapp][:artifact]}-#{mvn_branded_version}.war -d #{tomcat_home_dir}/webapps/tracker || exit 1
 
   EOH
 end
 
 ###
-# start deploy branded webapps
+# start deploy branded webapps but only on dev
 ###
 # deploy onebusaway-enterprise-wmata-webapp
 # deploy onebusaway-enterprise-sound-webapp
@@ -192,7 +233,7 @@ script "deploy_front_end" do
   # deploy sound
   sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-enterprise-sound-webapp
   sudo unzip /tmp/war/#{node[:oba][:sound_webapp][:artifact]}-#{mvn_branded_version}.war -d #{tomcat_home_dir}/webapps/onebusaway-enterprise-sound-webapp || exit 1
-  # deploy wmata
+  # deploy hart
   sudo mkdir #{tomcat_home_dir}/webapps/onebusaway-enterprise-hart-webapp
   sudo unzip /tmp/war/#{node[:oba][:hart_webapp][:artifact]}-#{mvn_branded_version}.war -d #{tomcat_home_dir}/webapps/onebusaway-enterprise-hart-webapp || exit 1
   EOH
@@ -237,6 +278,16 @@ template "#{tomcat_home_dir}/webapps/ROOT/WEB-INF/classes/data-sources.xml" do
   group node[:tomcat][:group]
   mode '0644'
 end
+
+# we need to do the same for tracker so that xwiki works
+# template app data-sources
+template "#{tomcat_home_dir}/webapps/tracker/WEB-INF/classes/data-sources.xml" do
+  source "tracker/data-sources.xml.erb"
+  owner node[:tomcat][:user]
+  group node[:tomcat][:group]
+  mode '0644'
+end
+
 
 # template app urlrewrite
 template "#{tomcat_home_dir}/webapps/ROOT/WEB-INF/urlrewrite.xml" do
