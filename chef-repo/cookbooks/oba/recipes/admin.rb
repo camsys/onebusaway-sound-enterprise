@@ -306,3 +306,50 @@ script "restart watchdog" do
   #{tomcat_w_start_command}
   EOH
 end
+
+# a patch as logrotate isn't working right
+cron "cleanup-tomcat-logs" do
+  command "find /var/lib/tomcat8/logs -mtime +3 -delete >/dev/null 2>&1"
+  user "root"
+  hour '12'
+  minute '0'
+end
+cron "cleanup-tomcat-catalina" do
+  command "truncate -s '<100m' /var/lib/tomcat8/logs/catalina.out >/dev/null 2>&1"
+  user "root"
+  hour '12'
+  minute '0'
+end
+
+cron "cleanup-tomcat-catalina" do
+  command "truncate -s '<100m' /var/lib/tomcat8/logs/catalina.out >/dev/null 2>&1"
+  user "root"
+  hour '12'
+  minute '0'
+end
+cron "cleanup-watchdog-catalina" do
+  command "truncate -s '<100m' /var/lib/tomcat8-watchdog/logs/catalina.out >/dev/null 2>&1"
+  user "root"
+  hour '12'
+  minute '0'
+end
+
+cron "cleanup-watchdog-catalina" do
+  command "truncate -s '<100m' /var/lib/tomcat8-watchdog/logs/catalina.out >/dev/null 2>&1"
+  user "root"
+  hour '12'
+  minute '0'
+end
+cron "cleanup-twilio-catalina" do
+  command "truncate -s '<100m' /var/lib/tomcat8-twilio/logs/catalina.out >/dev/null 2>&1"
+  user "root"
+  hour '12'
+  minute '0'
+end
+
+cron "cleanup-twilio-catalina" do
+  command "truncate -s '<100m' /var/lib/tomcat8-twilio/logs/catalina.out >/dev/null 2>&1"
+  user "root"
+  hour '12'
+  minute '0'
+end
