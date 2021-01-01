@@ -30,14 +30,14 @@ maven "transitclockCore" do
 end
 
 
-systemd_service 'predictions' do
-  description 'Predictions Service'
-  after 'network.target'
-  service do
-    user node[:oba][:user]
-    exec_start "/var/lib/oba/transitime/core/core.sh"
-  end
-end
+#systemd_service 'predictions' do
+#  description 'Predictions Service'
+#  after 'network.target'
+#  service do
+#    user node[:oba][:user]
+#    exec_start "/var/lib/oba/transitime/core/core.sh"
+#  end
+#end
 
 service 'predictions' do
   action [:enable]
