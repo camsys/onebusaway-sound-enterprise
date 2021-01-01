@@ -14,8 +14,8 @@ default_attributes({
                            "version_branded" => "2.0.72-cs-SNAPSHOT",
                            "version_transitime_core" => "0.0.43-SNAPSHOT",
                            "version_transitime_web" => "0.0.43-SNAPSHOT",
-                           "version_shuttle_transitime_core" => "0.0.42-SNAPSHOT",
-                           "version_shuttle_transitime_web" => "0.0.42-SNAPSHOT",
+                           "version_shuttle_transitime_core" => "2.0.38-rpts",
+                           "version_shuttle_transitime_web" => "2.0.42-rpts",
                            "repositories" => ["https://repo.camsys-apps.com/snapshots/"]
                        },
                        "db_instance" => "db",  
@@ -101,6 +101,7 @@ default_attributes({
                          "snsSecret" => "",
                          "snsArn" => "",
                          "retentionDays" => "30",
+			 "ehcacheDiskStore" => "/var/lib/oba/transitime/cache",
                          "env" => "dash_shuttle_dev"
                      },
 

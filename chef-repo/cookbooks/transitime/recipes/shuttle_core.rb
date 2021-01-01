@@ -7,8 +7,8 @@
 mvn_version = node[:oba][:mvn][:version_shuttle_transitime_core]
 mvn_core_dest_file = "/tmp/chef/transitimeCore-#{mvn_version}-Core.jar"
 log "maven dependency installed at #{mvn_core_dest_file}"
-maven "transitimeCore" do
-  group_id "transitime"
+maven "transitclockCore" do
+  group_id "TheTransitClock"
   dest "/tmp/chef/"
   version mvn_version
   packaging "jar"
@@ -19,8 +19,8 @@ end
 
 mvn_update_dest_file = "/tmp/chef/transitimeCore-#{mvn_version}-UpdateTravelTimes.jar"
 log "maven dependency installed at #{mvn_update_dest_file}"
-maven "transitimeCore" do
-  group_id "transitime"
+maven "transitclockCore" do
+  group_id "TheTransitClock"
   dest "/tmp/chef/"
   version mvn_version
   packaging "jar"
@@ -95,6 +95,14 @@ template "/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml" do
   group 'ubuntu'
   mode '0644'
 end
+
+template "/var/lib/oba/transitime/core/ehcache.xml" do
+  source "shuttle-core/ehcache.xml.erb"
+  owner "root"
+  group "root"
+  mode '0755'
+end
+
 
 # template logback configuration
 template "/var/lib/oba/transitime/core/logback.xml" do
