@@ -127,5 +127,6 @@ directory '/usr/local/transitclock/cache' do
   owner 'ubuntu'
   group 'ubuntu'
   mode '0755'
+  recursive true
   action :create
 end
