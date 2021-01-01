@@ -5,7 +5,7 @@
 ###
 
 mvn_version = node[:oba][:mvn][:version_shuttle_transitime_core]
-mvn_core_dest_file = "/tmp/chef/transitimeCore-#{mvn_version}-Core.jar"
+mvn_core_dest_file = "/tmp/chef/transitclockCore-#{mvn_version}-Core.jar"
 log "maven dependency installed at #{mvn_core_dest_file}"
 maven "transitclockCore" do
   group_id "TheTransitClock"
@@ -17,7 +17,7 @@ maven "transitclockCore" do
   repositories node[:oba][:mvn][:repositories]
 end
 
-mvn_update_dest_file = "/tmp/chef/transitimeCore-#{mvn_version}-UpdateTravelTimes.jar"
+mvn_update_dest_file = "/tmp/chef/transiclockCore-#{mvn_version}-UpdateTravelTimes.jar"
 log "maven dependency installed at #{mvn_update_dest_file}"
 maven "transitclockCore" do
   group_id "TheTransitClock"
