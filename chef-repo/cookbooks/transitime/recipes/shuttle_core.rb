@@ -17,7 +17,7 @@ maven "transitclockCore" do
   repositories node[:oba][:mvn][:repositories]
 end
 
-mvn_update_dest_file = "/tmp/chef/transiclockCore-#{mvn_version}-UpdateTravelTimes.jar"
+mvn_update_dest_file = "/tmp/chef/transitclockCore-#{mvn_version}-UpdateTravelTimes.jar"
 log "maven dependency installed at #{mvn_update_dest_file}"
 maven "transitclockCore" do
   group_id "TheTransitClock"
