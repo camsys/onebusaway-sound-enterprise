@@ -123,7 +123,7 @@ directory '/var/lib/oba/monitoring' do
   mode '0755'
   action :create
 end
-directory '/var/lib/oba/transitime/cache' do
+directory '/usr/local/transitclock/cache' do
   owner 'ubuntu'
   group 'ubuntu'
   mode '0755'
