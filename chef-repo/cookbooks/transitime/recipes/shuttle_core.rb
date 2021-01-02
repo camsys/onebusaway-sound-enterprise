@@ -88,7 +88,7 @@ template "/var/lib/oba/transitime/core/core.sh" do
 end
 
 template "/var/lib/oba/transitime/core/transitClockCoreConfig.properties" do
-  source "shuttle-core/core.sh.erb"
+  source "shuttle-core/transitClockCoreConfig.properties.erb"
   owner "root"
   group "root"
   mode '0755'
