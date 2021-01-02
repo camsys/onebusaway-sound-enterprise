@@ -103,6 +103,8 @@ default_attributes({
                          "snsSecret" => "",
                          "snsArn" => "",
                          "retentionDays" => "30",
+			 "daysPopulateHistoricalCache" => "28",	
+			 "fillHistoricalCaches" => "true",
 
 			 "ehcacheDiskStore" => "/var/lib/oba/transitime/cache",
                          "env" => "dash_shuttle_dev"
