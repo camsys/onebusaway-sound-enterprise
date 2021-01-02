@@ -65,6 +65,7 @@ script "deploy_web_pre" do
   sudo unzip #{mvn_api_dest_file} -d /#{tomcat_home_dir}/webapps/api || exit 1
   sudo rm -f #{tomcat_home_dir}/webapps/web/WEB-INF/classes/transiTimeConfig.xml
   sudo rm -f #{tomcat_home_dir}/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml
+  sudo rm -f #{tomcat_home_dir}/webapps/api/WEB-INF/classes/mysql_hibernate.cfg.xml
   EOH
 end
 
@@ -77,7 +78,7 @@ template "/var/lib/oba/transitime/web/transitClockWebConfig.properties" do
 end
 
 template "/var/lib/oba/transitime/web/mysql_hibernate.cfg.xml" do
-  source "web/mysql_hibernate.cfg.xml.erb"
+  source "shuttle-web/mysql_hibernate.cfg.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
