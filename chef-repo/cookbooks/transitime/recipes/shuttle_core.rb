@@ -87,6 +87,13 @@ template "/var/lib/oba/transitime/core/core.sh" do
   mode '0755'
 end
 
+template "/var/lib/oba/transitime/core/transitClockCoreConfig.properties" do
+  source "shuttle-core/core.sh.erb"
+  owner "root"
+  group "root"
+  mode '0755'
+end
+
 
 # template transitime configuration
 template "/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml" do
