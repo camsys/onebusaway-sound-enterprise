@@ -29,7 +29,7 @@
         <ehcache:resources>
             <!-- how many in memory at a time -->
             <ehcache:heap unit="entries">4500</ehcache:heap><!-- 1500 buses * previous / current / next trip -->
-            <ehcache:offheap unit="GB">8</ehcache:offheap>
+            <ehcache:offheap unit="GB">1</ehcache:offheap>
             <ehcache:disk persistent="false" unit="GB">40</ehcache:disk>
         </ehcache:resources>
         <ehcache:disk-store-settings thread-pool="pool-disk"
@@ -44,7 +44,7 @@
         </ehcache:expiry>
         <ehcache:resources>
             <ehcache:heap unit="entries">10000</ehcache:heap><!-- 10,000 stops * 1 day -->
-            <ehcache:offheap unit="GB">8</ehcache:offheap>
+            <ehcache:offheap unit="GB">1</ehcache:offheap>
             <ehcache:disk persistent="false" unit="GB">40</ehcache:disk>
         </ehcache:resources>
         <ehcache:disk-store-settings thread-pool="pool-disk"
@@ -59,7 +59,7 @@
         </ehcache:expiry>
         <ehcache:resources>
             <ehcache:heap unit="entries">225000</ehcache:heap><!-- 4500 active trips * 50 -->
-            <ehcache:offheap unit="GB">8</ehcache:offheap>
+            <ehcache:offheap unit="GB">1</ehcache:offheap>
             <ehcache:disk persistent="false" unit="GB">15</ehcache:disk>
         </ehcache:resources>
     </ehcache:cache>

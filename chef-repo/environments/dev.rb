@@ -91,7 +91,7 @@ default_attributes({
                          "dbusername" => "shuttle",
                          "dbpassword" => "changeme",
                          "dbname" => "dash_transitime",
-			 "memcache_host" => "dev.rzrtx2.cfg.use1.cache.amazonaws.com",
+			 "memcache_host" => "dev.31krdw.0001.use1.cache.amazonaws.com",
                          "memcache_port" => "11211",
                          "agency" => "71",
                          "api_key" => "612bek1",
