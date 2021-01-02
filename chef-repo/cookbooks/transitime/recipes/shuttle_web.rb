@@ -76,28 +76,34 @@ template "/var/lib/oba/transitime/web/transitClockWebConfig.properties" do
   mode '0644'
 end
 
-
-# template transitime configuration
-template "#{tomcat_home_dir}/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml" do
-  source "shuttle-web/mysql_hibernate.cfg.xml.erb"
-  owner node[:tomcat][:user]
-  group node[:tomcat][:group]
-  mode '0644'
-end
-template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/transiTimeConfig.xml" do
-  source "shuttle-web/transitimeConfig.xml.erb"
+template "/var/lib/oba/transitime/web/mysql_hibernate.cfg.xml" do
+  source "web/mysql_hibernate.cfg.xml.erb"
   owner node[:tomcat][:user]
   group node[:tomcat][:group]
   mode '0644'
 end
 
 # template transitime configuration
-template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/mysql_hibernate.cfg.xml" do
-  source "shuttle-web/mysql_hibernate.cfg.xml.erb"
-  owner node[:tomcat][:user]
-  group node[:tomcat][:group]
-  mode '0644'
-end
+#template "#{tomcat_home_dir}/webapps/web/WEB-INF/classes/mysql_hibernate.cfg.xml" do
+#  source "shuttle-web/mysql_hibernate.cfg.xml.erb"
+#  owner node[:tomcat][:user]
+#  group node[:tomcat][:group]
+#  mode '0644'
+#end
+#template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/transiTimeConfig.xml" do
+#  source "shuttle-web/transitimeConfig.xml.erb"
+#  owner node[:tomcat][:user]
+#  group node[:tomcat][:group]
+#  mode '0644'
+#end
+
+# template transitime configuration
+#template "#{tomcat_home_dir}/webapps/api/WEB-INF/classes/mysql_hibernate.cfg.xml" do
+#  source "shuttle-web/mysql_hibernate.cfg.xml.erb"
+#  owner node[:tomcat][:user]
+#  group node[:tomcat][:group]
+#  mode '0644'
+#end
 
 template "/var/lib/oba/transitime/web/logback.xml" do
   source "shuttle-web/logback.xml.erb"
