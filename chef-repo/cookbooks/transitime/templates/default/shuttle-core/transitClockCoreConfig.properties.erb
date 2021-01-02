@@ -2,10 +2,10 @@
 #transitclock.avl.playbackStartTime=2019-10-01 05:45:00
 #transitclock.avl.playbackEndTime=2019-10-01 06:15:00
 #transitclock.avl.playbackVehicleId=3923
-transitclock.avl.playbackRealtime=<%= node[:transitime][:playbackRealtime] %>
+transitclock.avl.playbackRealtime=<%= node[:shuttle][:playbackRealtime] %>
 
 transitclock.api.gtfsRtCacheSeconds=10
-transitclock.apikey=<%= node[:transitime][:api_key] %>
+transitclock.apikey=<%= node[:shuttle][:api_key] %>
 
 transitclock.autoBlockAssigner.autoAssignerEnabled=false
 transitclock.autoBlockAssigner.ignoreAvlAssignments=false
@@ -13,16 +13,16 @@ transitclock.autoBlockAssigner.allowableEarlySeconds=600
 transitclock.autoBlockAssigner.allowableLateSeconds=600
 
 transitclock.avl.feedTimeoutInMSecs=4000
-transitclock.avl.gtfsRealtimeFeedURI=<%= node[:transitime][:gtfsRealtimeFeedURI] %>
+transitclock.avl.gtfsRealtimeFeedURI=<%= node[:shuttle][:gtfsRealtimeFeedURI] %>
 transitclock.avl.sqsUrl=<%= node[:shuttle][:sqsUrl] %>
 transitclock.avl.messageLogFrequency=100
 transitclock.avl.sqsKey=<%= node[:shuttle][:sqsKey] %>
 transitclock.avl.sqsSecret=<%= node[:shuttle][:sqsSecret] %>
 transitclock.avl.maxSpeed=50
-transitclock.avl.numThreads=<%= node[:transitime][:numThreads] %>
+#transitclock.avl.numThreads=<%= node[:shuttle][:numThreads] %>
 transitclock.avl.queueSize=2400
-transitclock.avl.serviceIdSuffix=<%= node[:transitime][:serviceIdSuffix] %>
-transitclock.avl.shouldLogToStdOut=<%= node[:transitime][:shouldLogToStdOut] %>
+transitclock.avl.serviceIdSuffix=<%= node[:shuttle][:serviceIdSuffix] %>
+transitclock.avl.shouldLogToStdOut=<%= node[:shuttle][:shouldLogToStdOut] %>
 
 transitclock.blockLoading.agressive=false
 
@@ -74,7 +74,7 @@ transitclock.core.maxPredictionTimeForDbSecs=600
 transitclock.core.maxPredictionsTimeSecs=1800
 transitclock.core.minDistanceForDelayed=100
 transitclock.core.minDistanceForNoProgress=100
-transitclock.core.onlyNeedArrivalDepartures=<%= node[:transitime][:onlyNeedArrivalDepartures] %>
+transitclock.core.onlyNeedArrivalDepartures=<%= node[:shuttle][:onlyNeedArrivalDepartures] %>
 transitclock.core.predictionGeneratorClass=org.transitclock.core.predictiongenerator.scheduled.traveltime.kalman.KalmanPredictionGeneratorImpl
 transitclock.core.shortDistanceDeadheadingSpeed=10
 transitclock.core.timeForDeterminingDelayedSecs=300
@@ -114,7 +114,7 @@ transitclock.modules.optionalModulesList=org.transitclock.core.predAccuracy.Pred
 transitclock.reports.showPredictionSource=true
 transitclock.api.includeSkippedStops=true
 
-#transitclock.trip.feedUrl=<%= node[:transitime][:gtfsTripUpdatesFeedURI] %>
+#transitclock.trip.feedUrl=<%= node[:shuttle][:gtfsTripUpdatesFeedURI] %>
 #transitclock.trip.feedPollingRateSecs=10
 transitclock.avl.csv.url=http://tracker.prod.dash.obaweb.org:8080/events/data.csv?a=dash&u=dash&p=api_password&g=dash_shuttle&tmz=US/Eastern&l=1
 transitclock.externalAssignerEnabled=true

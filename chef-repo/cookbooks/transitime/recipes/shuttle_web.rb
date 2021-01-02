@@ -22,7 +22,7 @@ end
 mvn_api_dest_file = "/tmp/chef/transitclockApi-#{mvn_version}.war"
 log "maven dependency installed at #{mvn_api_dest_file}"
 maven "transitclockApi" do
-  group_id "transitime"
+  group_id "TheTransitClock"
   dest "/tmp/chef"
   version mvn_version
   packaging "war"

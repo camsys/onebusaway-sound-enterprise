@@ -102,6 +102,8 @@ default_attributes({
                          "snsKey" => "",
                          "snsSecret" => "",
                          "snsArn" => "",
+			 "mapTileUrl" => 'https://a.tile.openstreetmap.de/{z}/{x}/{y}.png',
+
                          "retentionDays" => "30",
 			 "daysPopulateHistoricalCache" => "28",	
 			 "fillHistoricalCaches" => "true",

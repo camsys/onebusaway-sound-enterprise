@@ -6,7 +6,7 @@ transitclock.autoBlockAssigner.allowableLateSeconds=180
 transitclock.api.apiKeyLastUpdateLimitSec=3
 transitclock.api.predictionMaxFutureSecs=3600
 transitclock.api.gtfsRtCacheSeconds=10
-transitclock.apikey=<%= node[:transitime][:api_key] %>
+transitclock.apikey=<%= node[:shuttle][:api_key] %>
 
 transitclock.avl.realTime=false
 transitclock.avl.minLongitude=-360.0
@@ -30,6 +30,6 @@ transitclock.usage.maxRequestsTimeMsec=0
 transitclock.reports.showPredictionSource=false
 transitclock.rmi.timeoutSec=300
 
-transitclock.web.mapTileUrl=<%= node[:transitime][:mapTileUrl] %>
+transitclock.web.mapTileUrl=<%= node[:shuttle][:mapTileUrl] %>
 
 transitclock.api.includeSkippedStops=true
