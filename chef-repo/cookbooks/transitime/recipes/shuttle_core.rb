@@ -113,10 +113,32 @@ end
 
 # template logback configuration
 template "/var/lib/oba/transitime/core/logback.xml" do
-  source "core/logback.xml.erb"
+  source "shuttle-core/logback.xml.erb"
   owner 'ubuntu'
   group 'ubuntu'
   mode '0644'
+end
+
+directory node[:shuttle][:ehcacheDiskStore] do
+  owner 'ubuntu'
+  group 'ubuntu'
+  mode '0755'
+  recursive true
+  action :create
+end
+
+script "make_swap" do
+  interpreter "bash"
+  user 'root'
+  cwd "/var/lib/oba/transitime/core"
+  puts "creating swap..."
+  code <<-EOH
+  fallocate -l 16G /swapfile
+  chmod 600 /swapfile 
+  mkswap /swapfile 
+  swapon /swapfile
+  EOH
+  not_if { ::File.exist?("/swapfile") }
 end
 
 service "predictions" do
@@ -128,12 +150,5 @@ directory '/var/lib/oba/monitoring' do
   owner 'ubuntu'
   group 'ubuntu'
   mode '0755'
-  action :create
-end
-directory '/usr/local/transitclock/cache' do
-  owner 'ubuntu'
-  group 'ubuntu'
-  mode '0755'
-  recursive true
   action :create
 end

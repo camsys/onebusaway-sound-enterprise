@@ -14,6 +14,10 @@ transitclock.autoBlockAssigner.allowableLateSeconds=600
 
 transitclock.avl.feedTimeoutInMSecs=4000
 transitclock.avl.gtfsRealtimeFeedURI=<%= node[:transitime][:gtfsRealtimeFeedURI] %>
+transitime.avl.sqsUrl=<%= node[:shuttle][:sqsUrl] %>
+transitime.avl.messageLogFrequency=100
+transitime.avl.sqsKey=<%= node[:shuttle][:sqsKey] %>
+transitime.avl.sqsSecret=<%= node[:shuttle][:sqsSecret] %>
 transitclock.avl.maxSpeed=50
 transitclock.avl.numThreads=<%= node[:transitime][:numThreads] %>
 transitclock.avl.queueSize=2400
@@ -29,7 +33,7 @@ transitclock.cloudwatch.awsAccessKey=<%= node[:aws][:cloudwatch_publish_key] %>
 transitclock.cloudwatch.awsEndpoint=<%= node[:aws][:cloudwatch_endpoint] %>
 transitclock.cloudwatch.awsSecretKey=<%= node[:aws][:cloudwatch_publish_secret] %>
 
-transitclock.core.agencyId=1
+transitclock.core.agencyId=<%= node[:shuttle][:agency] %>
 transitclock.core.terminatePredictionsAtTripEnd=true
 transitclock.core.allowableEarlyDepartureTimeForLoggingEvent=180
 transitclock.core.allowableEarlyForLayoverSeconds=3600
@@ -43,8 +47,8 @@ transitclock.core.afterStopDistance=50
 transitclock.core.beforeStopDistance=66
 transitclock.core.strictTripAssignmentMatch=true
 
-transitclock.cache.memcached.host=<%= node[:transitime][:memcache_host] %>
-transitclock.cache.memcached.port=<%= node[:transitime][:memcache_port] %>
+transitclock.cache.memcached.host=<%= node[:shuttle][:memcache_host] %>
+transitclock.cache.memcached.port=<%= node[:shuttle][:memcache_port] %>
 
 # number of db processesors
 transitclock.core.parallelThreads=4
@@ -84,8 +88,8 @@ transitclock.core.useArrivalPredictionsForNormalStops=false
 # so try smaller values
 #transitclock.db.batchSize=4000
 transitclock.db.batchSize=500
-transitclock.db.dbName=<%= node[:transitime][:dbname] %>
-transitclock.db.encryptionPassword=<%= node[:transitime][:encryptionPassword] %>
+transitclock.db.dbName=<%= node[:shuttle][:dbname] %>
+transitclock.db.encryptionPassword=<%= node[:shuttle][:encryptionPassword] %>
 transitclock.db.storeDataInDatabase=<%= @storeDataInDatabase %>
 
 transitclock.predAccuracy.stopsPerTrip=1000
@@ -106,12 +110,18 @@ transitclock.updates.pageDbReads=false
 transitclock.updates.pageSize=50000
 
 transitclock.logging.dir=/var/lib/oba/transitime/logs
-transitclock.modules.optionalModulesList=<%= node[:transitime][:optionalModulesList] %>
+transitclock.modules.optionalModulesList=org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.avl.CsvPollingAvlModule;org.transitime.custom.aws.AvlSqsClientModule
 transitclock.reports.showPredictionSource=true
 transitclock.api.includeSkippedStops=true
 
 #transitclock.trip.feedUrl=<%= node[:transitime][:gtfsTripUpdatesFeedURI] %>
 #transitclock.trip.feedPollingRateSecs=10
+transitime.avl.csv.url=http://tracker.prod.dash.obaweb.org:8080/events/data.csv?a=dash&u=dash&p=api_password&g=dash_shuttle&tmz=US/Eastern&l=1
+transitime.externalAssignerEnabled=true
+transitime.externalAssignerUrl=http://admin.<%= node[:oba][:env] %>.wmata.obaweb.org/api/vehicle-assign/get/csv
+transitime.autoBlockAssigner.autoAssignerEnabled=false
+transitime.avl.unmarshaller=org.transitime.custom.aws.DashAvlTypeUnmarshaller
+logback.timezone=America/New_York
 
 # MET-156 - Enable sampling stops from all trip patterns not just longest
 # Only matters when you have a really large sampling size
