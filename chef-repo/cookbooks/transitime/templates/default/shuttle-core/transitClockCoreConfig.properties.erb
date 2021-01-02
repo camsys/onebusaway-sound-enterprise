@@ -26,7 +26,7 @@ transitclock.avl.shouldLogToStdOut=<%= node[:transitime][:shouldLogToStdOut] %>
 
 transitclock.blockLoading.agressive=false
 
-transitclock.cache.core.daysPopulateHistoricalCache=<%= node[:transitime][:daysPopulateHistoricalCache] %>
+transitclock.cache.core.daysPopulateHistoricalCache=<%= node[:shuttle][:daysPopulateHistoricalCache] %>
 transitclock.cache.ehcacheConfigFile=/var/lib/oba/transitime/core/ehcache.xml
 
 transitclock.cloudwatch.awsAccessKey=<%= node[:aws][:cloudwatch_publish_key] %>
@@ -64,7 +64,7 @@ transitclock.core.distanceFromLayoverForEarlyDeparture=250
 transitclock.core.dwelltime.model=org.transitclock.core.predictiongenerator.scheduled.dwell.DwellAverage
 transitclock.core.dwelltime.headwayGeneratorClass=org.transitclock.core.headwaygenerator.LastArrivalsHeadwayGenerator
 transitclock.core.exclusiveBlockAssignments=true
-transitclock.core.fillHistoricalCaches=<%= node[:transitime][:fillHistoricalCaches] %>
+transitclock.core.fillHistoricalCaches=<%= node[:shuttle][:fillHistoricalCaches] %>
 transitclock.core.layoverDistance=1000
 transitclock.core.longDistanceDeadheadingSpeed=20
 transitclock.core.matchHistoryMaxSize=40
