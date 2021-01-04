@@ -9,11 +9,11 @@ java \
   -Dtransitime.core.agencyId=<%= node[:transitime][:agency] %> \
   -Dtransitime.db.dbName=<%= node[:transitime][:dbname] %> \
   -Dtransitime.db.encryptionPassword='<%= node[:transitime][:encryptionPassword] %>' \
-  -Dtransitime.db.batchSize=250 \
+  -Dtransitime.db.batchSize=100 \
   -Dtransitime.avl.minTimeBetweenAvlReportsSecs=15 \
   -Dtransitime.modules.optionalModulesList="org.transitime.core.predAccuracy.PredictionAccuracyModule;org.transitime.custom.aws.AvlSqsClientModule;org.transitime.monitoring.MonitoringModule" \
   -Dtransitime.avl.feedTimeoutInMSecs=30000 \
-  -Dtransitime.core.maxPredictionTimeForDbSecs=60 \
+  -Dtransitime.core.maxPredictionTimeForDbSecs=0 \
   -Dtransitime.core.exclusiveBlockAssignments=true \
   -Dtransitime.core.matchHistoryMaxSize=40 \
   -Dtransitime.avl.queueSize=2400 \
