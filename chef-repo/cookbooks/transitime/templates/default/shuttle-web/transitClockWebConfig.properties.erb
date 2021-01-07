@@ -2,6 +2,8 @@ transitclock.autoBlockAssigner.autoAssignerEnabled=false
 transitclock.autoBlockAssigner.ignoreAvlAssignments=false
 transitclock.autoBlockAssigner.allowableEarlySeconds=180
 transitclock.autoBlockAssigner.allowableLateSeconds=180
+transitclock.db.dbName=<%= node[:shuttle][:dbname] %>
+transitclock.db.encryptionPassword=<%= node[:shuttle][:encryptionPassword] %>
 
 transitclock.api.apiKeyLastUpdateLimitSec=3
 transitclock.api.predictionMaxFutureSecs=3600
