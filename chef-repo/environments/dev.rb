@@ -91,7 +91,7 @@ default_attributes({
                          "dbusername" => "shuttle",
                          "dbpassword" => "changeme",
                          "dbname" => "dash_transitime",
-			 "memcache_host" => "dev.31krdw.cfg.use1.cache.amazonaws.com",
+			                   "memcache_host" => "dev.31krdw.cfg.use1.cache.amazonaws.com",
                          "memcache_port" => "11211",
                          "agency" => "71",
                          "api_key" => "612bek1",
@@ -102,14 +102,12 @@ default_attributes({
                          "snsKey" => "",
                          "snsSecret" => "",
                          "snsArn" => "",
-			 "mapTileUrl" => 'https://a.tile.openstreetmap.de/{z}/{x}/{y}.png',
-
-                         "retentionDays" => "30",
-			 "daysPopulateHistoricalCache" => "28",	
-			 "fillHistoricalCaches" => "true",
-
-			 "ehcacheDiskStore" => "/var/lib/oba/transitime/cache",
-                         "env" => "dash_shuttle_dev"
+			                    "mapTileUrl" => 'https://a.tile.openstreetmap.de/{z}/{x}/{y}.png',
+                          "retentionDays" => "30",
+			                    "daysPopulateHistoricalCache" => "28",
+			                    "fillHistoricalCaches" => "true",
+                          "ehcacheDiskStore" => "/var/lib/oba/transitime/cache",
+                          "env" => "dash_shuttle_dev"
                      },
 
                      "aws" => {
