@@ -76,7 +76,7 @@ transitclock.core.maxPredictionTimeForDbSecs=0
 transitclock.core.maxPredictionsTimeSecs=1800
 transitclock.core.minDistanceForDelayed=100
 transitclock.core.minDistanceForNoProgress=100
-transitclock.core.onlyNeedArrivalDepartures=<%= node[:shuttle][:onlyNeedArrivalDepartures] %>
+#transitclock.core.onlyNeedArrivalDepartures=<%= node[:shuttle][:onlyNeedArrivalDepartures] %>
 transitclock.core.predictionGeneratorClass=org.transitclock.core.predictiongenerator.scheduled.traveltime.kalman.KalmanPredictionGeneratorImpl
 transitclock.core.shortDistanceDeadheadingSpeed=10
 transitclock.core.timeForDeterminingDelayedSecs=300
@@ -92,7 +92,7 @@ transitclock.core.useArrivalPredictionsForNormalStops=false
 transitclock.db.batchSize=500
 transitclock.db.dbName=<%= node[:shuttle][:dbname] %>
 transitclock.db.encryptionPassword=<%= node[:shuttle][:encryptionPassword] %>
-transitclock.db.storeDataInDatabase=<%= @storeDataInDatabase %>
+transitclock.db.storeDataInDatabase=true
 
 transitclock.predAccuracy.stopsPerTrip=1000
 transitclock.predAccuracy.maxPredTimeMinutes=45
