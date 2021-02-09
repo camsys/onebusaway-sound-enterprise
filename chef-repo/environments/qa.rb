@@ -12,8 +12,8 @@ default_attributes({
                            "version_core" => "2.0.74-cs",
                            "version_app" => "2.0.74-cs",
                            "version_branded" => "2.0.74-cs",
-                           "version_transitime_core" => "0.0.48",
-                           "version_transitime_web" => "0.0.48",
+                           "version_transitime_core" => "0.0.49",
+                           "version_transitime_web" => "0.0.49",
                            "version_shuttle_transitime_core" => "0.0.39",
                            "version_shuttle_transitime_web" => "0.0.39",
                            "repositories" => ["https://repo.camsys-apps.com/releases/"]
