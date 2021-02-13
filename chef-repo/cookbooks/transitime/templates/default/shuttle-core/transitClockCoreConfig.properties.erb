@@ -1,0 +1,133 @@
+# Uncomment playbackStartTime and playbackEndTime for Playback Mode
+#transitclock.avl.playbackStartTime=2019-10-01 05:45:00
+#transitclock.avl.playbackEndTime=2019-10-01 06:15:00
+#transitclock.avl.playbackVehicleId=3923
+transitclock.avl.playbackRealtime=<%= node[:shuttle][:playbackRealtime] %>
+
+transitclock.api.gtfsRtCacheSeconds=10
+transitclock.apikey=<%= node[:shuttle][:api_key] %>
+
+transitclock.autoBlockAssigner.autoAssignerEnabled=false
+transitclock.autoBlockAssigner.ignoreAvlAssignments=false
+transitclock.autoBlockAssigner.allowableEarlySeconds=600
+transitclock.autoBlockAssigner.allowableLateSeconds=600
+
+transitclock.avl.feedTimeoutInMSecs=4000
+transitclock.avl.gtfsRealtimeFeedURI=<%= node[:shuttle][:gtfsRealtimeFeedURI] %>
+transitclock.avl.sqsUrl=<%= node[:shuttle][:sqsUrl] %>
+transitclock.avl.messageLogFrequency=100
+transitclock.avl.sqsKey=<%= node[:shuttle][:sqsKey] %>
+transitclock.avl.sqsSecret=<%= node[:shuttle][:sqsSecret] %>
+transitclock.avl.maxSpeed=50
+#transitclock.avl.numThreads=<%= node[:shuttle][:numThreads] %>
+transitclock.avl.queueSize=2400
+transitclock.avl.serviceIdSuffix=<%= node[:shuttle][:serviceIdSuffix] %>
+transitclock.avl.shouldLogToStdOut=<%= node[:shuttle][:shouldLogToStdOut] %>
+transitclock.core.cache.smoothStopArrivalDepartures=false
+transitclock.core.cache.verifyStopArrivalDepartures=false
+
+transitclock.blockLoading.agressive=false
+
+transitclock.cache.core.daysPopulateHistoricalCache=<%= node[:shuttle][:daysPopulateHistoricalCache] %>
+transitclock.cache.ehcacheConfigFile=/var/lib/oba/transitime/core/ehcache.xml
+
+transitclock.cloudwatch.awsAccessKey=<%= node[:aws][:cloudwatch_publish_key] %>
+transitclock.cloudwatch.awsEndpoint=<%= node[:aws][:cloudwatch_endpoint] %>
+transitclock.cloudwatch.awsSecretKey=<%= node[:aws][:cloudwatch_publish_secret] %>
+
+transitclock.core.agencyId=<%= node[:shuttle][:agency] %>
+transitclock.core.terminatePredictionsAtTripEnd=true
+transitclock.core.allowableEarlyDepartureTimeForLoggingEvent=180
+transitclock.core.allowableEarlyForLayoverSeconds=3600
+transitclock.core.allowableEarlySecondsForInitialMatching=1200
+transitclock.core.allowableEarlyTimeForEarlyDepartureSecs=180
+transitclock.core.allowableLateAtTerminalForLoggingEvent=240
+transitclock.core.allowableLateDepartureTimeForLoggingEvent=360
+transitclock.core.allowableLateSeconds=5400
+transitclock.core.allowableNumberOfBadMatches=4
+transitclock.core.afterStopDistance=50
+transitclock.core.beforeStopDistance=66
+transitclock.core.strictTripAssignmentMatch=true
+
+transitclock.cache.memcached.host=<%= node[:shuttle][:memcache_host] %>
+transitclock.cache.memcached.port=<%= node[:shuttle][:memcache_port] %>
+
+# number of db processesors
+transitclock.core.parallelThreads=4
+transitclock.core.cache.tripDataHistoryCache=org.transitclock.core.dataCache.ehcache.scheduled.TripDataHistoryCache
+transitclock.core.cache.errorCacheClass=org.transitclock.core.dataCache.memcached.scheduled.KalmanErrorCache
+#transitclock.core.cache.errorCacheClass=org.transitclock.core.dataCache.ehcache.KalmanErrorCache
+transitclock.core.cache.stopArrivalDepartureCache=org.transitclock.core.dataCache.ehcache.StopArrivalDepartureCache
+#transitclock.core.cache.stopPathPredictionCache=org.transitclock.core.dataCache.StopPathPredictionCache
+transitclock.core.cache.stopPathPredictionCache=org.transitclock.core.dataCache.ehcache.dummy.DummyStopPathPredictionCache
+#transitclock.core.cache.dwellTimeModelCache=org.transitclock.core.dataCache.ehcache.scheduled.DwellTimeModelCache
+transitclock.core.cache.dwellTimeModelCache=org.transitclock.core.dataCache.ehcache.dummy.DummyDwellTimeModelCache
+transitclock.core.distanceFromLayoverForEarlyDeparture=250
+transitclock.core.dwelltime.model=org.transitclock.core.predictiongenerator.scheduled.dwell.DwellAverage
+transitclock.core.dwelltime.headwayGeneratorClass=org.transitclock.core.headwaygenerator.LastArrivalsHeadwayGenerator
+transitclock.core.exclusiveBlockAssignments=true
+transitclock.core.fillHistoricalCaches=<%= node[:shuttle][:fillHistoricalCaches] %>
+transitclock.core.layoverDistance=1000
+transitclock.core.longDistanceDeadheadingSpeed=20
+transitclock.core.matchHistoryMaxSize=40
+transitclock.core.maxHeadingOffsetFromSegment=200
+#transitclock.core.maxPredictionTimeForDbSecs=1200
+transitclock.core.maxPredictionTimeForDbSecs=0
+transitclock.core.maxPredictionsTimeSecs=1800
+transitclock.core.minDistanceForDelayed=100
+transitclock.core.minDistanceForNoProgress=100
+#transitclock.core.onlyNeedArrivalDepartures=<%= node[:shuttle][:onlyNeedArrivalDepartures] %>
+transitclock.core.predictionGeneratorClass=org.transitclock.core.predictiongenerator.scheduled.traveltime.kalman.KalmanPredictionGeneratorImpl
+transitclock.core.shortDistanceDeadheadingSpeed=10
+transitclock.core.timeForDeterminingDelayedSecs=300
+transitclock.core.timeForDeterminingNoProgress=360000
+transitclock.core.trackHistoricalCaches=false
+transitclock.core.useArrivalPredictionsForNormalStops=false
+
+##
+# usually you want this very large, but errors are common
+# and the queue degrades to one at a time in those instances
+# so try smaller values
+#transitclock.db.batchSize=4000
+transitclock.db.batchSize=500
+transitclock.db.dbName=<%= node[:shuttle][:dbname] %>
+transitclock.db.encryptionPassword=<%= node[:shuttle][:encryptionPassword] %>
+transitclock.db.storeDataInDatabase=true
+
+transitclock.predAccuracy.stopsPerTrip=1000
+transitclock.predAccuracy.maxPredTimeMinutes=45
+
+transitclock.prediction.data.kalman.mindays=3
+transitclock.prediction.data.kalman.maxdays=5
+transitclock.prediction.data.kalman.maxdaystosearch=28
+transitclock.prediction.data.kalman.percentagePredictionMethodDifferencene=50
+transitclock.prediction.data.kalman.tresholdForDifferenceEventLog=60000
+transitclock.prediction.rls.lambda=0.9
+
+transitclock.timeout.pollingRateSecs=60
+
+transitclock.environmentName=<%= node["shuttle"]["env"] %>
+transitclock.hibernate.configFile=/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml
+transitclock.updates.pageDbReads=false
+transitclock.updates.pageSize=50000
+
+transitclock.logging.dir=/var/lib/oba/transitime/logs
+transitclock.modules.optionalModulesList=org.transitclock.core.predAccuracy.PredictionAccuracyModule;org.transitclock.avl.CsvPollingAvlModule;org.transitclock.custom.aws.AvlSqsClientModule;org.transitclock.monitoring.MonitoringModule
+transitclock.reports.showPredictionSource=true
+transitclock.api.includeSkippedStops=true
+
+#transitclock.trip.feedUrl=<%= node[:shuttle][:gtfsTripUpdatesFeedURI] %>
+#transitclock.trip.feedPollingRateSecs=10
+transitclock.avl.csv.url=http://tracker.prod.dash.obaweb.org:8080/events/data.csv?a=dash&u=dash&p=api_password&g=dash_shuttle&tmz=US/Eastern&l=1
+transitclock.externalAssignerEnabled=true
+transitclock.externalAssignerUrl=http://admin.<%= node[:oba][:env] %>.wmata.obaweb.org/api/vehicle-assign/get/csv
+transitclock.avl.unmarshaller=org.transitclock.custom.aws.DashAvlTypeUnmarshaller
+logback.timezone=America/New_York
+
+# MET-156 - Enable sampling stops from all trip patterns not just longest
+# Only matters when you have a really large sampling size
+transitclock.predAccuracy.includeStopsFromAllTripPatterns=true
+
+#org.transitclock.core.predictiongenerator.bias.linear.rate=""
+#org.transitclock.core.predictiongenerator.bias.linear.updown=""
+transitclock.core.predictiongenerator.biasadjuster=

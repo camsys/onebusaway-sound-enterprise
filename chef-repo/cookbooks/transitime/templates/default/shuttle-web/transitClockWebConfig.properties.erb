@@ -1,0 +1,37 @@
+transitclock.autoBlockAssigner.autoAssignerEnabled=false
+transitclock.autoBlockAssigner.ignoreAvlAssignments=false
+transitclock.autoBlockAssigner.allowableEarlySeconds=180
+transitclock.autoBlockAssigner.allowableLateSeconds=180
+transitclock.db.dbName=<%= node[:shuttle][:dbname] %>
+transitclock.db.encryptionPassword=<%= node[:shuttle][:encryptionPassword] %>
+
+transitclock.api.apiKeyLastUpdateLimitSec=3
+transitclock.api.predictionMaxFutureSecs=3600
+transitclock.api.gtfsRtCacheSeconds=10
+transitclock.apikey=<%= node[:shuttle][:api_key] %>
+
+transitclock.avl.realTime=false
+transitclock.avl.minLongitude=-360.0
+transitclock.avl.maxLongitude=360.0
+transitclock.avl.minLatitude=-360.0
+transitclock.avl.maxLatitude=360.0
+
+transitclock.core.agencyId=1
+
+transitclock.find.dwelltime=30000
+transitclock.find.fuzzytime=180000
+
+transitclock.hibernate.configFile=/var/lib/oba/transitime/web/mysql_hibernate.cfg.xml
+
+transitclock.schedBasedPreds.pollingRateMsec=30000
+transitclock.schedBasedPreds.beforeStartTimeMins=5
+
+transitclock.usage.maxRequests=1000
+transitclock.usage.maxRequestsTimeMsec=0
+
+transitclock.reports.showPredictionSource=false
+transitclock.rmi.timeoutSec=300
+
+transitclock.web.mapTileUrl=<%= node[:shuttle][:mapTileUrl] %>
+
+transitclock.api.includeSkippedStops=true

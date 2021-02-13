@@ -7,15 +7,15 @@ default_attributes({
                        "home" => "/home/ubuntu",
                        "mvn" => {
                            "group_id" => "org.onebusaway",
-                           "version_admin" => "2.0.71-cs-SNAPSHOT",
-                           "version_twilio" => "2.0.71-cs-SNAPSHOT",
-                           "version_core" => "2.0.71-cs-SNAPSHOT",
-                           "version_app" => "2.0.71-cs-SNAPSHOT",
-                           "version_branded" => "2.0.71-cs-SNAPSHOT",
+                           "version_admin" => "2.0.76-cs-SNAPSHOT",
+                           "version_twilio" => "2.0.76-cs-SNAPSHOT",
+                           "version_core" => "2.0.76-cs-SNAPSHOT",
+                           "version_app" => "2.0.76-cs-SNAPSHOT",
+                           "version_branded" => "2.0.76-cs-SNAPSHOT",
                            "version_transitime_core" => "0.0.43-SNAPSHOT",
                            "version_transitime_web" => "0.0.43-SNAPSHOT",
-                           "version_shuttle_transitime_core" => "0.0.42-SNAPSHOT",
-                           "version_shuttle_transitime_web" => "0.0.42-SNAPSHOT",
+                           "version_shuttle_transitime_core" => "2.0.46-cs-SNAPSHOT",
+                           "version_shuttle_transitime_web" => "2.0.46-cs-SNAPSHOT",
                            "repositories" => ["https://repo.camsys-apps.com/snapshots/"]
                        },
                        "db_instance" => "db",  
@@ -91,6 +91,8 @@ default_attributes({
                          "dbusername" => "shuttle",
                          "dbpassword" => "changeme",
                          "dbname" => "dash_transitime",
+			                   "memcache_host" => "dev.31krdw.cfg.use1.cache.amazonaws.com",
+                         "memcache_port" => "11211",
                          "agency" => "71",
                          "api_key" => "612bek1",
                          "encryptionPassword" => "dash_transitime",
@@ -100,8 +102,12 @@ default_attributes({
                          "snsKey" => "",
                          "snsSecret" => "",
                          "snsArn" => "",
-                         "retentionDays" => "30",
-                         "env" => "dash_shuttle_dev"
+			                    "mapTileUrl" => 'https://a.tile.openstreetmap.de/{z}/{x}/{y}.png',
+                          "retentionDays" => "30",
+			                    "daysPopulateHistoricalCache" => "28",
+			                    "fillHistoricalCaches" => "true",
+                          "ehcacheDiskStore" => "/var/lib/oba/transitime/cache",
+                          "env" => "dash_shuttle_dev"
                      },
 
                      "aws" => {
