@@ -5,10 +5,10 @@
 ###
 
 mvn_version = node[:oba][:mvn][:version_shuttle_transitime_core]
-mvn_core_dest_file = "/tmp/chef/transitimeCore-#{mvn_version}-Core.jar"
+mvn_core_dest_file = "/tmp/chef/transitclockCore-#{mvn_version}-Core.jar"
 log "maven dependency installed at #{mvn_core_dest_file}"
-maven "transitimeCore" do
-  group_id "transitime"
+maven "transitclockCore" do
+  group_id "TheTransitClock"
   dest "/tmp/chef/"
   version mvn_version
   packaging "jar"
@@ -17,10 +17,10 @@ maven "transitimeCore" do
   repositories node[:oba][:mvn][:repositories]
 end
 
-mvn_update_dest_file = "/tmp/chef/transitimeCore-#{mvn_version}-UpdateTravelTimes.jar"
+mvn_update_dest_file = "/tmp/chef/transitclockCore-#{mvn_version}-UpdateTravelTimes.jar"
 log "maven dependency installed at #{mvn_update_dest_file}"
-maven "transitimeCore" do
-  group_id "transitime"
+maven "transitclockCore" do
+  group_id "TheTransitClock"
   dest "/tmp/chef/"
   version mvn_version
   packaging "jar"
@@ -30,22 +30,22 @@ maven "transitimeCore" do
 end
 
 
-systemd_service 'predictions' do
-  description 'Predictions Service'
-  after 'network.target'
-  service do
-    user node[:oba][:user]
-    exec_start "/var/lib/oba/transitime/core/core.sh"
-  end
-end
+#systemd_service 'predictions' do
+#  description 'Predictions Service'
+#  after 'network.target'
+#  service do
+#    user node[:oba][:user]
+#    exec_start "/var/lib/oba/transitime/core/core.sh"
+#  end
+#end
 
-service 'predictions' do
-  action [:enable]
-end
-
-service "predictions" do
-  action [:stop]
-end
+# service 'predictions' do
+#   action [:enable]
+# end
+#
+# service "predictions" do
+#   action [:stop]
+# end
 
 
 directory "/var/lib/oba/transitime/core" do
@@ -87,6 +87,13 @@ template "/var/lib/oba/transitime/core/core.sh" do
   mode '0755'
 end
 
+template "/var/lib/oba/transitime/core/transitClockCoreConfig.properties" do
+  source "shuttle-core/transitClockCoreConfig.properties.erb"
+  owner "root"
+  group "root"
+  mode '0755'
+end
+
 
 # template transitime configuration
 template "/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml" do
@@ -96,12 +103,42 @@ template "/var/lib/oba/transitime/core/mysql_hibernate.cfg.xml" do
   mode '0644'
 end
 
+template "/var/lib/oba/transitime/core/ehcache.xml" do
+  source "shuttle-core/ehcache.xml.erb"
+  owner "root"
+  group "root"
+  mode '0755'
+end
+
+
 # template logback configuration
 template "/var/lib/oba/transitime/core/logback.xml" do
-  source "core/logback.xml.erb"
+  source "shuttle-core/logback.xml.erb"
   owner 'ubuntu'
   group 'ubuntu'
   mode '0644'
+end
+
+directory node[:shuttle][:ehcacheDiskStore] do
+  owner 'ubuntu'
+  group 'ubuntu'
+  mode '0755'
+  recursive true
+  action :create
+end
+
+script "make_swap" do
+  interpreter "bash"
+  user 'root'
+  cwd "/var/lib/oba/transitime/core"
+  puts "creating swap..."
+  code <<-EOH
+  fallocate -l 16G /swapfile
+  chmod 600 /swapfile 
+  mkswap /swapfile 
+  swapon /swapfile
+  EOH
+  not_if { ::File.exist?("/swapfile") }
 end
 
 service "predictions" do
