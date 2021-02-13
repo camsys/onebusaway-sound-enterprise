@@ -39,13 +39,13 @@ end
 #  end
 #end
 
-service 'predictions' do
-  action [:enable]
-end
-
-service "predictions" do
-  action [:stop]
-end
+# service 'predictions' do
+#   action [:enable]
+# end
+#
+# service "predictions" do
+#   action [:stop]
+# end
 
 
 directory "/var/lib/oba/transitime/core" do
