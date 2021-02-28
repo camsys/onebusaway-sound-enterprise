@@ -7,7 +7,7 @@ transitclock.avl.playbackRealtime=<%= node[:shuttle][:playbackRealtime] %>
 transitclock.api.gtfsRtCacheSeconds=10
 transitclock.apikey=<%= node[:shuttle][:api_key] %>
 
-transitclock.autoBlockAssigner.autoAssignerEnabled=false
+transitclock.autoBlockAssigner.autoAssignerEnabled=true
 transitclock.autoBlockAssigner.ignoreAvlAssignments=false
 transitclock.autoBlockAssigner.allowableEarlySeconds=600
 transitclock.autoBlockAssigner.allowableLateSeconds=600
@@ -102,7 +102,7 @@ transitclock.predAccuracy.maxPredTimeMinutes=45
 
 transitclock.prediction.data.kalman.mindays=3
 transitclock.prediction.data.kalman.maxdays=5
-transitclock.prediction.data.kalman.maxdaystosearch=28
+transitclock.prediction.data.kalman.maxdaystosearch=1
 transitclock.prediction.data.kalman.percentagePredictionMethodDifferencene=50
 transitclock.prediction.data.kalman.tresholdForDifferenceEventLog=60000
 transitclock.prediction.data.kalman.usekalmanforpartialstoppaths=false

@@ -97,7 +97,7 @@ default_attributes({
                          "snsArn" => "arn:aws:sns:us-east-1:443046490497:dash_avl",
                          "mapTileUrl" => 'https://a.tile.openstreetmap.de/{z}/{x}/{y}.png',
                          "retentionDays" => "30",
-                         "daysPopulateHistoricalCache" => "28",
+                         "daysPopulateHistoricalCache" => "1",
                          "fillHistoricalCaches" => "true",
                          "ehcacheDiskStore" => "/var/lib/oba/transitime/cache",
                          "env" => "dash_shuttle_prod"
