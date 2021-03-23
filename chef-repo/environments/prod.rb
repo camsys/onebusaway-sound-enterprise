@@ -15,7 +15,7 @@ default_attributes({
                            "version_transitime_core" => "0.0.49",
                            "version_transitime_web" => "0.0.49",
                            "version_shuttle_transitime_core" => "2.0.46.1-cs",
-                           "version_shuttle_transitime_web" => "2.0.46.1-cs",
+                           "version_shuttle_transitime_web" => "2.0.46.2-cs",
                            "repositories" => ["https://repo.camsys-apps.com/releases/"]
                        },
                        "db_instance" => "db",
