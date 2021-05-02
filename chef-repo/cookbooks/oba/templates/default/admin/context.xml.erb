@@ -42,7 +42,7 @@
         username="<%= node[:oba][:db_user] %>"
         password="<%= node[:oba][:db_password] %>"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://<%= node[:oba][:db_master] %>/org_onebusaway_users" >
+        url="jdbc:mysql://<%= node[:oba][:db_master] %>/org_onebusaway_users?useSSL=true" >
      </Resource>
      <Resource name="jdbc/archiveDB"
           auth="Container"
@@ -68,7 +68,7 @@
           username="oba"
         password="<%= node[:oba][:db_password] %>"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>?characterEncoding=UTF-8" />
+        url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>?characterEncoding=UTF-8&amp;useSSL=true" />
      <Resource name="jdbc/agencyMetadataDB"
           auth="Container"
           type="javax.sql.DataSource"
@@ -93,7 +93,7 @@
           username="<%= node[:oba][:db_user] %>"
         password="<%= node[:oba][:db_password] %>"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>" >
+        url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>?useSSL=true" >
      </Resource>
      <Resource name="mail/Session" auth="Container"
          type="javax.mail.Session"
