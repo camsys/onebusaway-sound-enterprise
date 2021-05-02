@@ -71,10 +71,10 @@
              uncomment this part and set the db parameters here. -->
 
         <property name="hibernate.connection.url">
-            jdbc:mysql://<%= node[:shuttle][:dbhost] %>/<%= node[:shuttle][:dbname] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;autoReconnect=true&amp;connectTimeout=600000&amp;socketTimeout=600000
+            jdbc:mysql://<%= node[:shuttle][:dbhost] %>/<%= node[:shuttle][:dbname] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;autoReconnect=true&amp;connectTimeout=600000&amp;socketTimeout=600000&amp;useSSL=false
         </property>
         <property name="hibernate.ro.connection.url">
-            jdbc:mysql://<%= node[:shuttle][:dbrohost] %>/<%= node[:shuttle][:dbname] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;autoReconnect=true
+            jdbc:mysql://<%= node[:shuttle][:dbrohost] %>/<%= node[:shuttle][:dbname] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;autoReconnect=true&amp;useSSL=false
         </property>
         <property name="hibernate.connection.username">
             <%= node[:shuttle][:dbusername] %>
