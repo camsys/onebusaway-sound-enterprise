@@ -17,7 +17,7 @@
       username="<%= node[:oba][:db_user] %>"
       password="<%= node[:oba][:db_password] %>"
       driverClassName="com.mysql.jdbc.Driver"
-      url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_instance_name] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;useSSL=true" >
+      url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_instance_name] %>?rewriteBatchedStatements=true&amp;cachePrepStmts=true&amp;useSSL=false" >
      </Resource>
 
     <Resource name="jdbc/agencyMetadataDB"
@@ -33,7 +33,7 @@
       username="<%= node[:oba][:db_user] %>"
       password="<%= node[:oba][:db_password] %>"
       driverClassName="com.mysql.jdbc.Driver"
-      url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>?useSSL=true" >
+      url="jdbc:mysql://<%= node[:oba][:db_master] %>/<%= node[:oba][:db_archive] %>?useSSL=false" >
     </Resource>
 
     <Environment name="xwikiUrl" value="http://xwiki.prod.wmata.obaweb.org:8080/xwiki" type="java.lang.String" override="true" />

@@ -31,7 +31,7 @@
         username="<%= node[:oba][:db_user] %>"
         password="<%= node[:oba][:db_password] %>"
         driverClassName="com.mysql.jdbc.Driver"
-        url="jdbc:mysql://<%= node[:oba][:db_master] %>/org_onebusaway_users?useSSL=true" >
+        url="jdbc:mysql://<%= node[:oba][:db_master] %>/org_onebusaway_users?useSSL=false" >
      </Resource>
 
     <!-- Uncomment this to disable session persistence across Tomcat restarts -->
