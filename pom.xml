@@ -8,10 +8,28 @@
   </parent>
   <artifactId>onebusaway-sound-enterprise</artifactId>
   <packaging>pom</packaging>
-  <version>2.0.75-cs</version>
+  <version>2.0.75.1-cs-SNAPSHOT</version>
   <name>onebusaway-sound-enterprise</name>
 
-	<modules>
+    <repositories>
+        <repository>
+            <id>releases-camsys-public-repo</id>
+            <url>https://repo.camsys-apps.com/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <!-- Required for the xwiki-rendering-macros -->
+        <repository>
+            <id>xwiki</id>
+            <url>http://maven.xwiki.org/releases</url>
+        </repository>
+    </repositories>
+
+    <modules>
 	  <module>onebusaway-enterprise-sound-webapp</module>
 	</modules>
 </project>
