@@ -51,8 +51,8 @@ default_attributes({
                           "artifact" => "onebusaway-enterprise-sound-webapp"
                        },
                        "ses_host" => "email-smtp.us-east-1.amazonaws.com",
-                       "ses_user" => "AKIAISKUXW2UHBZRHHNA",
-                       "ses_password" => "AhxzNCmnlqzK8qjPwsQ41yHUbk3meOlHZvVRuoVoM7/t",
+                       "ses_user" => "AKIARB3JXJPDXNFUFBUL",
+                       "ses_password" => "BF/ZvxtLV08jXdBUds5iPyvH+iXKJPtZNf1BIyXvqPG6",
                        "ses_from" => "btss@wmata.com",
                        "mobile_require_ssl" => "true",
                        "tomcat" => {
