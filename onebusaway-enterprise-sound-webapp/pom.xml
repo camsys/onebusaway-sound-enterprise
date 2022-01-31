@@ -20,6 +20,16 @@
 	</properties>
 
 	<repositories>
+		<repository>
+			<id>releases-camsys-public-repo</id>
+			<url>https://repo.camsys-apps.com/releases/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
 		<!-- Required for the xwiki-rendering-macros -->
 		<repository>
 			<id>xwiki</id>
@@ -98,10 +108,10 @@
 			<id>local-multi-port</id> <!-- services-vtw-as-tds-multiport --><!-- multi port, also for development -->
 			<!-- assumes we're running on 8080, and vtw and api are on different ports -->
 			<properties>
-				<tds.path>http://localhost:8081/onebusaway-nyc-vehicle-tracking-webapp</tds.path>
-				<vtms.path>http://localhost:8081/onebusaway-nyc-vehicle-tracking-webapp</vtms.path>
-				<config.path>http://localhost:8081/onebusaway-nyc-vehicle-tracking-webapp</config.path>
-				<archive.path>http://localhost:8081/onebusaway-nyc-report-archive</archive.path>
+				<tds.path>http://localhost:8080/onebusaway-nyc-vehicle-tracking-webapp</tds.path>
+				<vtms.path>http://localhost:8080/onebusaway-nyc-vehicle-tracking-webapp</vtms.path>
+				<config.path>http://localhost:8080/onebusaway-nyc-vehicle-tracking-webapp</config.path>
+				<archive.path>http://localhost:8080/onebusaway-nyc-report-archive</archive.path>
 				<tdm.host>tdm.dev.obanyc.com</tdm.host>
 				<webapp.api.url>http://localhost:8082</webapp.api.url>
 				<log4j.appender>stdout</log4j.appender>
