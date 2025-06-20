@@ -23,7 +23,7 @@
     <dependency>
 		<groupId>org.onebusaway</groupId>
 		<artifactId>onebusaway-enterprise-webapp</artifactId>
-		<version>2.5.25-cs-SNAPSHOT</version>
+		<version>${project.version}</version>
 		<type>war</type>
 	</dependency>
   </dependencies>
