@@ -29,3 +29,6 @@ target/
 
 #intellij
 *.iml
+.idea/
+
+onebusaway-enterprise-sound-webapp/overlays/
