@@ -243,11 +243,15 @@ html, body {
 #topbar #branding {
     float: left;
     height: 90px;
+    width: 325px;
 }
-#topbar #branding a img,
-#topbar #branding a {
-	border: none;
-	text-decoration: none;
+#topbar #branding a#agency-logo {
+    height: 90px;
+    background-image: url('img/agency_logo.png');
+    display: block;
+    background-repeat: no-repeat;
+    background-size: contain;
+    width: 100%;
 }
 #topbar #search {
     float: right;
